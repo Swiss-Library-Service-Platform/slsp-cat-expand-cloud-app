@@ -1,0 +1,65 @@
+<div class="eca-actions">
+  <button mat-flat-button color="primary" (click)="save()" [disabled]="!selectedEntity || !hasChanges || (loader.isLoading | async)">Save</button>
+  <button mat-flat-button color="secondary" (click)="reset()" [disabled]="!selectedEntity || (loader.isLoading | async)">{{ 'main.resetButtonLabel' | translate }}</button>
+</div>
+
+<div *ngIf="entities.length == 0">
+  <h2 translate>main.noMmsIdMsg</h2>
+</div>
+
+<div *ngIf="entities.length > 0">
+  <mat-card *ngFor="let entity of entities" [ngClass]="{'hidden' : selectedEntity && (entity.id != selectedEntity.mms_id) }">
+    <mat-card-title>
+      <span class="item-title">
+        <mat-icon color="primary">menu_book</mat-icon>
+        <span>{{entity.description}}</span>
+      </span>
+    </mat-card-title>
+    <mat-card-actions class="entity-actions" *ngIf="!selectedEntity">
+      <button mat-flat-button color="primary" (click)="selectRecord(entity)">{{ 'main.selectRecord' | translate }}</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<div *ngIf="selectedEntity">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <span class="item-title">
+          <mat-icon color="primary">code</mat-icon>
+          <span>MarcXML</span>
+        </span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <textarea readonly class="xml-code" value="{{getFormattedXml()}}"></textarea>
+  </mat-expansion-panel>
+  <div class="template-set-container" *ngFor="let templateSet of getTemplateSets()">
+    <h2>{{templateSet.getName()}}</h2>
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let template of templateSet.getTemplates()">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span class="item-title">
+              <mat-icon color="primary">control_point_duplicate</mat-icon>
+              <span>{{template.getName()}}</span>
+            </span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-list>
+          <mat-list-item *ngFor="let rule of template.getRules()">
+            <mat-icon matListItemIcon color="primary">rule</mat-icon>
+            {{rule.getDescription()}}
+          </mat-list-item>
+        </mat-list>
+        <div class="template-actions">
+          <button mat-flat-button color="primary" (click)="applyTemplate(template)">Apply template</button>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>
+
+<div class="loading-shade" *ngIf="loader.isLoading | async">
+  <mat-spinner diameter="50" [mode]="loader.mode | async" [value]="loader.progress | async"></mat-spinner>
+  <p class="loading-info">{{ status.message | async }}</p>
+</div>

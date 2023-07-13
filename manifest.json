@@ -1,0 +1,10 @@
+{
+   "id": "record-expander",
+   "title": "Record Expander",
+   "subtitle": "Expand record metadata with templates",
+   "author": "Jonas Furrer",
+   "description": "Add or edit fields of a bibliographic record, based on templates.",
+   "entities": [
+      "BIB_MMS"
+   ]
+}

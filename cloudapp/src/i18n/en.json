@@ -1,0 +1,18 @@
+{
+	"main": {
+		"selectRecord": "Select",
+		"calculateButtonLabel": "calculate",
+		"closeWindowButtonLabel": "Close window",
+		"expandInfo": "To expand the view click the expand button in the toolbar",
+		"exportButtonLabel": "Export",
+		"mmsIdNz": "MMS ID (NZ)",
+		"noMmsIdMsg": "No Bibliographic Entities found, search for MMSID",
+		"noRelatedRecordsFoundMsg": "No related records found",
+		"popUpWindowButtonLabel": "Popup window",
+		"relatedRecords": "Related Records",
+		"resetButtonLabel": "Reset",
+		"resetSelectionButtonLabel": "Reset selection",
+		"showAdditionalData": "Show/Hide additional data",
+		"showHierarchyButtonLabel": "Show hierarchy"
+	}
+}
