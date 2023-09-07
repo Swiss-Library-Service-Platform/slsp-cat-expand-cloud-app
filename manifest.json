@@ -6,5 +6,10 @@
    "description": "Add or edit fields of a bibliographic record, based on templates.",
    "entities": [
       "BIB_MMS"
-   ]
+   ],
+   "contentSecurity": {
+      "connectSrc": [
+         "https://proxy02.swisscovery.network"
+      ]
+   }
 }
