@@ -15,6 +15,7 @@
             ],
             "url": "/node_modules/@exlibris/exl-cloudapp-base/manifest.schema.json"
         }
-    ]
-    
+    ],
+    "editor.acceptSuggestionOnEnter": "on"
+
 }

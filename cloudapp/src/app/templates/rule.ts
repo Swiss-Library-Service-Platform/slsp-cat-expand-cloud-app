@@ -7,7 +7,7 @@ export abstract class Rule {
 	protected log: LogService
 	protected xpath: XPathHelperService
 
-	constructor(private description: string) {
+	protected constructor(private description: string) {
 		this.log = AppInjector.get(LogService)
 		this.xpath = AppInjector.get(XPathHelperService)
 	}
