@@ -1,0 +1,29 @@
+{
+	"template": {
+		"name": "Illustrated book",
+		"rules": [
+			{
+				"type": "AddDataFieldRule",
+				"name": "add 336__$$bsti$$2rdacontent",
+				"arguments": {
+					"tag": "336",
+					"ind1": "",
+					"ind2": "",
+					"code": "b",
+					"value": "sti$$2rdacontent"
+				}
+			},
+			{
+				"type": "AddDataFieldRule",
+				"name": "add 655_7$$Bildband$$2gnd-content",
+				"arguments": {
+					"tag": "655",
+					"ind1": "",
+					"ind2": "7",
+					"code": "a",
+					"value": "Bildband$$2gnd-content"
+				}
+			}
+		]
+	}
+}

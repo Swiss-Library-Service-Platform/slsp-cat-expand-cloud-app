@@ -9,3 +9,17 @@ An [ExLibris Alma CloudApp](https://developers.exlibrisgroup.com/cloudapps/), wh
 - Updating NZ bib records from CloudApps ✖️
 
 ➡ https://developers.exlibrisgroup.com/forums/topic/update-bib-record-in-nz-via-api/
+
+# Development notes
+
+## How to create templates
+
+1. Add template definition json file in assets/templates
+2. Register the template definition file in assets/templastes/_template-index.json
+
+### Rules and how to instantiate templates
+
+- Rules need a RuleCreator impl.
+- Rules need a RulesArg definition
+- RuleCreators must be registered in app.module.ts (for injection)
+

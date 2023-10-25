@@ -6,12 +6,13 @@ import xmlFormat from 'xml-formatter'
 import { BibRecord } from '../models/bib-record'
 import { LoadingIndicatorService } from '../services/loading-indicator.service'
 import { LogService } from '../services/log.service'
+import { NetworkZoneRestService } from '../services/network-zone-rest.service'
 import { StatusMessageService } from '../services/status-message.service.ts'
+import { XPathHelperService } from '../services/xpath-helper.service'
 import { Template } from '../templates/template'
 import { TemplateSet } from '../templates/template-set'
 import { TemplateSetRegistry } from '../templates/template-set-registry.service'
-import { XPathHelperService } from '../services/xpath-helper.service'
-import { NetworkZoneRestService } from "../services/network-zone-rest.service"
+
 
 
 @Component({
@@ -62,6 +63,7 @@ export class MainComponent implements OnInit, OnDestroy {
       .subscribe(
         (entites) => {
           this.entities = entites
+          console.log(entites)
         },
         (error) => {
           this.log.error('ngOnInit failed:', error)
@@ -107,7 +109,8 @@ export class MainComponent implements OnInit, OnDestroy {
     return this.templateSetRegistry.get()
   }
 
-  applyTemplate(template: Template): void {
+  applyTemplate(event: Event, template: Template): void {
+    event.stopPropagation()
     this.loader.show()
     this.status.set('applying template')
     this.log.info('apply template:', template.getName())
@@ -145,40 +148,50 @@ export class MainComponent implements OnInit, OnDestroy {
       }).subscribe(
         (response) => {
           this.log.info('save successful:', response)
-          this.eventsService.refreshPage()
+          this.eventsService.refreshPage().subscribe()
           this.loader.hide()
         },
         (error) => {
           this.log.error('save failed:', error)
-          this.eventsService.refreshPage()
+          this.eventsService.refreshPage().subscribe()
           this.loader.hide()
         }
       )
     })
+  }
 
-    /* nzMmsId.subscribe(id => {
-      this.restService.call({
-        method: HttpMethod.PUT,
-        url: `/bibs/${id}`,
-        //queryParams: params,
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/xml'
-        },
-        requestBody: `<bib>${recordXml}</bib>`
-      }).subscribe(
-        (response) => {
-          this.log.info('save successful:', response)
-          this.eventsService.refreshPage()
-          this.loader.hide()
-        },
-        (error) => {
-          this.log.info('save failed:', error)
-          this.eventsService.refreshPage()
-          this.loader.hide()
-        }
-      )
-    }) */
+  addTemplate(newTemplate: any): void {
+    console.log(newTemplate)
+    console.log(newTemplate.value)
+
+    this.loader.show()
+    this.templateSetRegistry.storeUserTemplate(newTemplate.value).subscribe(result => {
+      if (result.success) {
+        this.alert.info(`Added new template`)
+        newTemplate.value = null
+      } else {
+        this.alert.error(`Could not add template: ${result.error}`)
+      }
+      setTimeout(() => {
+        this.loader.hide()
+      }, 200)
+    })
+
+  }
+
+  removeTemplate(event: Event, templateName: string): void {
+    this.loader.show()
+    event.stopPropagation()
+    this.templateSetRegistry.removeUserTemplate(templateName).subscribe(result => {
+      if (result.success) {
+        this.alert.info(`Removed template ${templateName}`)
+      } else {
+        this.alert.error(`Could not remove template ${templateName}: ${result.error}`)
+      }
+      setTimeout(() => {
+        this.loader.hide()
+      }, 200)
+    })
   }
 
   private wrapWithBib(xmlRecord: Document): string {
@@ -192,37 +205,16 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   private getBibRecord(entity: Entity): Observable<BibRecord> {
-/*     return this.getNzMmsIdFromEntity(entity)
+    return this.getNzMmsIdFromEntity(entity)
       .pipe(
         switchMap(id => {
           return this.networkZoneRestService.call(
             {
               method: HttpMethod.GET,
-              url: `/bibs/?nz_mms_id=${id}`
+              url: `/bibs/${id}`
             })
         }),
         switchMap(response => {
-          if (response.bib) {
-            const bibRecord: BibRecord = response.bib[0]
-            bibRecord.entity = entity
-            return of(bibRecord)
-          } else {
-            const bibRecord: BibRecord = response
-            bibRecord.entity = entity
-            return of(response)
-          }
-        })
-      ) */
-
-    return this.getNzMmsIdFromEntity(entity)
-      .pipe(
-        switchMap((id) => {
-          return this.restService.call({
-            method: HttpMethod.GET,
-            url: `/bibs/?nz_mms_id=${id}`
-          })
-        }),
-        switchMap((response) => {
           if (response.bib) {
             const bibRecord: BibRecord = response.bib[0]
             bibRecord.entity = entity

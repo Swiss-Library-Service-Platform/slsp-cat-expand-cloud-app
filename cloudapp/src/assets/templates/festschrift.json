@@ -1,0 +1,28 @@
+{
+	"template": {
+		"name": "Festschrift",
+		"set": "SLSP",
+		"rules": [
+			{
+				"type": "ChangeControlFieldRule",
+				"name": "Change 008 / Pos.30 to 1",
+				"arguments": {
+					"tag": "008",
+					"searchRegex": "^(.{29}).(.*)$",
+					"replacement": "$11$2"
+				}
+			},
+			{
+				"type": "AddDataFieldRule",
+				"name": "add 655_7$$aFestschrift$$2gnd-content",
+				"arguments": {
+					"tag": "655",
+					"ind1": "7",
+					"ind2": " ",
+					"code": "a",
+					"value": "Festschrift$$2gnd-content"
+				}
+			}
+		]
+	}
+}

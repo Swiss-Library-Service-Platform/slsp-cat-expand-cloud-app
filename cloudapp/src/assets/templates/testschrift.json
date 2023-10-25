@@ -1,0 +1,19 @@
+{
+	"template": {
+		"name": "Testschrift",
+		"set": "SLSP",
+		"rules": [
+			{
+				"type": "AddDataFieldRule",
+				"name": "add 655_7$$atest jonas",
+				"arguments": {
+					"tag": "655",
+					"ind1": "7",
+					"ind2": " ",
+					"code": "a",
+					"value": "test jonas"
+				}
+			}
+		]
+	}
+}

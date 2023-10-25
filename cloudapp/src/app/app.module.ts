@@ -1,15 +1,18 @@
-import { Injector, NgModule } from '@angular/core'
 import { HttpClientModule } from '@angular/common/http'
+import { Injector, NgModule } from '@angular/core'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { MaterialModule, CloudAppTranslateModule, AlertModule } from '@exlibris/exl-cloudapp-angular-lib'
+import { AlertModule, CloudAppTranslateModule, MaterialModule } from '@exlibris/exl-cloudapp-angular-lib'
 
-import { AppComponent } from './app.component'
-import { AppRoutingModule } from './app-routing.module'
-import { MainComponent } from './main/main.component'
 import { AppInjector } from './app-injector'
+import { AppRoutingModule } from './app-routing.module'
+import { AppComponent } from './app.component'
+import { MainComponent } from './main/main.component'
+import { AddDataFieldRuleCreator } from './templates/rules/add-data-field-rule'
+import { ChangeControlFieldRuleCreator } from './templates/rules/change-control-field-rule'
+import { RuleCreatorToken } from './templates/rules/rule-creator'
 
 @NgModule({
   declarations: [
@@ -29,6 +32,8 @@ import { AppInjector } from './app-injector'
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'standard' } },
+    { provide: RuleCreatorToken, useClass: AddDataFieldRuleCreator, multi: true },
+    { provide: RuleCreatorToken, useClass: ChangeControlFieldRuleCreator, multi: true },
   ],
   bootstrap: [AppComponent]
 })
@@ -39,5 +44,4 @@ export class AppModule {
   ) {
     AppInjector.setInjector(injector)
   }
-
 }

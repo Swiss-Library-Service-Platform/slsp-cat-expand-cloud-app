@@ -1,0 +1,7 @@
+{
+	"templates": [
+		"festschrift.json",
+		"testschrift.json",
+		"illustratedbook.json"
+	]
+}
