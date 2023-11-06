@@ -1,5 +1,5 @@
 import { LogService } from '../../services/log.service'
-import { Rule } from './rule'
+import { ChangeSet, ChangeType, Rule } from './rule'
 import { RuleCreator } from './rule-creator'
 
 export class ChangeControlFieldRuleCreator extends RuleCreator<ChangeControlFieldRule> {
@@ -18,7 +18,7 @@ class ChangeControlFieldRule extends Rule {
 	private searchRegex: RegExp
 	private replacement: string
 
-	constructor(name:string, args: any) {
+	constructor(name: string, args: any) {
 		super(name)
 		const ruleArguments = args as RuleArguments
 		this.tag = ruleArguments.tag
@@ -26,12 +26,15 @@ class ChangeControlFieldRule extends Rule {
 		this.replacement = ruleArguments.replacement
 	}
 
-	public apply(xmlDocument: Document): void {
+	public apply(xmlDocument: Document): ChangeSet[] {
 		this.log.info('apply rule:', this.getName())
 		const controlfield: Node = this.getControlFieldNode(xmlDocument)
 		const value: string = controlfield.textContent
 		const result: string = this.searchReplace(value)
 		controlfield.textContent = result
+		return [
+			this.getChangeSet(controlfield as Element, this.tag, ChangeType.Change)
+		]
 	}
 
 	private searchReplace(value: string): string {

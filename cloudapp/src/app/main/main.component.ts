@@ -12,6 +12,8 @@ import { XPathHelperService } from '../services/xpath-helper.service'
 import { Template } from '../templates/template'
 import { TemplateSet } from '../templates/template-set'
 import { TemplateSetRegistry } from '../templates/template-set-registry.service'
+import { ChangeSet, ChangeType } from '../templates/rules/rule'
+import { ChangeTrackingService } from '../services/change-tracking.service'
 
 
 
@@ -27,6 +29,7 @@ export class MainComponent implements OnInit, OnDestroy {
   xml: string
   xmlRecord: Document
   hasChanges: boolean
+  changes: ChangeSet[]
 
   entities$: Observable<Entity[]> = this.eventsService.entities$
     .pipe(
@@ -42,6 +45,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private alert: AlertService,
     private templateSetRegistry: TemplateSetRegistry,
     private xpath: XPathHelperService,
+    private changeTrackingService: ChangeTrackingService,
     private _status: StatusMessageService,
     private _loader: LoadingIndicatorService,
   ) { }
@@ -58,6 +62,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.loader.show()
     this.status.set("loading")
     this.hasChanges = false
+    this.changes = []
 
     this.entities$
       .subscribe(
@@ -78,6 +83,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.hasChanges = false
     this.log.info(entity)
     this.loader.show()
+    this.status.set('selecting record')
     this.getBibRecord(entity)
       .subscribe(
         (bibRecord) => {
@@ -100,9 +106,71 @@ export class MainComponent implements OnInit, OnDestroy {
     })
   }
 
+  getMarc(): {}[] {
+    return this.createMarc()
+  }
+
+  //TODO: rewrite and extract
+  private createMarc(): {}[] {
+    const record: Element = this.xmlRecord.getElementsByTagName("record")[0]
+    const fields: Node[] = Array.from(record.childNodes)
+
+    return fields.map((field: Element) => {
+      const entry: {} = {}
+      if (field.tagName == 'leader') {
+        entry['change'] = ChangeType.None
+        entry['tag'] = 'LDR'
+        entry['ind1'] = ' '
+        entry['ind2'] = ' '
+        const valueMap: { code: string, value: string }[] = []
+        valueMap.push({ code: '', value: field.textContent.replace(/ /g, '#') })
+        entry['value'] = valueMap
+        return entry
+      }
+      const tag: string = field.getAttribute('tag')
+      entry['change'] = this.getChange(field)
+      if (field.tagName == 'controlfield') {
+        entry['tag'] = tag
+        entry['ind1'] = ' '
+        entry['ind2'] = ' '
+        const valueMap: { [code: string]: string }[] = []
+        valueMap.push({ code: '', value: field.textContent.replace(/ /g, '#') })
+        entry['value'] = valueMap
+        return entry
+      }
+      if (field.tagName == 'datafield') {
+        entry['tag'] = tag
+        entry['ind1'] = field.getAttribute('ind1')
+        entry['ind2'] = field.getAttribute('ind2')
+        const valueMap: { [code: string]: string }[] = []
+        Array.from(field.childNodes).forEach((subfield: Element) => {
+          const key: string = subfield.getAttribute("code")
+          const value: string = subfield.textContent
+          valueMap.push({ code: key, value: value })
+        })
+        entry['value'] = valueMap
+      }
+      return entry
+    })
+  }
+
+  getChange(field: Element): ChangeType {
+    const change: ChangeSet[] = this.changes.filter(change => change.changeHash === this.changeTrackingService.getNodeHash(field))
+    if (change != undefined && change.length > 0) {
+      return change.reduce((previous, current) => {
+        if (current.type == ChangeType.Create) {
+          return ChangeType.Create
+        }
+        return previous
+      }, ChangeType.Change)
+    }
+    return ChangeType.None
+  }
+
   reset(): void {
     this.selectedEntity = null
     this.hasChanges = false
+    this.changes = []
   }
 
   getTemplateSets(): TemplateSet[] {
@@ -114,7 +182,8 @@ export class MainComponent implements OnInit, OnDestroy {
     this.loader.show()
     this.status.set('applying template')
     this.log.info('apply template:', template.getName())
-    template.applyTemplate(this.xmlRecord)
+    const changes = template.applyTemplate(this.xmlRecord)
+    this.changes.push(...changes)
     this.hasChanges = true
     this.loader.hide()
   }
@@ -165,6 +234,7 @@ export class MainComponent implements OnInit, OnDestroy {
     console.log(newTemplate.value)
 
     this.loader.show()
+    this.status.set('saving template')
     this.templateSetRegistry.storeUserTemplate(newTemplate.value).subscribe(result => {
       if (result.success) {
         this.alert.info(`Added new template`)
@@ -181,6 +251,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   removeTemplate(event: Event, templateName: string): void {
     this.loader.show()
+    this.status.set('removing template')
     event.stopPropagation()
     this.templateSetRegistry.removeUserTemplate(templateName).subscribe(result => {
       if (result.success) {

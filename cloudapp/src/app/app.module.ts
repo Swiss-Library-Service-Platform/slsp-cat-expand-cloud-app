@@ -13,11 +13,13 @@ import { MainComponent } from './main/main.component'
 import { AddDataFieldRuleCreator } from './templates/rules/add-data-field-rule'
 import { ChangeControlFieldRuleCreator } from './templates/rules/change-control-field-rule'
 import { RuleCreatorToken } from './templates/rules/rule-creator'
+import { ChangeIconComponent } from './components/change-icon/change-icon.component'
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent
+    MainComponent,
+    ChangeIconComponent
   ],
   imports: [
     MaterialModule,

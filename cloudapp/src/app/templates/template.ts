@@ -1,4 +1,4 @@
-import { Rule } from './rules/rule'
+import { ChangeSet, Rule } from './rules/rule'
 
 export class Template {
 
@@ -30,8 +30,11 @@ export class Template {
 		return this.origin
 	}
 
-	public applyTemplate(recordXml: Document): void {
-		this.rules.forEach(rule => rule.apply(recordXml))
+	public applyTemplate(recordXml: Document): ChangeSet[] {
+		const changes: ChangeSet[][] = this.rules
+			.map(rule => rule.apply(recordXml))
+			.filter(changeSet => changeSet !== undefined)
+		return [].concat(...changes)
 	}
 }
 
