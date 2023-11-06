@@ -4,10 +4,8 @@ import { Injectable } from '@angular/core'
 	providedIn: 'root'
 })
 export class LogService {
-	info(...args: any[]): void {
-		console.info('[Record-Expander]', ...args)
-	}
-	error(...args: any[]): void {
-		console.error('[Record-Expander][ERR]', ...args)
-	}
+	debug = console.log.bind(window.console, '[Record-Expander][DEBUG]')
+	info = console.log.bind(window.console, '[Record-Expander]')
+	warn = console.warn.bind(window.console, '[Record-Expander][WARN]')
+	error = console.error.bind(window.console, '[Record-Expander][ERROR]')
 }
