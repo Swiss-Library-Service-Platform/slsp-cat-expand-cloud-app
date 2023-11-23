@@ -1,0 +1,61 @@
+{
+	"template": {
+		"name": "Thesis",
+		"set": "SLSP",
+		"rules": [
+			{
+				"type": "ChangeControlFieldRule",
+				"name": "Change 008 / Pos.24 to m",
+				"arguments": {
+					"tag": "008",
+					"searchRegex": "^(.{23}).(.*)$",
+					"replacement": "$1m$2"
+				}
+			},
+			{
+				"type": "AddDataFieldRule",
+				"name": "add 502__$$B$$b$$c$$d$$o",
+				"arguments": {
+					"tag": "502",
+					"ind1": "",
+					"ind2": "",
+					"code": "B",
+					"value": "$$b$$c$$d$$o"
+				}
+			},
+			{
+				"type": "AddDataFieldRule",
+				"name": "add 655_7$$aHochschulschrift$$2gnd-content",
+				"arguments": {
+					"tag": "655",
+					"ind1": "",
+					"ind2": "7",
+					"code": "a",
+					"value": "Hochschulschrift$$2gnd-content"
+				}
+			},
+			{
+				"type": "AddDataFieldRule",
+				"name": "add 655_7$$aThèses et écrits académiques$$0(IDREF)027253139$$2idref",
+				"arguments": {
+					"tag": "655",
+					"ind1": "",
+					"ind2": "7",
+					"code": "a",
+					"value": "Thèses et écrits académiques$$0(IDREF)027253139$$2idref"
+				}
+			},
+			{
+				"type": "AddDataFieldRule",
+				"name": "add 655_7$$aTesi$$2sbt12-content",
+				"arguments": {
+					"tag": "655",
+					"ind1": "",
+					"ind2": "7",
+					"code": "a",
+					"value": "Tesi$$2sbt12-content"
+				}
+			}
+		]
+	}
+}

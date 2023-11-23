@@ -1,7 +1,10 @@
 {
 	"templates": [
+		"comic.json",
+		"conference.json",
+		"exhibitioncatalogue.json",
 		"festschrift.json",
-		"testschrift.json",
-		"illustratedbook.json"
+		"illustratedbook.json",
+		"thesis.json"
 	]
 }

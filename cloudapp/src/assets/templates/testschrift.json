@@ -1,7 +1,6 @@
 {
 	"template": {
 		"name": "Testschrift",
-		"set": "SLSP",
 		"rules": [
 			{
 				"type": "AddDataFieldRule",
