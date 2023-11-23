@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { AlertService, CloudAppEventsService, CloudAppRestService, Entity, EntityType, HttpMethod } from '@exlibris/exl-cloudapp-angular-lib'
 import { Observable, of } from 'rxjs'
 import { catchError, filter, shareReplay, switchMap, tap } from 'rxjs/operators'
-import xmlFormat from 'xml-formatter'
 import { BibRecord } from '../models/bib-record'
 import { LoadingIndicatorService } from '../services/loading-indicator.service'
 import { LogService } from '../services/log.service'
@@ -100,12 +99,6 @@ export class MainComponent implements OnInit, OnDestroy {
       )
   }
 
-  getFormattedXml(): string {
-    return xmlFormat(new XMLSerializer().serializeToString(this.xmlRecord), {
-      collapseContent: true,
-    })
-  }
-
   getMarc(): {}[] {
     return this.createMarc()
   }
@@ -192,13 +185,6 @@ export class MainComponent implements OnInit, OnDestroy {
     this.loader.show()
     this.status.set('saving record')
     const nzMmsId: Observable<string> = this.getNzMmsIdFromEntity(this.selectedEntity.entity)//this.selectedEntity.mms_id
-    const params: { [param: string]: any } = {
-      'validate': true,
-      'override_warning': true,
-      'override_lock': true,
-      'cataloger_level': '00'
-    }
-    const xmlBody: string = this.wrapWithBib(this.xmlRecord)
     const record: Node = this.xpath.querySingle('//record', this.xmlRecord)
     const recordXml: string = new XMLSerializer().serializeToString(record)
 
@@ -262,16 +248,6 @@ export class MainComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.loader.hide()
       }, 200)
-    })
-  }
-
-  private wrapWithBib(xmlRecord: Document): string {
-    const bib: Element = xmlRecord.createElement('bib')
-    const record: Node = this.xpath.querySingle('./record', xmlRecord)
-    bib.appendChild(record)
-    xmlRecord.appendChild(bib)
-    return xmlFormat(new XMLSerializer().serializeToString(xmlRecord), {
-      collapseContent: true,
     })
   }
 
