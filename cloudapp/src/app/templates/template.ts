@@ -40,5 +40,6 @@ export class Template {
 
 export enum TemplateOrigin {
 	BuiltIn = "BUILTIN",
-	User = "USER"
+	User = "USER",
+	Institution = "INSTITUTION"
 }

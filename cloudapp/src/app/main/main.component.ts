@@ -3,16 +3,16 @@ import { AlertService, CloudAppEventsService, CloudAppRestService, Entity, Entit
 import { Observable, of } from 'rxjs'
 import { catchError, filter, shareReplay, switchMap, tap } from 'rxjs/operators'
 import { BibRecord } from '../models/bib-record'
+import { ChangeTrackingService } from '../services/change-tracking.service'
 import { LoadingIndicatorService } from '../services/loading-indicator.service'
 import { LogService } from '../services/log.service'
 import { NetworkZoneRestService } from '../services/network-zone-rest.service'
 import { StatusMessageService } from '../services/status-message.service.ts'
 import { XPathHelperService } from '../services/xpath-helper.service'
+import { ChangeSet, ChangeType } from '../templates/rules/rule'
 import { Template } from '../templates/template'
 import { TemplateSet } from '../templates/template-set'
 import { TemplateSetRegistry } from '../templates/template-set-registry.service'
-import { ChangeSet, ChangeType } from '../templates/rules/rule'
-import { ChangeTrackingService } from '../services/change-tracking.service'
 
 
 
@@ -29,6 +29,7 @@ export class MainComponent implements OnInit, OnDestroy {
   xmlRecord: Document
   hasChanges: boolean
   changes: ChangeSet[]
+  userIsAdmin: boolean
 
   entities$: Observable<Entity[]> = this.eventsService.entities$
     .pipe(
@@ -73,6 +74,9 @@ export class MainComponent implements OnInit, OnDestroy {
           this.log.error('ngOnInit failed:', error)
           this.loader.hide()
         })
+
+    this.eventsService.getInitData()
+      .subscribe(data => this.userIsAdmin = data.user.isAdmin)
   }
 
   ngOnDestroy(): void {
@@ -215,10 +219,23 @@ export class MainComponent implements OnInit, OnDestroy {
     })
   }
 
-  addTemplate(newTemplate: any): void {
-    console.log(newTemplate)
-    console.log(newTemplate.value)
+  addInstitutionTemplate(newTemplate: any): void {
+    this.loader.show()
+    this.status.set('saving template')
+    this.templateSetRegistry.storeInstitutionTemplate(newTemplate.value).subscribe(result => {
+      if (result.success) {
+        this.alert.info(`Added new template`)
+        newTemplate.value = null
+      } else {
+        this.alert.error(`Could not add template: ${result.error}`)
+      }
+      setTimeout(() => {
+        this.loader.hide()
+      }, 200)
+    })
+  }
 
+  addUserTemplate(newTemplate: any): void {
     this.loader.show()
     this.status.set('saving template')
     this.templateSetRegistry.storeUserTemplate(newTemplate.value).subscribe(result => {
@@ -232,10 +249,25 @@ export class MainComponent implements OnInit, OnDestroy {
         this.loader.hide()
       }, 200)
     })
-
   }
 
-  removeTemplate(event: Event, templateName: string): void {
+  removeInstitutionTemplate(event: Event, templateName: string): void {
+    this.loader.show()
+    this.status.set('removing template')
+    event.stopPropagation()
+    this.templateSetRegistry.removeInstitutionTemplate(templateName).subscribe(result => {
+      if (result.success) {
+        this.alert.info(`Removed template ${templateName}`)
+      } else {
+        this.alert.error(`Could not remove template ${templateName}: ${result.error}`)
+      }
+      setTimeout(() => {
+        this.loader.hide()
+      }, 200)
+    })
+  }
+
+  removeUserTemplate(event: Event, templateName: string): void {
     this.loader.show()
     this.status.set('removing template')
     event.stopPropagation()

@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http'
 import { Inject, Injectable } from '@angular/core'
+import { CloudAppConfigService, CloudAppSettingsService, WriteSettingsResponse } from '@exlibris/exl-cloudapp-angular-lib'
 import { Observable, forkJoin, of } from 'rxjs'
-import { catchError, map, switchMap, tap } from 'rxjs/operators'
+import { catchError, map, switchMap } from 'rxjs/operators'
+import { LogService } from '../services/log.service'
 import { Rule } from './rules/rule'
 import { RuleCreator, RuleCreatorToken } from './rules/rule-creator'
 import { Template, TemplateOrigin } from './template'
 import { TemplateSet } from './template-set'
-import { CloudAppSettingsService, WriteSettingsResponse } from '@exlibris/exl-cloudapp-angular-lib'
-import { LogService } from '../services/log.service'
 
 
 @Injectable({
@@ -21,11 +21,12 @@ export class TemplateSetRegistry {
 	constructor(
 		private httpClient: HttpClient,
 		private settingsService: CloudAppSettingsService,
+		private configService: CloudAppConfigService,
 		private log: LogService,
 		@Inject(RuleCreatorToken) ruleCreators: RuleCreator<Rule>[]
 	) {
 		this.initHttp()
-		this.initSettings()
+		this.initStoredTemplates()
 		this.ruleCreators = ruleCreators
 	}
 
@@ -42,21 +43,19 @@ export class TemplateSetRegistry {
 		return this.registry
 	}
 
-	storeUserTemplate(templateSource: string): Observable<WriteSettingsResponse> {
-		return this.settingsService.get()
+	private storeTemplate(templateSource: string, service: CloudAppSettingsService | CloudAppConfigService) {
+		return service.get()
 			.pipe(
 				switchMap(settings => {
-					console.log("current settings", settings)
-					let userSettings: UserSettings = settings as UserSettings
-					if (!userSettings || !userSettings.userScripts) {
-						userSettings = { userScripts: {} }
+					let storedTemplates: StoredTemplates = settings as StoredTemplates
+					if (!storedTemplates || !storedTemplates.storedScripts) {
+						storedTemplates = { storedScripts: {} }
 					}
-					const userScripts: UserScripts = userSettings.userScripts
+					const storedScripts: StoredScripts = storedTemplates.storedScripts
 					const templateObject: TemplateDefinition = JSON.parse(templateSource) as TemplateDefinition
-					userScripts[templateObject.template.name] = templateSource
-					userSettings.userScripts = userScripts
-					console.log("settings to saved", userSettings)
-					return this.settingsService.set(userSettings)
+					storedScripts[templateObject.template.name] = templateSource
+					storedTemplates.storedScripts = storedScripts
+					return service.set(storedTemplates)
 				}),
 				switchMap(result => {
 					if (result.success == true) {
@@ -71,20 +70,18 @@ export class TemplateSetRegistry {
 			)
 	}
 
-	removeUserTemplate(templateName: string): Observable<WriteSettingsResponse> {
-		return this.settingsService.get()
+	private removeTemplate(templateName: string, service: CloudAppSettingsService | CloudAppConfigService): Observable<WriteSettingsResponse> {
+		return service.get()
 			.pipe(
 				switchMap(settings => {
-					console.log("current settings", settings)
-					let userSettings: UserSettings = settings as UserSettings
-					if (!userSettings || !userSettings.userScripts) {
-						userSettings = { userScripts: {} }
+					let storedTemplates: StoredTemplates = settings as StoredTemplates
+					if (!storedTemplates || !storedTemplates.storedScripts) {
+						storedTemplates = { storedScripts: {} }
 					}
-					const userScripts: UserScripts = userSettings.userScripts
-					delete userScripts[templateName]
-					userSettings.userScripts = userScripts
-					console.log("settings to saved", userSettings)
-					return this.settingsService.set(userSettings)
+					const storedScripts: StoredScripts = storedTemplates.storedScripts
+					delete storedScripts[templateName]
+					storedTemplates.storedScripts = storedScripts
+					return service.set(storedTemplates)
 				}),
 				switchMap(result => {
 					if (result.success == true) {
@@ -97,12 +94,29 @@ export class TemplateSetRegistry {
 					error: error
 				}))
 			)
+	}
+
+	storeUserTemplate(templateSource: string): Observable<WriteSettingsResponse> {
+		console.log("this", this)
+		return this.storeTemplate(templateSource, this.settingsService)
+	}
+
+	storeInstitutionTemplate(templateSource: string): Observable<WriteSettingsResponse> {
+		return this.storeTemplate(templateSource, this.configService)
+	}
+
+	removeUserTemplate(templateSource: string): Observable<WriteSettingsResponse> {
+		return this.removeTemplate(templateSource, this.settingsService)
+	}
+
+	removeInstitutionTemplate(templateSource: string): Observable<WriteSettingsResponse> {
+		return this.removeTemplate(templateSource, this.configService)
 	}
 
 	reset() {
 		this.registry = []
 		this.initHttp()
-		this.initSettings()
+		this.initStoredTemplates()
 	}
 
 	private initHttp(): void {
@@ -122,19 +136,24 @@ export class TemplateSetRegistry {
 
 	}
 
-	private initSettings(): void {
-		this.settingsService.get()
+	private initStoredTemplates(): void {
+		this.loadStoredTemplates(this.settingsService, TemplateOrigin.User)
+		this.loadStoredTemplates(this.configService, TemplateOrigin.Institution)
+	}
+
+	private loadStoredTemplates(service: CloudAppSettingsService | CloudAppConfigService, templateOrigin: TemplateOrigin): void {
+		service.get()
 			.subscribe(settings => {
-				let userSettings: UserSettings = settings as UserSettings
-				if (!userSettings) {
-					userSettings = { userScripts: {} }
+				let storedTemplates: StoredTemplates = settings as StoredTemplates
+				if (!storedTemplates) {
+					storedTemplates = { storedScripts: {} }
 				}
-				const userScripts: UserScripts = userSettings.userScripts
-				for (let templateName in userScripts) {
-					const templateString: string = userScripts[templateName]
+				const storedScripts: StoredScripts = storedTemplates.storedScripts
+				for (let templateName in storedScripts) {
+					const templateString: string = storedScripts[templateName]
 					try {
 						const templateDefinition: TemplateDefinition = JSON.parse(templateString) as TemplateDefinition
-						this.createTemplateFromJson(templateDefinition, TemplateOrigin.User)
+						this.createTemplateFromJson(templateDefinition, templateOrigin)
 					} catch (e) {
 						this.log.error(`Could not create template from user settings. Error: '${e}'. Template: '${templateString}'`)
 					}
@@ -182,10 +201,10 @@ type RuleDefinition = {
 	"arguments": any
 }
 
-type UserSettings = {
-	"userScripts": UserScripts
+type StoredTemplates = {
+	"storedScripts": StoredScripts
 }
 
-type UserScripts = {
+type StoredScripts = {
 	[name: string]: string
 }
