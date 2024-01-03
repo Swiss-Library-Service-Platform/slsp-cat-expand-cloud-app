@@ -1,10 +1,14 @@
 {
 	"templates": [
+		"autobiography.json",
+		"bibliography.json",
+		"biography.json",
 		"comic.json",
 		"conference.json",
 		"exhibitioncatalogue.json",
 		"festschrift.json",
 		"illustratedbook.json",
+		"schoolbook.json",
 		"thesis.json"
 	]
 }

@@ -1,0 +1,49 @@
+{
+	"template": {
+		"name": "Bibliography",
+		"rules": [
+			{
+				"type": "ChangeControlFieldRule",
+				"name": "Change 008 / Pos.24 to b",
+				"arguments": {
+					"tag": "008",
+					"searchRegex": "^(.{23}).(.*)$",
+					"replacement": "$1b$2"
+				}
+			},
+			{
+				"type": "AddDataFieldRule",
+				"name": "add 655_7$$aBibliografie$$2gnd-content",
+				"arguments": {
+					"tag": "655",
+					"ind1": "",
+					"ind2": "7",
+					"code": "a",
+					"value": "Bibliografie$$2gnd-content"
+				}
+			},
+			{
+				"type": "AddDataFieldRule",
+				"name": "add 655_7$$aBibliographie$$0(IDREF)027229386$$2idref",
+				"arguments": {
+					"tag": "655",
+					"ind1": "",
+					"ind2": "7",
+					"code": "a",
+					"value": "Bibliographie$$0(IDREF)027229386$$2idref"
+				}
+			},
+			{
+				"type": "AddDataFieldRule",
+				"name": "add 655_7$$aBibliografie$$2sbt12-content",
+				"arguments": {
+					"tag": "655",
+					"ind1": "",
+					"ind2": "7",
+					"code": "a",
+					"value": "Bibliografie$$2sbt12-content"
+				}
+			}
+		]
+	}
+}

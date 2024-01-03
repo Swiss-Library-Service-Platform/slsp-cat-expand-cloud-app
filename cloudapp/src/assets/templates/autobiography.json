@@ -1,0 +1,49 @@
+{
+	"template": {
+		"name": "Autobiography",
+		"rules": [			
+			{
+				"type": "ChangeControlFieldRule",
+				"name": "Change 008 / Pos.34 to a",
+				"arguments": {
+					"tag": "008",
+					"searchRegex": "^(.{33}).(.*)$",
+					"replacement": "$1a$2"
+				}
+			},
+			{
+				"type": "AddDataFieldRule",
+				"name": "add 655_7$$aAutobiografie$$2gnd-content",
+				"arguments": {
+					"tag": "655",
+					"ind1": "",
+					"ind2": "7",
+					"code": "a",
+					"value": "Autobiografie$$2gnd-content"
+				}
+			},
+			{
+				"type": "AddDataFieldRule",
+				"name": "add 655_7$$aAutobiographie$$0(IDREF)02759436X$$2idref",
+				"arguments": {
+					"tag": "655",
+					"ind1": "",
+					"ind2": "7",
+					"code": "a",
+					"value": "Autobiographie$$0(IDREF)02759436X$$2idref"
+				}
+			},
+			{
+				"type": "AddDataFieldRule",
+				"name": "add 655_7$$aAutobiografie$$2sbt12-content",
+				"arguments": {
+					"tag": "655",
+					"ind1": "",
+					"ind2": "7",
+					"code": "a",
+					"value": "Autobiografie$$2sbt12-content"
+				}
+			}
+		]
+	}
+}

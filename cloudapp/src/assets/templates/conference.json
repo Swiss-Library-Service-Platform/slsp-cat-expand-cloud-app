@@ -1,7 +1,6 @@
 {
 	"template": {
 		"name": "Conference",
-		"set": "SLSP",
 		"rules": [
 			{
 				"type": "ChangeControlFieldRule",

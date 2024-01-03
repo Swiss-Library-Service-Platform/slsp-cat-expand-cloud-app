@@ -1,7 +1,6 @@
 {
 	"template": {
 		"name": "Exhibition catalogue",
-		"set": "SLSP",
 		"rules": [
 			{
 				"type": "AddDataFieldRule",

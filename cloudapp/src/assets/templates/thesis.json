@@ -1,7 +1,6 @@
 {
 	"template": {
 		"name": "Thesis",
-		"set": "SLSP",
 		"rules": [
 			{
 				"type": "ChangeControlFieldRule",

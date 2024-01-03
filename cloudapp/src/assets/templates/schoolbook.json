@@ -1,0 +1,40 @@
+{
+	"template": {
+		"name": "Schoolbook",
+		"rules": [
+			{
+				"type": "AddDataFieldRule",
+				"name": "add 655_7$$aaSchulbuch$$2gnd-content",
+				"arguments": {
+					"tag": "655",
+					"ind1": "",
+					"ind2": "7",
+					"code": "a",
+					"value": "Schulbuch$$2gnd-content"
+				}
+			},
+			{
+				"type": "AddDataFieldRule",
+				"name": "add 655_7$$aManuels d'enseignement$$0(IDREF)027446514$$2idref",
+				"arguments": {
+					"tag": "655",
+					"ind1": "",
+					"ind2": "7",
+					"code": "a",
+					"value": "Manuels d'enseignement$$0(IDREF)027446514$$2idref"
+				}
+			},
+			{
+				"type": "AddDataFieldRule",
+				"name": "add 655_7$$aTesti scolastici$$2sbt12-content",
+				"arguments": {
+					"tag": "655",
+					"ind1": "",
+					"ind2": "7",
+					"code": "a",
+					"value": "Testi scolastici$$2sbt12-content"
+				}
+			}
+		]
+	}
+}

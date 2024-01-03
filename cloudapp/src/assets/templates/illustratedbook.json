@@ -1,7 +1,6 @@
 {
 	"template": {
 		"name": "Illustrated book",
-		"set": "SLSP",
 		"rules": [
 			{
 				"type": "AddDataFieldRule",

@@ -1,7 +1,6 @@
 {
 	"template": {
 		"name": "Festschrift",
-		"set": "SLSP",
 		"rules": [
 			{
 				"type": "ChangeControlFieldRule",
@@ -20,7 +19,6 @@
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-
 					"value": "Festschrift$$2gnd-content"
 				}
 			},

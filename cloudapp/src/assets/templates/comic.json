@@ -1,8 +1,16 @@
 {
 	"template": {
 		"name": "Comic",
-		"set": "SLSP",
 		"rules": [
+			{
+				"type": "ChangeControlFieldRule",
+				"name": "Change 008 / Pos.24 to 6",
+				"arguments": {
+					"tag": "008",
+					"searchRegex": "^(.{23}).(.*)$",
+					"replacement": "$16$2"
+				}
+			},
 			{
 				"type": "AddDataFieldRule",
 				"name": "add 336__$$bsti$$2rdacontent",
