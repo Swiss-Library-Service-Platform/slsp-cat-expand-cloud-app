@@ -13,24 +13,17 @@ export class MarcTableComponent implements OnInit {
   @Input()
   xmlRecord: Document
 
+  marcFields = []
+
   constructor(
     private changeTrackingService: ChangeTrackingService,
   ) { }
 
   ngOnInit(): void {
-  }
-
-  getMarc(): {}[] {
-    return this.createMarc()
-  }
-
-
-  //TODO: rewrite and extract
-  private createMarc(): {}[] {
     const record: Element = this.xmlRecord.getElementsByTagName("record")[0]
     const fields: Node[] = Array.from(record.childNodes)
 
-    return fields.map((field: Element) => {
+    this.marcFields = fields.map((field: Element) => {
       const entry: {} = {}
       if (field.tagName == 'leader') {
         entry['change'] = ChangeType.None
