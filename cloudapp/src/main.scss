@@ -13,3 +13,24 @@
         padding-right: 8px;
     }
 }
+
+cloudapp-alert {
+    font-weight: bold;
+    position: absolute;
+    top: 1rem;
+    width: 100%;
+    z-index: 99;
+    .alert {
+        //height: 1.3rem;
+    }
+}
+
+button.mat-button .mat-icon,
+a.mat-button .mat-icon,
+a.mat-raised-button .mat-icon,
+button.mat-flat-button .mat-icon,
+a.mat-stroked-button .mat-icon {
+    vertical-align: top;
+    font-size: 1.25em;
+    padding-right: 4px;
+}

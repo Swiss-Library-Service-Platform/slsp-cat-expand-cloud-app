@@ -1,0 +1,38 @@
+
+.marc {
+    border-collapse: collapse;
+    font-family: Arial Unicode MS, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    height: 18.6px;
+    line-height: 15.6px;
+    color: rgb(0, 0, 0);
+  
+    tr {
+      height: 2em;
+    }
+  
+    tr:nth-child(odd) {
+      background: rgb(243, 245, 244);
+    }
+  
+    .tag {
+      color: rgb(128, 0, 128);
+      width: 3em;
+      padding-left: 3px;
+    }
+  
+    .ind {
+      color: rgb(0, 128, 0);
+      width: 1em;
+    }
+  
+    .subfield {
+      color: rgb(0, 0, 255);
+      width: 3em;
+    }
+  
+    .value {
+      width: fit-content;
+    }
+  }

@@ -1,0 +1,26 @@
+<table class="marc">
+    <tr *ngFor="let entry of getMarc()">
+      <td>
+        <span class="tag">
+          <change-icon changeType={{entry.change}}></change-icon>
+        </span>
+      </td>
+      <td>
+        <span class="tag">{{entry.tag}}</span>
+      </td>
+      <td>
+        <span class="ind">{{entry.ind1}}</span>
+      </td>
+      <td>
+        <span class="ind">{{entry.ind2}}</span>
+      </td>
+      <td>
+        <ng-container *ngFor="let valueEntry of entry.value">
+          <span *ngIf="valueEntry.code && valueEntry.code != ''" class="subfield">$${{valueEntry.code}}
+          </span>
+          <span class="value">{{valueEntry.value}}
+          </span>
+        </ng-container>
+      </td>
+    </tr>
+  </table>

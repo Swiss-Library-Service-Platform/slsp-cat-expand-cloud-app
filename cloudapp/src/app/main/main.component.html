@@ -1,67 +1,153 @@
-<div class="record-expander-main">
-  <div class="eca-actions">
-    <button mat-flat-button color="primary" (click)="save()" [disabled]="!selectedEntity || !hasChanges || (loader.isLoading | async)">Save</button>
-    <button mat-flat-button color="secondary" (click)="reset()" [disabled]="!selectedEntity || (loader.isLoading | async)">{{ 'main.resetButtonLabel' | translate }}</button>
+<!-- Test Flag -->
+<ng-container *ngIf="!isProdEnvironment">
+  <div class="info-test-env">
+    Test instance using Alma Sandbox environment
   </div>
-  <mat-tab-group>
-    <mat-tab label="Items">
-      <div *ngIf="entities.length == 0">
-        <h2 translate>main.noMmsIdMsg</h2>
-      </div>
+</ng-container>
 
-      <div class="entities-list" *ngIf="entities.length > 0">
-        <mat-action-list [ngClass]="{'hidden' : selectedEntity }">
-          <ng-container *ngFor="let entity of entities">
-            <mat-list-item
-                           matTooltip="{{entity.description}}"
-                           [matTooltipShowDelay]="800"
-                           (click)="selectRecord(entity)">
-              <mat-icon color="primary">menu_book</mat-icon>
-              <span class="entity-description">{{entity.description}}</span>
-            </mat-list-item>
-            <mat-divider></mat-divider>
-          </ng-container>
-        </mat-action-list>
-      </div>
+<!-- Main View -->
+<div *ngIf="isAuthorizationDone">
+  <div class="record-expander-main" *ngIf="isInstitutionAllowed">
 
-      <div class="selected-container" *ngIf="selectedEntity">
-
-        <div class="selected-head">
-          <button mat-button (click)="reset()"><mat-icon>arrow_back</mat-icon></button>
-          <h1 class="entity-title">
-            {{selectedEntity.title}}<br>
-            <span class="entity-subtitle">{{selectedEntity.mms_id}}</span>
-          </h1>
+    <mat-tab-group>
+      <mat-tab label="Items">
+        <div *ngIf="entities.length == 0">
+          <h2 translate>main.noMmsIdMsg</h2>
         </div>
+
+        <div class="entities-list" *ngIf="entities.length > 0">
+          <mat-action-list [ngClass]="{'hidden' : selectedEntity }">
+            <ng-container *ngFor="let entity of entities">
+              <mat-list-item matTooltip="{{entity.description}}" [matTooltipShowDelay]="800"
+                (click)="selectRecord(entity)">
+                <mat-icon color="primary">menu_book</mat-icon>
+                <span class="entity-description">{{entity.description}}</span>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+            </ng-container>
+          </mat-action-list>
+        </div>
+
+
+        <div class="selected-container" *ngIf="selectedEntity">
+
+          <div class="selected-head">
+            <button mat-icon-button (click)="reset()">
+              <mat-icon>arrow_back</mat-icon>
+            </button>
+            <div class="entity-title">
+              <h1 class="entity-title">{{selectedEntity.title}}</h1>
+              <span class="entity-subtitle">{{selectedEntity.mms_id}}</span>
+            </div>
+          </div>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="item-title">
+                  <div>
+                    <mat-icon color="primary">code</mat-icon>
+                    <span>Inspect Marc</span>
+                    <span [ngClass]="{'hidden' : !hasChanges }" class="template-changed-badge">
+                      <mat-icon color="primary">edit</mat-icon>
+                    </span>
+                  </div>
+                  <!-- 
+                  <button mat-flat-button class="mat-small" color="primary"
+                    [disabled]="!selectedEntity || !hasChanges || (loader.isLoading | async)"
+                    (click)="save()">Save</button>
+                    -->
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <app-marc-table [xmlRecord]="xmlRecord"></app-marc-table>
+            
+          </mat-expansion-panel>
+
+          <div class="selected-actions">
+            <button mat-flat-button color="primary" (click)="save()"
+              [disabled]="!selectedEntity || !hasChanges || (loader.isLoading | async)">
+              <mat-icon inline=true>save</mat-icon>
+              Save
+            </button>
+
+            <button mat-flat-button color="secondary" (click)="reset()"
+              [disabled]="!selectedEntity || !hasChanges || (loader.isLoading | async)">
+              <mat-icon inline=true>undo</mat-icon>
+              {{'main.resetButtonLabel' | translate }}
+            </button>
+          </div>
+
+          <div class="template-set-container" *ngFor="let templateSet of getTemplateSets()">
+            <h2>{{templateSet.getName()}}</h2>
+            <mat-accordion>
+              <mat-expansion-panel *ngFor="let template of templateSet.getTemplates()">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <div class="item-title">
+                      <div>
+                        <mat-icon color="primary">control_point_duplicate</mat-icon>
+                        <span>{{template.getName()}}</span>
+                        <span [ngClass]="{'hidden' : !selectedEntity[template.getName()] }"
+                          class="template-applied-badge">
+                          <mat-icon color="primary">done</mat-icon>
+                        </span>
+                      </div>
+                      <button mat-flat-button class="mat-small" color="primary"
+                        (click)="applyTemplate($event, template); selectedEntity[template.getName()] = true;">Apply</button>
+                    </div>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-list>
+                  <mat-list-item *ngFor="let rule of template.getRules()">
+                    <mat-icon matListItemIcon color="primary">rule</mat-icon>
+                    {{rule.getName()}}
+                  </mat-list-item>
+                </mat-list>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+
+      </mat-tab>
+      <mat-tab label="Manage templates">
+
+        <mat-expansion-panel *ngIf="userIsAdmin">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="item-title">
+                <div>
+                  <mat-icon color="primary">add_item</mat-icon>
+                  <span>Add IZ template</span>
+                </div>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <textarea #newInstitutionTemplateElement class="code" cdkTextareaAutosize></textarea>
+          <div class="add-template-actions">
+            <button mat-flat-button color="primary" [disabled]="!newInstitutionTemplateElement.value"
+              (click)="addInstitutionTemplate(newInstitutionTemplateElement)">Add</button>
+          </div>
+        </mat-expansion-panel>
 
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
               <div class="item-title">
                 <div>
-                  <mat-icon color="primary">code</mat-icon>
-                  <span>Marc</span>
-                  <span [ngClass]="{'hidden' : !hasChanges }" class="template-changed-badge"><mat-icon color="primary">save</mat-icon></span>
+                  <mat-icon color="primary">add_item</mat-icon>
+                  <span>Add personal template</span>
                 </div>
-                <button mat-flat-button class="mat-small" color="primary" [disabled]="!selectedEntity || !hasChanges || (loader.isLoading | async)" (click)="save()">Save</button>
               </div>
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <table class="marc">
-            <tr *ngFor="let entry of getMarc()">
-              <td><span class="tag"><change-icon changeType={{entry.change}}></change-icon></span></td>
-              <td><span class="tag">{{entry.tag}}</span></td>
-              <td><span class="ind">{{entry.ind1}}</span></td>
-              <td><span class="ind">{{entry.ind2}}</span></td>
-              <td>
-                <ng-container *ngFor="let valueEntry of entry.value">
-                  <span *ngIf="valueEntry.code && valueEntry.code != ''" class="subfield">$${{valueEntry.code}} </span>
-                  <span class="value">{{valueEntry.value}} </span>
-                </ng-container>
-              </td>
-            </tr>
-          </table>
+          <textarea #newUserTemplateElement class="code" cdkTextareaAutosize></textarea>
+          <div class="add-template-actions">
+            <button mat-flat-button color="primary" [disabled]="!newUserTemplateElement.value"
+              (click)="addUserTemplate(newUserTemplateElement)">Add</button>
+          </div>
         </mat-expansion-panel>
+
 
         <div class="template-set-container" *ngFor="let templateSet of getTemplateSets()">
           <h2>{{templateSet.getName()}}</h2>
@@ -73,107 +159,65 @@
                     <div>
                       <mat-icon color="primary">control_point_duplicate</mat-icon>
                       <span>{{template.getName()}}</span>
-                      <span [ngClass]="{'hidden' : !selectedEntity[template.getName()] }" class="template-applied-badge"><mat-icon color="primary">done</mat-icon></span>
                     </div>
-                    <button mat-flat-button class="mat-small" color="primary" (click)="applyTemplate($event, template); selectedEntity[template.getName()] = true;">Apply</button>
+                    <span class="manage-template-action builtin" *ngIf="template.getOrigin() == 'BUILTIN'">
+                      <button mat-flat-button="mat-flat-button" class="mat-small" color="primary"
+                        [disabled]="true">Built-In</button>
+                    </span>
+                    <span class="manage-template-action user" *ngIf="template.getOrigin() == 'USER'">
+                      <span class="uxf-icon uxf-user leading-icon"></span>
+                      <button mat-flat-button="mat-flat-button" class="mat-small" color="primary"
+                        (click)="removeUserTemplate($event, template.getName())">Remove</button>
+                    </span>
+                    <span class="manage-template-action institution"
+                      *ngIf="template.getOrigin() == 'INSTITUTION' && userIsAdmin">
+                      <span class="uxf-icon uxf-home leading-icon"></span>
+                      <button mat-flat-button="mat-flat-button" class="mat-small" color="primary"
+                        (click)="removeInstitutionTemplate($event, template.getName())">Remove</button>
+                    </span>
+                    <span class="manage-template-action institution"
+                      *ngIf="template.getOrigin() == 'INSTITUTION' && !userIsAdmin">
+                      <button mat-flat-button="mat-flat-button" class="mat-small" color="primary"
+                        [disabled]="true">IZ-Level</button>
+                    </span>
                   </div>
                 </mat-panel-title>
               </mat-expansion-panel-header>
               <mat-list>
                 <mat-list-item *ngFor="let rule of template.getRules()">
-                  <mat-icon matListItemIcon color="primary">rule</mat-icon>
+                  <mat-icon matListItemIcon="matListItemIcon" color="primary">rule</mat-icon>
                   {{rule.getName()}}
                 </mat-list-item>
               </mat-list>
+              <details class="template-source">
+                <summary>Source</summary>
+                <textarea cdkTextareaAutosize="cdkTextareaAutosize" readonly="readonly" class="code"
+                  value="{{template.getSource()}}"></textarea>
+              </details>
             </mat-expansion-panel>
           </mat-accordion>
         </div>
-      </div>
-
-    </mat-tab>
-    <mat-tab label="Manage templates">
-
-      <mat-expansion-panel *ngIf="userIsAdmin">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <div class="item-title">
-              <div>
-                <mat-icon color="primary">add_item</mat-icon>
-                <span>Add IZ template</span>
-              </div>
-            </div>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <textarea #newInstitutionTemplateElement class="code" cdkTextareaAutosize></textarea>
-        <div class="add-template-actions">
-          <button mat-flat-button color="primary" [disabled]="!newInstitutionTemplateElement.value" (click)="addInstitutionTemplate(newInstitutionTemplateElement)">Add</button>
-        </div>
-      </mat-expansion-panel>
-
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <div class="item-title">
-              <div>
-                <mat-icon color="primary">add_item</mat-icon>
-                <span>Add personal template</span>
-              </div>
-            </div>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <textarea #newUserTemplateElement class="code" cdkTextareaAutosize></textarea>
-        <div class="add-template-actions">
-          <button mat-flat-button color="primary" [disabled]="!newUserTemplateElement.value" (click)="addUserTemplate(newUserTemplateElement)">Add</button>
-        </div>
-      </mat-expansion-panel>
-
-
-      <div class="template-set-container" *ngFor="let templateSet of getTemplateSets()">
-        <h2>{{templateSet.getName()}}</h2>
-        <mat-accordion>
-          <mat-expansion-panel *ngFor="let template of templateSet.getTemplates()">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <div class="item-title">
-                  <div>
-                    <mat-icon color="primary">control_point_duplicate</mat-icon>
-                    <span>{{template.getName()}}</span>
-                  </div>
-                  <span class="manage-template-action builtin" *ngIf="template.getOrigin() == 'BUILTIN'">
-                    <button mat-flat-button class="mat-small" color="primary" [disabled]="true">Built-In</button>
-                  </span>
-                  <span class="manage-template-action user" *ngIf="template.getOrigin() == 'USER'">
-                    <span class="uxf-icon uxf-user leading-icon"></span>
-                    <button mat-flat-button class="mat-small" color="primary" (click)="removeUserTemplate($event, template.getName())">Remove</button>
-                  </span>
-                  <span class="manage-template-action institution" *ngIf="template.getOrigin() == 'INSTITUTION' && userIsAdmin">
-                    <span class="uxf-icon uxf-home leading-icon"></span>
-                    <button mat-flat-button class="mat-small" color="primary" (click)="removeInstitutionTemplate($event, template.getName())">Remove</button>
-                  </span>
-                  <span class="manage-template-action institution" *ngIf="template.getOrigin() == 'INSTITUTION' && !userIsAdmin">
-                    <button mat-flat-button class="mat-small" color="primary" [disabled]="true">IZ-Level</button>
-                  </span>
-                </div>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-list>
-              <mat-list-item *ngFor="let rule of template.getRules()">
-                <mat-icon matListItemIcon color="primary">rule</mat-icon>
-                {{rule.getName()}}
-              </mat-list-item>
-            </mat-list>
-            <details class="template-source">
-              <summary>Source</summary>
-              <textarea cdkTextareaAutosize readonly class="code" value="{{template.getSource()}}"></textarea>
-            </details>
-          </mat-expansion-panel>
-        </mat-accordion>
-      </div>
-    </mat-tab>
-  </mat-tab-group>
-
-  <div class="loading-shade" *ngIf="loader.isLoading | async">
-    <mat-spinner diameter="50" [mode]="loader.mode | async" [value]="loader.progress | async"></mat-spinner>
-    <p class="loading-info">{{ status.message | async }}</p>
+      </mat-tab>
+    </mat-tab-group>
   </div>
+
+  <!-- Institution not allowed -->
+  <div class="record-expander-unauthorized" *ngIf="!isInstitutionAllowed">
+    <h1>
+      <mat-icon inline="true">error</mat-icon>
+      {{ 'unauthorized.headline' | translate }}
+    </h1>
+    <p>
+      {{ 'unauthorized.text1' | translate }}
+      <a href="https://slsp.ch/en/contact" target="_blank">
+        {{ 'unauthorized.link' | translate }}
+      </a>
+      {{ 'unauthorized.text2' | translate }}
+    </p>
+  </div>
+</div>
+
+<div class="loading-shade" *ngIf="loader.isLoading | async">
+  <mat-spinner diameter="50"></mat-spinner>
+  <p class="loading-info">{{ status.message | async }}</p>
 </div>

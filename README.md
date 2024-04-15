@@ -23,3 +23,9 @@ An [ExLibris Alma CloudApp](https://developers.exlibrisgroup.com/cloudapps/), wh
 - Rules need a RulesArg definition
 - RuleCreators must be registered in app.module.ts (for injection)
 
+## Dev: Common issues
+
+### MacOS Error: OpenSSL Error 'ERR_OSSL_EVP_UNSUPPORTED'
+
+Run in Terminal: `export NODE_OPTIONS=--openssl-legacy-provider`
+and then run `npm start` again.

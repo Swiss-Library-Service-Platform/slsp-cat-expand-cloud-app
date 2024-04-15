@@ -14,8 +14,6 @@ import { Template } from '../templates/template'
 import { TemplateSet } from '../templates/template-set'
 import { TemplateSetRegistry } from '../templates/template-set-registry.service'
 
-
-
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -29,7 +27,10 @@ export class MainComponent implements OnInit, OnDestroy {
   xmlRecord: Document
   hasChanges: boolean
   changes: ChangeSet[]
-  userIsAdmin: boolean
+  isAuthorizationDone: boolean
+  isUserAdmin: boolean
+  isInstitutionAllowed: boolean = false
+  isProdEnvironment: boolean
 
   entities$: Observable<Entity[]> = this.eventsService.entities$
     .pipe(
@@ -44,8 +45,8 @@ export class MainComponent implements OnInit, OnDestroy {
     private eventsService: CloudAppEventsService,
     private alert: AlertService,
     private templateSetRegistry: TemplateSetRegistry,
-    private xpath: XPathHelperService,
     private changeTrackingService: ChangeTrackingService,
+    private xpath: XPathHelperService,
     private _status: StatusMessageService,
     private _loader: LoadingIndicatorService,
   ) { }
@@ -62,21 +63,42 @@ export class MainComponent implements OnInit, OnDestroy {
     this.loader.show()
     this.status.set("loading")
     this.hasChanges = false
-    this.changes = []
-
-    this.entities$
-      .subscribe(
-        (entites) => {
-          this.entities = entites
-          console.log(entites)
-        },
-        (error) => {
-          this.log.error('ngOnInit failed:', error)
-          this.loader.hide()
-        })
+   // this.changes = []
 
     this.eventsService.getInitData()
-      .subscribe(data => this.userIsAdmin = data.user.isAdmin)
+      .subscribe(initData => {
+
+        // Setting isProd environment
+        this.isProdEnvironment = this.networkZoneRestService.setIsProdEnvironment(initData);
+        this.log.info('isProd', this.isProdEnvironment);
+
+        // Institution Authorization
+        this.log.info('Checking if current institution is allowed to use this app');
+        this.networkZoneRestService.getIsCurrentInstitutionAllowed(initData.instCode).subscribe(
+          allowed => {
+            this.isInstitutionAllowed = true;
+            // User Authorization
+            this.isUserAdmin = initData.user.isAdmin;
+            this.isAuthorizationDone = true;
+
+            // Get Entities
+            this.entities$
+              .subscribe(
+                (entites) => {
+                  this.entities = entites
+                  this.loader.hide();
+                },
+                (error) => {
+                  this.log.error('ngOnInit failed:', error)
+                  this.loader.hide()
+                });
+          },
+          error => {
+            this.log.error('Error checking if current institution is allowed to use this app', error)
+            this.loader.hide()
+            this.isAuthorizationDone = true;
+          });
+      });
   }
 
   ngOnDestroy(): void {
@@ -98,76 +120,18 @@ export class MainComponent implements OnInit, OnDestroy {
         },
         (error) => {
           this.log.error('selectRecord failed:', error)
+          this.alert.error('Could not select record');
           this.loader.hide()
         }
       )
   }
 
-  getMarc(): {}[] {
-    return this.createMarc()
-  }
 
-  //TODO: rewrite and extract
-  private createMarc(): {}[] {
-    const record: Element = this.xmlRecord.getElementsByTagName("record")[0]
-    const fields: Node[] = Array.from(record.childNodes)
-
-    return fields.map((field: Element) => {
-      const entry: {} = {}
-      if (field.tagName == 'leader') {
-        entry['change'] = ChangeType.None
-        entry['tag'] = 'LDR'
-        entry['ind1'] = ' '
-        entry['ind2'] = ' '
-        const valueMap: { code: string, value: string }[] = []
-        valueMap.push({ code: '', value: field.textContent.replace(/ /g, '#') })
-        entry['value'] = valueMap
-        return entry
-      }
-      const tag: string = field.getAttribute('tag')
-      entry['change'] = this.getChange(field)
-      if (field.tagName == 'controlfield') {
-        entry['tag'] = tag
-        entry['ind1'] = ' '
-        entry['ind2'] = ' '
-        const valueMap: { [code: string]: string }[] = []
-        valueMap.push({ code: '', value: field.textContent.replace(/ /g, '#') })
-        entry['value'] = valueMap
-        return entry
-      }
-      if (field.tagName == 'datafield') {
-        entry['tag'] = tag
-        entry['ind1'] = field.getAttribute('ind1')
-        entry['ind2'] = field.getAttribute('ind2')
-        const valueMap: { [code: string]: string }[] = []
-        Array.from(field.childNodes).forEach((subfield: Element) => {
-          const key: string = subfield.getAttribute("code")
-          const value: string = subfield.textContent
-          valueMap.push({ code: key, value: value })
-        })
-        entry['value'] = valueMap
-      }
-      return entry
-    })
-  }
-
-  getChange(field: Element): ChangeType {
-    const change: ChangeSet[] = this.changes.filter(change => change.changeHash === this.changeTrackingService.getNodeHash(field))
-    if (change != undefined && change.length > 0) {
-      return change.reduce((previous, current) => {
-        if (current.type == ChangeType.Create) {
-          return ChangeType.Create
-        }
-        return previous
-      }, ChangeType.Change)
-    }
-    return ChangeType.None
-  }
 
   reset(): void {
     this.selectedEntity = null
     this.hasChanges = false
-    this.changes = []
+    this.changeTrackingService.removeAllChanges();
   }
 
   getTemplateSets(): TemplateSet[] {
@@ -180,7 +144,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.status.set('applying template')
     this.log.info('apply template:', template.getName())
     const changes = template.applyTemplate(this.xmlRecord)
-    this.changes.push(...changes)
+    this.changeTrackingService.addChanges(changes);
     this.hasChanges = true
     this.loader.hide()
   }
@@ -207,13 +171,17 @@ export class MainComponent implements OnInit, OnDestroy {
       }).subscribe(
         (response) => {
           this.log.info('save successful:', response)
-          this.eventsService.refreshPage().subscribe()
-          this.loader.hide()
+          this.eventsService.refreshPage().subscribe(pageReloaded => {
+            this.alert.success(`Record saved`);
+          });
+          this.hasChanges = false;
+          this.loader.hide();
+          
         },
         (error) => {
-          this.log.error('save failed:', error)
-          this.eventsService.refreshPage().subscribe()
-          this.loader.hide()
+          this.log.error('save failed:', error);
+          this.eventsService.refreshPage().subscribe();
+          this.loader.hide();
         }
       )
     })
@@ -287,6 +255,7 @@ export class MainComponent implements OnInit, OnDestroy {
     return this.getNzMmsIdFromEntity(entity)
       .pipe(
         switchMap(id => {
+          this.log.info('getBibRecord', id);
           return this.networkZoneRestService.call(
             {
               method: HttpMethod.GET,
@@ -319,15 +288,18 @@ export class MainComponent implements OnInit, OnDestroy {
     })
       .pipe(
         switchMap(response => {
-          const nzMmsId: string = response?.linked_record_id?.value
-          this.log.info('nzMmsId', nzMmsId)
+          const nzMmsId: string = response?.linked_record_id?.value;
+          if (!nzMmsId) {
+            throw new Error('No NZ MMSID found in linked record')
+          }
           return of(nzMmsId)
         }),
         catchError(error => {
-          this.log.error('Cannot get NZ MMSID from API. Assuming the MMSID is already from NZ.', error)
+          this.log.error('Error retrieving NZ MSSID. Trying with entity ID.', error)
           return of(entity.id)
         }),
         shareReplay(1)
       )
   }
+
 }

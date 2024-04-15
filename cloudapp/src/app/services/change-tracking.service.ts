@@ -6,7 +6,26 @@ import { ChangeSet, ChangeType } from '../templates/rules/rule'
 })
 export class ChangeTrackingService {
 
+
+	changes: ChangeSet[] = []
+
 	constructor() { }
+
+	public addChanges(change: ChangeSet[]): void {
+		this.changes.push(...change)
+	}
+
+	public removeChange(change: ChangeSet): void {
+		this.changes = this.changes.filter(c => c.changeHash !== change.changeHash)
+	}
+	
+	public removeAllChanges(): void {
+		this.changes = []
+	}
+
+	public getChanges(): ChangeSet[] {
+		return this.changes
+	}
 
 	createChangeSet(element: Element, field: string, type: ChangeType): ChangeSet {
 		return {

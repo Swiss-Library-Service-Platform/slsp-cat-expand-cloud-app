@@ -14,5 +14,12 @@
 		"resetSelectionButtonLabel": "Reset selection",
 		"showAdditionalData": "Show/Hide additional data",
 		"showHierarchyButtonLabel": "Show hierarchy"
+	},
+	"unauthorized": {
+		"headline": "Access denied",
+		"message": "You are not authorized to view this page",
+        "text1": "Unfortunately your institution does not have the permission to use this app. Please ",
+        "link": "contact SLSP ",
+        "text2": "if you have any questions."
 	}
 }

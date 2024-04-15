@@ -11,36 +11,53 @@ import { switchMap } from 'rxjs/operators'
 })
 export class NetworkZoneRestService {
 
-    private static IS_PROD: string = 'false'
-    private static PROXY_URL: string = 'https://proxy02.swisscovery.network/p/api-eu.hosted.exlibrisgroup.com/almaws/v1/'
+    public static IS_PROD: string = 'false'
+    private static PROXY_DOMAIN: string = 'https://proxy02.swisscovery.network/'
+    private static PROXY_PATH: string = 'p/api-eu.hosted.exlibrisgroup.com/almaws/v1/'
 
     constructor(
         private httpClient: HttpClient,
         private eventsService: CloudAppEventsService,
-    ) {
+    ) {    }
+
+    setIsProdEnvironment(initData: any): boolean {
+        let regExp = new RegExp('^https(.*)psb(.*)com/?$|.*localhost.*'), // contains "PSB" (Premium Sandbox) or "localhost"
+            currentUrl = initData["urls"]["alma"];
+        let isProd = !regExp.test(currentUrl);
+        NetworkZoneRestService.IS_PROD = isProd ? 'true' : 'false';
+        return isProd;
     }
 
-    call(request: Request): Observable<any> {
+    getIsCurrentInstitutionAllowed(instCode: any): Observable<boolean> {
+        return this.call({
+            url: `isAllowed/${instCode}`,
+            method: HttpMethod.GET
+        }, false).pipe(
+            switchMap(response => of(response["isAllowed"]))
+        )
+    }
+
+    call(request: Request, isProxyRequest: Boolean = true): Observable<any> {
         switch (request.method) {
             case HttpMethod.GET:
-                return this.get(request)
+                return this.get(request, isProxyRequest)
             case HttpMethod.PUT:
-                return this.put(request)
+                return this.put(request, isProxyRequest)
             default:
                 throw new Error("HTTP method not supported")
         }
     }
 
-    private get(request: Request): Observable<any> {
-        const url: string = this.buildUrl(request)
+    private get(request: Request, isProxyRequest: Boolean): Observable<any> {
+        const url: string = this.buildUrl(request, isProxyRequest)
         return this.mergeHttpsOptions(request)
             .pipe(
                 switchMap(httpOptions => this.httpClient.get(url, httpOptions))
             )
     }
 
-    private put(request: Request): Observable<any> {
-        const url: string = this.buildUrl(request)
+    private put(request: Request, isProxyRequest: Boolean): Observable<any> {
+        const url: string = this.buildUrl(request, isProxyRequest)
         return this.mergeHttpsOptions(request)
             .pipe(
                 switchMap(httpOptions => this.httpClient.put(url, request.requestBody, httpOptions))
@@ -64,9 +81,9 @@ export class NetworkZoneRestService {
             )
     }
 
-    private buildUrl(request: Request): string {
-        const regex = /\/+/gm
-        const url: string = NetworkZoneRestService.PROXY_URL + request.url
-        return url.replace(regex, '/')
+    private buildUrl(request: Request, isProxyRequest: Boolean): string {
+        const regex = /\/+/gm;
+        const url: string = NetworkZoneRestService.PROXY_DOMAIN + (isProxyRequest ? NetworkZoneRestService.PROXY_PATH : '') + request.url;
+        return url.replace(regex, '/');
     }
 }

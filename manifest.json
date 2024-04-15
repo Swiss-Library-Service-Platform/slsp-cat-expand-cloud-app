@@ -10,6 +10,9 @@
    "contentSecurity": {
       "connectSrc": [
          "https://proxy02.swisscovery.network"
-      ]
+      ],
+      "sandbox": {
+         "popups": true
+      }
    }
 }

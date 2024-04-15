@@ -13,10 +13,26 @@
   white-space: pre;
 }
 
+.info-test-env {
+  color: #963031;
+  border: 2px solid #963031;
+  text-align: center;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  font-weight: bold;
+}
+
 .entities-list {
   .mat-list-item {
     height: 50px;
     padding: unset;
+
+    .mat-icon {
+      margin-right: 10px;
+    }
   }
 
   .entity-description {
@@ -36,8 +52,17 @@
   margin-bottom: 20px;
 
   button {
-    height: fit-content;
+    margin-right: 0.5rem;
   }
+}
+
+.selected-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .entity-title {
@@ -52,10 +77,6 @@
   color: #999;
 }
 
-.mat-icon {
-  margin-right: 5px;
-}
-
 .template-set-container {
   margin-top: 20px;
 }
@@ -65,6 +86,10 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
+
+  .mat-icon {
+    margin-right: 10px;
+  }
 
   div {
     display: flex;
@@ -88,18 +113,41 @@
   margin-bottom: 6px;
 }
 
+.record-expander-unauthorized {
+  padding-top: 1rem;
+
+  h1 {
+    display: flex;
+
+    .mat-icon {
+      margin-right: 4px;
+    }
+  }
+}
+body[class*=cloudapp-theme] .mat-expansion-panel-body {
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+  overflow: scroll;
+}
+
 .record-expander-main {
   mat-expansion-panel {
     box-shadow: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0;
+
+    mat-expansion-panel-header {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
   }
+
 
   .mat-accordion {
 
     span {
       margin-right: 5px;
-      margin-bottom: 4px;
+      //margin-bottom: 4px;
     }
 
     .template-actions {
@@ -122,43 +170,6 @@
   padding-top: 10px;
 }
 
-.marc {
-  border-collapse: collapse;
-  font-family: Arial Unicode MS, Arial, sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  height: 18.6px;
-  line-height: 15.6px;
-  color: rgb(0,0,0);
-
-  tr {
-    height: 2em;
-  }
-
-  tr:nth-child(odd) {
-    background: rgb(243, 245, 244);
-  }
-
-  .tag {
-    color: rgb(128, 0, 128);
-    width: 3em;
-    padding-left: 3px;
-  }
-
-  .ind {
-    color: rgb(0, 128, 0);
-    width: 1em;
-  }
-
-  .subfield {
-    color: rgb(0, 0, 255);
-    width: 3em;
-  }
-
-  .value {
-    width: fit-content;
-  }
-}
 
 .empty-list {
   height: 100%;
