@@ -1,10 +1,15 @@
 {
 	"main": {
-		"selectRecord": "Select",
+		"alert": {
+			"recordSaved": "Record saved",
+			"recordLoadError": "Error loading record"
+		},
+		"applyTemplateButtonLabel": "Apply",
 		"calculateButtonLabel": "calculate",
 		"closeWindowButtonLabel": "Close window",
 		"expandInfo": "To expand the view click the expand button in the toolbar",
 		"exportButtonLabel": "Export",
+		"inspectMarc": "Inspect MARC",
 		"mmsIdNz": "MMS ID (NZ)",
 		"noMmsIdMsg": "No Bibliographic Entities found, search for MMSID",
 		"noRelatedRecordsFoundMsg": "No related records found",
@@ -12,8 +17,36 @@
 		"relatedRecords": "Related Records",
 		"resetButtonLabel": "Reset",
 		"resetSelectionButtonLabel": "Reset selection",
+		"saveButtonLabel": "Save",
+		"selectRecord": "Select",
+		"testEnv": "Test instance using Alma Sandbox environment",
 		"showAdditionalData": "Show/Hide additional data",
-		"showHierarchyButtonLabel": "Show hierarchy"
+		"showHierarchyButtonLabel": "Show hierarchy",
+		"status": {
+			"applyingTemplate": "Applying template...",
+			"loading": "Loading...",
+			"savingRecord": "Saving record...",
+			"selectingRecord": "Selecting record..."
+		}
+	},
+	"templatesManagement": {
+		"add": "Add",
+		"addIzTemplate": "Add IZ template",
+		"addPersonalTemplate" : "Add personal template",
+		"alert": {
+			"templateAdded": "Template added",
+			"templateAddedError": "Error adding template",
+			"templateRemoved": "Template removed",
+			"templateRemovedError": "Error removing template"
+		},
+		"builtIn": "Built-In",
+		"izLevel": "IZ-Level",
+		"remove": "Remove",
+		"status": {
+			"removingTemplate": "Removing template...",
+			"savingTemplate": "Saving template..."
+		},
+		"source": "Source"
 	},
 	"unauthorized": {
 		"headline": "Access denied",

@@ -1,86 +1,103 @@
-
 <mat-expansion-panel *ngIf="userIsAdmin">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <div class="item-title">
-          <div>
-            <mat-icon color="primary">add_item</mat-icon>
-            <span>Add IZ template</span>
-          </div>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <div class="item-title">
+        <div>
+          <mat-icon color="primary">add_item</mat-icon>
+          <span>
+            {{ 'templatesManagement.addIzTemplate' | translate }}
+          </span>
         </div>
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <textarea #newInstitutionTemplateElement class="code" cdkTextareaAutosize></textarea>
-    <div class="add-template-actions">
-      <button mat-flat-button color="primary" [disabled]="!newInstitutionTemplateElement.value"
-        (click)="addInstitutionTemplate(newInstitutionTemplateElement)">Add</button>
-    </div>
-  </mat-expansion-panel>
-
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <div class="item-title">
-          <div>
-            <mat-icon color="primary">add_item</mat-icon>
-            <span>Add personal template</span>
-          </div>
-        </div>
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <textarea #newUserTemplateElement class="code" cdkTextareaAutosize></textarea>
-    <div class="add-template-actions">
-      <button mat-flat-button color="primary" [disabled]="!newUserTemplateElement.value"
-        (click)="addUserTemplate(newUserTemplateElement)">Add</button>
-    </div>
-  </mat-expansion-panel>
-
-
-  <div class="template-set-container" *ngFor="let templateSet of getTemplateSets()">
-    <h2>{{templateSet.getName()}}</h2>
-    <mat-accordion>
-      <mat-expansion-panel *ngFor="let template of templateSet.getTemplates()">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <div class="item-title">
-              <div>
-                <mat-icon color="primary">control_point_duplicate</mat-icon>
-                <span>{{template.getName()}}</span>
-              </div>
-              <span class="manage-template-action builtin" *ngIf="template.getOrigin() == 'BUILTIN'">
-                <button mat-flat-button="mat-flat-button" class="mat-small" color="primary"
-                  [disabled]="true">Built-In</button>
-              </span>
-              <span class="manage-template-action user" *ngIf="template.getOrigin() == 'USER'">
-                <span class="uxf-icon uxf-user leading-icon"></span>
-                <button mat-flat-button="mat-flat-button" class="mat-small" color="primary"
-                  (click)="removeUserTemplate($event, template.getName())">Remove</button>
-              </span>
-              <span class="manage-template-action institution"
-                *ngIf="template.getOrigin() == 'INSTITUTION' && userIsAdmin">
-                <span class="uxf-icon uxf-home leading-icon"></span>
-                <button mat-flat-button="mat-flat-button" class="mat-small" color="primary"
-                  (click)="removeInstitutionTemplate($event, template.getName())">Remove</button>
-              </span>
-              <span class="manage-template-action institution"
-                *ngIf="template.getOrigin() == 'INSTITUTION' && !userIsAdmin">
-                <button mat-flat-button="mat-flat-button" class="mat-small" color="primary"
-                  [disabled]="true">IZ-Level</button>
-              </span>
-            </div>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-list>
-          <mat-list-item class="template-rule" *ngFor="let rule of template.getRules()">
-            <mat-icon matListItemIcon="matListItemIcon" color="primary">rule</mat-icon>
-            {{rule.getName()}}
-          </mat-list-item>
-        </mat-list>
-        <details class="template-source">
-          <summary>Source</summary>
-          <textarea cdkTextareaAutosize="cdkTextareaAutosize" readonly="readonly" class="code"
-            value="{{template.getSource()}}"></textarea>
-        </details>
-      </mat-expansion-panel>
-    </mat-accordion>
+      </div>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <textarea #newInstitutionTemplateElement class="code" cdkTextareaAutosize></textarea>
+  <div class="add-template-actions">
+    <button mat-flat-button color="primary" [disabled]="!newInstitutionTemplateElement.value"
+      (click)="addInstitutionTemplate(newInstitutionTemplateElement)">
+      {{ 'templatesManagement.add' | translate }}
+    </button>
   </div>
+</mat-expansion-panel>
+
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <div class="item-title">
+        <div>
+          <mat-icon color="primary">add_item</mat-icon>
+          <span>
+            {{ 'templatesManagement.addPersonalTemplate' | translate }}
+          </span>
+        </div>
+      </div>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <textarea #newUserTemplateElement class="code" cdkTextareaAutosize></textarea>
+  <div class="add-template-actions">
+    <button mat-flat-button color="primary" [disabled]="!newUserTemplateElement.value"
+      (click)="addUserTemplate(newUserTemplateElement)">
+      {{ 'templatesManagement.add' | translate }}
+    </button>
+  </div>
+</mat-expansion-panel>
+
+
+<div class="template-set-container" *ngFor="let templateSet of getTemplateSets()">
+  <h2>{{templateSet.getName()}}</h2>
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let template of templateSet.getTemplates()">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="item-title">
+            <div>
+              <mat-icon color="primary">control_point_duplicate</mat-icon>
+              <span>{{template.getName()}}</span>
+            </div>
+            <span class="manage-template-action builtin" *ngIf="template.getOrigin() == 'BUILTIN'">
+              <button mat-flat-button="mat-flat-button" class="mat-small" color="primary"
+                [disabled]="true">
+                {{ 'templatesManagement.builtIn' | translate }}
+               </button>
+            </span>
+            <span class="manage-template-action user" *ngIf="template.getOrigin() == 'USER'">
+              <span class="uxf-icon uxf-user leading-icon"></span>
+              <button mat-flat-button="mat-flat-button" class="mat-small" color="primary"
+                (click)="removeUserTemplate($event, template.getName())">
+                {{ 'templatesManagement.remove' | translate }}
+              </button>
+            </span>
+            <span class="manage-template-action institution"
+              *ngIf="template.getOrigin() == 'INSTITUTION' && userIsAdmin">
+              <span class="uxf-icon uxf-home leading-icon"></span>
+              <button mat-flat-button="mat-flat-button" class="mat-small" color="primary"
+                (click)="removeInstitutionTemplate($event, template.getName())">
+                {{ 'templatesManagement.remove' | translate }}
+              </button>
+            </span>
+            <span class="manage-template-action institution"
+              *ngIf="template.getOrigin() == 'INSTITUTION' && !userIsAdmin">
+              <button mat-flat-button="mat-flat-button" class="mat-small" color="primary"
+                [disabled]="true">
+                {{ 'templatesManagement.izLevel' | translate }}
+              </button>
+            </span>
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-list>
+        <mat-list-item class="template-rule" *ngFor="let rule of template.getRules()">
+          <mat-icon matListItemIcon="matListItemIcon" color="primary">rule</mat-icon>
+          {{rule.getName()}}
+        </mat-list-item>
+      </mat-list>
+      <details class="template-source">
+        <summary>
+          {{ 'templatesManagement.source' | translate }}
+        </summary>
+        <textarea cdkTextareaAutosize="cdkTextareaAutosize" readonly="readonly" class="code"
+          value="{{template.getSource()}}"></textarea>
+      </details>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

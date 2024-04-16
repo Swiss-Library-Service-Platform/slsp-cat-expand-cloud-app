@@ -1,7 +1,7 @@
 <!-- Test Flag -->
 <ng-container *ngIf="!isProdEnvironment">
   <div class="info-test-env">
-    Test instance using Alma Sandbox environment
+    {{ 'main.testEnv' | translate }}
   </div>
 </ng-container>
 
@@ -28,7 +28,6 @@
           </mat-action-list>
         </div>
 
-
         <div class="selected-container" *ngIf="selectedEntity">
 
           <div class="selected-head">
@@ -47,7 +46,9 @@
                 <div class="item-title">
                   <div>
                     <mat-icon color="primary">code</mat-icon>
-                    <span>Inspect Marc</span>
+                    <span>
+                      {{ 'main.inspectMarc' | translate }}
+                    </span>
                     <span [ngClass]="{'hidden' : !hasChanges }" class="template-changed-badge">
                       <mat-icon color="primary">edit</mat-icon>
                     </span>
@@ -65,7 +66,7 @@
             <button mat-flat-button color="primary" (click)="saveRecord()"
               [disabled]="!selectedEntity || !hasChanges || (loader.isLoading | async)">
               <mat-icon inline=true>save</mat-icon>
-              Save
+              {{'main.saveButtonLabel' | translate }}
             </button>
 
             <button mat-flat-button color="secondary" (click)="resetChanges()"
@@ -91,7 +92,9 @@
                         </span>
                       </div>
                       <button mat-flat-button class="mat-small" color="primary"
-                        (click)="applyTemplate($event, template)">Apply</button>
+                        (click)="applyTemplate($event, template)">
+                        {{'main.applyTemplateButtonLabel' | translate }}
+                      </button>
                     </div>
                   </mat-panel-title>
                 </mat-expansion-panel-header>

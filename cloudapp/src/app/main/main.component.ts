@@ -13,6 +13,7 @@ import { ChangeSet, ChangeType } from '../templates/rules/rule'
 import { Template } from '../templates/template'
 import { TemplateSet } from '../templates/template-set'
 import { TemplateSetRegistry } from '../templates/template-set-registry.service'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-main',
@@ -45,7 +46,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private alert: AlertService,
     private templateSetRegistry: TemplateSetRegistry,
     private changeTrackingService: ChangeTrackingService,
-    private xpath: XPathHelperService,
+    private translate: TranslateService,
     private _status: StatusMessageService,
     private _loader: LoadingIndicatorService,
   ) { }
@@ -58,9 +59,10 @@ export class MainComponent implements OnInit, OnDestroy {
     return this._status
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.loader.show()
-    this.status.set("Loading")
+    const statusText = await this.translate.get('main.status.loading').toPromise()
+    this.status.set(statusText)
     this.hasChanges = false
 
     this.eventsService.getInitData()
@@ -102,11 +104,12 @@ export class MainComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
   }
 
-  loadRecord(entity: Entity): void {
+  async loadRecord(entity: Entity): Promise<void> {
     this.hasChanges = false
     this.log.info(entity)
     this.loader.show()
-    this.status.set('Selecting Record')
+    const statusText = await this.translate.get('main.status.selectingRecord').toPromise()
+    this.status.set(statusText)
     this.getBibRecord(entity)
       .subscribe(
         (bibRecord: BibRecord) => {
@@ -115,9 +118,10 @@ export class MainComponent implements OnInit, OnDestroy {
           this.log.info('selected', this.selectedEntity)
           this.loader.hide()
         },
-        (error) => {
+        async (error) => {
           this.log.error('selectRecord failed:', error)
-          this.alert.error('Could not select record');
+          const alertText = await this.translate.get('main.alert.recordLoadError').toPromise()
+          this.alert.error(alertText)
           this.loader.hide()
         }
       )
@@ -146,10 +150,11 @@ export class MainComponent implements OnInit, OnDestroy {
     return this.templateSetRegistry.get()
   }
 
-  applyTemplate(event: Event, template: Template): void {
+ async applyTemplate(event: Event, template: Template): Promise<void> {
     event.stopPropagation()
     this.loader.show()
-    this.status.set('Applying Template')
+    const statusText = await this.translate.get('main.status.applyingTemplate').toPromise()
+    this.status.set(statusText)
     this.log.info('apply template:', template.getName())
     let changes = [];
     [this.xmlString, changes] = template.applyTemplate(this.xmlString)
@@ -159,9 +164,10 @@ export class MainComponent implements OnInit, OnDestroy {
     this.loader.hide()
   }
 
-  saveRecord(): void {
+  async saveRecord(): Promise<void> {
     this.loader.show()
-    this.status.set('Saving Record')
+    const statusText = await this.translate.get('main.status.savingRecord').toPromise()
+    this.status.set(statusText)
     const nzMmsId: Observable<string> = this.getNzMmsIdFromEntity(this.selectedEntity.entity)
 
     this.log.info('selected entity', this.selectedEntity)
@@ -178,9 +184,10 @@ export class MainComponent implements OnInit, OnDestroy {
       }).subscribe(
         (bibRecord: BibRecord) => {
           this.log.info('save successful:', bibRecord)
-          this.eventsService.refreshPage().subscribe(pageReloaded => {
+          this.eventsService.refreshPage().subscribe(async pageReloaded => {
             this.selectRecord(bibRecord)
-            this.alert.success(`Record saved`)
+            const alertText = await this.translate.get('main.alert.recordSaved').toPromise()
+            this.alert.success(alertText)
           });
           this.resetChanges()
           this.loader.hide()
