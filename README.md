@@ -6,9 +6,7 @@ An [ExLibris Alma CloudApp](https://developers.exlibrisgroup.com/cloudapps/), wh
 ## Proof of Concept
 - Loading bib records from entities in MDE ✓
 - Defining and appling templates with rules ✓
-- Updating NZ bib records from CloudApps ✖️
-
-➡ https://developers.exlibrisgroup.com/forums/topic/update-bib-record-in-nz-via-api/
+- Updating NZ bib records from CloudApps ✓
 
 # Development notes
 
