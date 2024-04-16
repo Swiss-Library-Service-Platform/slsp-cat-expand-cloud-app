@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { BibRecord } from '../../models/bib-record';
 import { ChangeSet, ChangeType } from '../../templates/rules/rule';
 import { ChangeTrackingService } from '../../services/change-tracking.service';
@@ -11,7 +11,7 @@ import { ChangeTrackingService } from '../../services/change-tracking.service';
 export class MarcTableComponent implements OnInit {
 
   @Input()
-  xmlRecord: Document
+  xmlString: string
 
   marcFields = []
 
@@ -20,7 +20,18 @@ export class MarcTableComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const record: Element = this.xmlRecord.getElementsByTagName("record")[0]
+    this.updateMarcFields();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.xmlString && !changes.xmlString.firstChange) {
+      this.updateMarcFields();
+    }
+  }
+
+  private updateMarcFields(): void {
+    const xmlRecord = new DOMParser().parseFromString(this.xmlString, "text/xml")
+    const record: Element = xmlRecord.getElementsByTagName("record")[0]
     const fields: Node[] = Array.from(record.childNodes)
 
     this.marcFields = fields.map((field: Element) => {

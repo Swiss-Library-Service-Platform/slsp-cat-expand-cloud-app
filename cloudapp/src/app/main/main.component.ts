@@ -24,7 +24,7 @@ export class MainComponent implements OnInit, OnDestroy {
   entities: Entity[]
   selectedEntity: BibRecord
   xml: string
-  xmlRecord: Document
+  xmlString: string
   hasChanges: boolean
   changes: ChangeSet[]
   isAuthorizationDone: boolean
@@ -34,7 +34,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
   entities$: Observable<Entity[]> = this.eventsService.entities$
     .pipe(
-      tap(() => this.reset()),
       filter(entites => entites.every(entity => entity.type === EntityType.BIB_MMS))
     )
 
@@ -61,9 +60,8 @@ export class MainComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loader.show()
-    this.status.set("loading")
+    this.status.set("Loading")
     this.hasChanges = false
-   // this.changes = []
 
     this.eventsService.getInitData()
       .subscribe(initData => {
@@ -108,14 +106,15 @@ export class MainComponent implements OnInit, OnDestroy {
     this.hasChanges = false
     this.log.info(entity)
     this.loader.show()
-    this.status.set('selecting record')
+    this.status.set('Selecting Record')
     this.getBibRecord(entity)
       .subscribe(
         (bibRecord) => {
           this.log.info('selectRecord successful:', bibRecord)
           this.selectedEntity = bibRecord
+          this.selectedEntity['appliedTemplates'] = []
           this.log.info('selected', this.selectedEntity)
-          this.xmlRecord = new DOMParser().parseFromString(this.selectedEntity.anies[0], "application/xml")
+          this.xmlString = this.selectedEntity.anies[0]
           this.loader.hide()
         },
         (error) => {
@@ -126,12 +125,16 @@ export class MainComponent implements OnInit, OnDestroy {
       )
   }
 
-
-
-  reset(): void {
+  navigateBack(): void {
     this.selectedEntity = null
+    this.xmlString = null
+  }
+
+  resetChanges(): void {
     this.hasChanges = false
     this.changeTrackingService.removeAllChanges();
+    this.xmlString = this.selectedEntity.anies[0]
+    this.selectedEntity['appliedTemplates'] = []
   }
 
   getTemplateSets(): TemplateSet[] {
@@ -141,9 +144,11 @@ export class MainComponent implements OnInit, OnDestroy {
   applyTemplate(event: Event, template: Template): void {
     event.stopPropagation()
     this.loader.show()
-    this.status.set('applying template')
+    this.status.set('Applying Template')
     this.log.info('apply template:', template.getName())
-    const changes = template.applyTemplate(this.xmlRecord)
+    let changes = [];
+    [this.xmlString, changes] = template.applyTemplate(this.xmlString)
+    this.selectedEntity['appliedTemplates'][template.getName()] = true;
     this.changeTrackingService.addChanges(changes);
     this.hasChanges = true
     this.loader.hide()
@@ -151,10 +156,8 @@ export class MainComponent implements OnInit, OnDestroy {
 
   save(): void {
     this.loader.show()
-    this.status.set('saving record')
-    const nzMmsId: Observable<string> = this.getNzMmsIdFromEntity(this.selectedEntity.entity)//this.selectedEntity.mms_id
-    const record: Node = this.xpath.querySingle('//record', this.xmlRecord)
-    const recordXml: string = new XMLSerializer().serializeToString(record)
+    this.status.set('Saving Record')
+    const nzMmsId: Observable<string> = this.getNzMmsIdFromEntity(this.selectedEntity.entity)
 
     this.log.info('selected entity', this.selectedEntity)
 
@@ -167,7 +170,7 @@ export class MainComponent implements OnInit, OnDestroy {
           'Accept': 'application/json',
           'Content-Type': 'application/xml'
         },
-        requestBody: `<bib>${recordXml}</bib>`
+        requestBody: `<bib>${this.xmlString}</bib>`
       }).subscribe(
         (response) => {
           this.log.info('save successful:', response)
@@ -176,7 +179,6 @@ export class MainComponent implements OnInit, OnDestroy {
           });
           this.hasChanges = false;
           this.loader.hide();
-          
         },
         (error) => {
           this.log.error('save failed:', error);
@@ -189,7 +191,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   addInstitutionTemplate(newTemplate: any): void {
     this.loader.show()
-    this.status.set('saving template')
+    this.status.set('Saving Template')
     this.templateSetRegistry.storeInstitutionTemplate(newTemplate.value).subscribe(result => {
       if (result.success) {
         this.alert.info(`Added new template`)
@@ -205,7 +207,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   addUserTemplate(newTemplate: any): void {
     this.loader.show()
-    this.status.set('saving template')
+    this.status.set('Saving Template')
     this.templateSetRegistry.storeUserTemplate(newTemplate.value).subscribe(result => {
       if (result.success) {
         this.alert.info(`Added new template`)
@@ -221,7 +223,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   removeInstitutionTemplate(event: Event, templateName: string): void {
     this.loader.show()
-    this.status.set('removing template')
+    this.status.set('Removing Template')
     event.stopPropagation()
     this.templateSetRegistry.removeInstitutionTemplate(templateName).subscribe(result => {
       if (result.success) {
@@ -237,7 +239,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   removeUserTemplate(event: Event, templateName: string): void {
     this.loader.show()
-    this.status.set('removing template')
+    this.status.set('Removing Template')
     event.stopPropagation()
     this.templateSetRegistry.removeUserTemplate(templateName).subscribe(result => {
       if (result.success) {

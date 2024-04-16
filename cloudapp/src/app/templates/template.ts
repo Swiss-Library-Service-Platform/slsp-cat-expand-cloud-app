@@ -1,14 +1,18 @@
 import { ChangeSet, Rule } from './rules/rule'
+import { XPathHelperService } from '../services/xpath-helper.service'
 
 export class Template {
 
 	private rules: Rule[] = []
+	private xpath: XPathHelperService;
 
 	constructor(
 		private name: string,
 		private source: string,
-		private origin: TemplateOrigin
-	) { }
+		private origin: TemplateOrigin,
+	) {
+		this.xpath = new XPathHelperService();
+	}
 
 	public addRule(rule: Rule): void {
 		this.rules.push(rule)
@@ -30,11 +34,15 @@ export class Template {
 		return this.origin
 	}
 
-	public applyTemplate(recordXml: Document): ChangeSet[] {
+	public applyTemplate(xmlString: string): [string, ChangeSet[]] {
+		const xmlDom = new DOMParser().parseFromString(xmlString, "application/xml")
 		const changes: ChangeSet[][] = this.rules
-			.map(rule => rule.apply(recordXml))
+			.map(rule => rule.apply(xmlDom))
 			.filter(changeSet => changeSet !== undefined)
-		return [].concat(...changes)
+
+		const record: Node = this.xpath.querySingle('//record', xmlDom)
+		xmlString = new XMLSerializer().serializeToString(record)
+		return [xmlString, [].concat(...changes)]
 	}
 }
 

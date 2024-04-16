@@ -32,7 +32,7 @@
         <div class="selected-container" *ngIf="selectedEntity">
 
           <div class="selected-head">
-            <button mat-icon-button (click)="reset()">
+            <button mat-icon-button (click)="navigateBack()">
               <mat-icon>arrow_back</mat-icon>
             </button>
             <div class="entity-title">
@@ -60,7 +60,7 @@
                 </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <app-marc-table [xmlRecord]="xmlRecord"></app-marc-table>
+            <app-marc-table [xmlString]="xmlString"></app-marc-table>
             
           </mat-expansion-panel>
 
@@ -71,7 +71,7 @@
               Save
             </button>
 
-            <button mat-flat-button color="secondary" (click)="reset()"
+            <button mat-flat-button color="secondary" (click)="resetChanges()"
               [disabled]="!selectedEntity || !hasChanges || (loader.isLoading | async)">
               <mat-icon inline=true>undo</mat-icon>
               {{'main.resetButtonLabel' | translate }}
@@ -88,13 +88,13 @@
                       <div>
                         <mat-icon color="primary">control_point_duplicate</mat-icon>
                         <span>{{template.getName()}}</span>
-                        <span [ngClass]="{'hidden' : !selectedEntity[template.getName()] }"
+                        <span [ngClass]="{'hidden' : !selectedEntity['appliedTemplates'][template.getName()] }"
                           class="template-applied-badge">
                           <mat-icon color="primary">done</mat-icon>
                         </span>
                       </div>
                       <button mat-flat-button class="mat-small" color="primary"
-                        (click)="applyTemplate($event, template); selectedEntity[template.getName()] = true;">Apply</button>
+                        (click)="applyTemplate($event, template)">Apply</button>
                     </div>
                   </mat-panel-title>
                 </mat-expansion-panel-header>
