@@ -5,7 +5,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { CloudAppConfigService, CloudAppSettingsService, WriteSettingsResponse } from '@exlibris/exl-cloudapp-angular-lib';
-import { Observable, forkJoin, of } from 'rxjs';
+import { BehaviorSubject, Observable, forkJoin, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { LogService } from '../services/log.service';
 import { Rule } from './rules/rule';
@@ -20,6 +20,10 @@ export class TemplateSetRegistry {
 
 	/** List of template sets */
 	private registry: TemplateSet[] = [];
+
+	private registrySubject = new BehaviorSubject<TemplateSet[]>([]);
+	registry$: Observable<TemplateSet[]> = this.registrySubject.asObservable();
+
 	/** List of rule creators */
 	ruleCreators: RuleCreator<Rule>[];
 
@@ -30,8 +34,7 @@ export class TemplateSetRegistry {
 		private log: LogService,
 		@Inject(RuleCreatorToken) ruleCreators: RuleCreator<Rule>[]
 	) {
-		this.initHttp();
-		this.initStoredTemplates();
+		this.initTemplates();
 		this.ruleCreators = ruleCreators;
 	}
 
@@ -42,6 +45,7 @@ export class TemplateSetRegistry {
 	addTemplateSet(templateSet: TemplateSet): void {
 		this.registry.push(templateSet);
 		this.registry.sort((a: TemplateSet, b: TemplateSet) => a.getName().localeCompare(b.getName()));
+		this.registrySubject.next(this.registry);
 	}
 
 	/**
@@ -98,14 +102,74 @@ export class TemplateSetRegistry {
 	}
 
 	/**
-	 * Resets the registry.
+	 *  Initializes the registry with built-in templates and stored templates.
 	 */
-	reset() {
+	initTemplates() {
 		this.registry = [];
-		this.initHttp();
+		this.initBuiltInTemplates();
 		this.initStoredTemplates();
 	}
 
+	/**
+	 * Initializes the registry with built-in templates.
+	 * Loads templates from the settings. 
+	 */
+	private initBuiltInTemplates(): void {
+		this.httpClient.get('./assets/templates/_template-index.json')
+			.pipe(
+				switchMap(response => {
+					this.log.debug('Template Init Http: templates built in', response);
+					return of(response['templates']);
+				}),
+				switchMap((templateNames: string[]) => {
+					return forkJoin(templateNames.map(name => this.httpClient.get('./assets/templates/' + name)));
+				}),
+				map(templateJsonArr => {
+					templateJsonArr.map(templateJson => this.createTemplateFromJsonAndAddToSet(templateJson as TemplateDefinition, TemplateOrigin.BuiltIn));
+				})
+			).subscribe();
+
+	}
+
+	/**
+	 * Initializes the registry with stored templates. 
+	 */
+	private initStoredTemplates(): void {
+		this.loadStoredTemplates(this.settingsService, TemplateOrigin.User);
+		this.loadStoredTemplates(this.configService, TemplateOrigin.Institution);
+	}
+
+	/**
+	 * Loads stored templates from a service.
+	 * @param service - The service to load templates from
+	 * @param templateOrigin - The origin of the templates
+	 */
+	private loadStoredTemplates(service: CloudAppSettingsService | CloudAppConfigService, templateOrigin: TemplateOrigin): void {
+		service.get()
+			.subscribe(settings => {
+				let storedTemplates: StoredTemplates = settings as StoredTemplates;
+				if (!storedTemplates) {
+					storedTemplates = { storedScripts: {} };
+				}
+				const storedScripts: StoredScripts = storedTemplates.storedScripts;
+				for (let templateName in storedScripts) {
+					const templateString: string = storedScripts[templateName];
+					try {
+						const templateDefinition: TemplateDefinition = JSON.parse(templateString) as TemplateDefinition;
+						this.createTemplateFromJsonAndAddToSet(templateDefinition, templateOrigin);
+					} catch (e) {
+						this.log.error(`Could not create template from user settings. Error: '${e}'. Template: '${templateString}'`);
+					}
+				}
+			});
+	}
+
+	/**
+	 * Stores a template in the settings.
+	 * @param templateSource - The source code of the template
+	 * @param service - The settings service to use
+	 * @returns Observable for the write settings response
+	 */
 	private storeTemplate(templateSource: string, service: CloudAppSettingsService | CloudAppConfigService): Observable<WriteSettingsResponse> {
 		return service.get()
 			.pipe(
@@ -122,7 +186,8 @@ export class TemplateSetRegistry {
 				}),
 				switchMap(result => {
 					if (result.success == true) {
-						this.reset();
+						const templateObject: TemplateDefinition = JSON.parse(templateSource) as TemplateDefinition;
+						this.createTemplateFromJsonAndAddToSet(templateObject, service == this.settingsService ? TemplateOrigin.User : TemplateOrigin.Institution);
 					}
 					return of(result);
 				}),
@@ -133,6 +198,12 @@ export class TemplateSetRegistry {
 			);
 	}
 
+	/**
+	 * Removes a template from the settings.
+	 * @param templateSource - The source code of the template
+	 * @param service - The settings service to use
+	 * @returns Observable for the write settings response	 * 
+	 */
 	private removeTemplate(templateName: string, service: CloudAppSettingsService | CloudAppConfigService): Observable<WriteSettingsResponse> {
 		return service.get()
 			.pipe(
@@ -148,7 +219,12 @@ export class TemplateSetRegistry {
 				}),
 				switchMap(result => {
 					if (result.success == true) {
-						this.reset();
+						// remove template from registry
+						this.registry = this.registry.filter(templateSet => {
+							templateSet.removeTemplate(templateName);
+							return templateSet.getTemplates().length > 0;
+						});
+						this.registrySubject.next(this.registry);
 					}
 					return of(result);
 				}),
@@ -159,49 +235,13 @@ export class TemplateSetRegistry {
 			);
 	}
 
-	private initHttp(): void {
-		this.httpClient.get('./assets/templates/_template-index.json')
-			.pipe(
-				switchMap(response => {
-					console.log(response);
-					return of(response['templates']);
-				}),
-				switchMap((templateNames: string[]) => {
-					return forkJoin(templateNames.map(name => this.httpClient.get('./assets/templates/' + name)));
-				}),
-				map(templateJsonArr => {
-					templateJsonArr.map(templateJson => this.createTemplateFromJson(templateJson as TemplateDefinition, TemplateOrigin.BuiltIn));
-				})
-			).subscribe();
 
-	}
-
-	private initStoredTemplates(): void {
-		this.loadStoredTemplates(this.settingsService, TemplateOrigin.User);
-		this.loadStoredTemplates(this.configService, TemplateOrigin.Institution);
-	}
-
-	private loadStoredTemplates(service: CloudAppSettingsService | CloudAppConfigService, templateOrigin: TemplateOrigin): void {
-		service.get()
-			.subscribe(settings => {
-				let storedTemplates: StoredTemplates = settings as StoredTemplates;
-				if (!storedTemplates) {
-					storedTemplates = { storedScripts: {} };
-				}
-				const storedScripts: StoredScripts = storedTemplates.storedScripts;
-				for (let templateName in storedScripts) {
-					const templateString: string = storedScripts[templateName];
-					try {
-						const templateDefinition: TemplateDefinition = JSON.parse(templateString) as TemplateDefinition;
-						this.createTemplateFromJson(templateDefinition, templateOrigin);
-					} catch (e) {
-						this.log.error(`Could not create template from user settings. Error: '${e}'. Template: '${templateString}'`);
-					}
-				}
-			});
-	}
-
-	private createTemplateFromJson(templateDefinition: TemplateDefinition, origin: TemplateOrigin): void {
+	/**
+	 * Creates a template from a JSON definition.
+	 * @param templateDefinition - The JSON definition of the template
+	 * @param origin - The origin of the template 
+	 */
+	private createTemplateFromJsonAndAddToSet(templateDefinition: TemplateDefinition, origin: TemplateOrigin): void {
 		const templateName: string = templateDefinition.template.name;
 		const templateSetName: string = templateDefinition.template?.set || TemplateSet.DEFAULT;
 		const rules: RuleDefinition[] = templateDefinition.template.rules;
@@ -222,6 +262,12 @@ export class TemplateSetRegistry {
 		templateSet.addTemplate(template);
 	}
 
+
+	/**
+	 * Retrieves a rule creator by type.
+	 * @param type - The type of the rule creator
+	 * @returns The rule creator
+	 */
 	private getRuleCreator(type: string): RuleCreator<Rule> {
 		return this.ruleCreators.find(ruleCreator => ruleCreator.forType() === type);
 	}

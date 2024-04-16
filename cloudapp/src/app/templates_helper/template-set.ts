@@ -29,6 +29,14 @@ export class TemplateSet {
 	}
 
 	/**
+	 * Removes a template from the set.
+	 * @param template - The template to remove
+	 */
+	public removeTemplate(templateName: string): void {
+		this.templates = this.templates.filter(t => t.getName() !== templateName);
+	}
+
+	/**
 	 * Retrieves the templates in the set.
 	 * @returns List of templates
 	 */

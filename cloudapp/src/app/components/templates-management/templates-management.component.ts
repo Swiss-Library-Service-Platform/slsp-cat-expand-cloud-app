@@ -9,6 +9,7 @@ import { StatusMessageService } from '../../services/status-message.service.ts';
 import { TranslateService } from '@ngx-translate/core';
 import { TemplateSetRegistry } from '../../templates_helper/template-set-registry.service';
 import { TemplateSet } from '../../templates_helper/template-set';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-templates-management',
@@ -21,26 +22,28 @@ export class TemplatesManagementComponent implements OnInit {
   @Input()
   isUserAllowedIZ: boolean;
 
+  /** Template sets */
+  templateSets: TemplateSet[];
+
   constructor(
     private templateSetRegistry: TemplateSetRegistry,
     private alert: AlertService,
     private loader: LoadingIndicatorService,
     private status: StatusMessageService,
     private translate: TranslateService,
+    private log: LogService
   ) { }
+  
 
   /**
    * Lifecycle hook that runs after component initialization.
    */
   ngOnInit(): void {
-  }
-
-  /**
-   * Retrieves the template sets.
-   * @returns Template sets
-   */
-  getTemplateSets(): TemplateSet[] {
-    return this.templateSetRegistry.get();
+    this.templateSetRegistry.registry$.subscribe(templateSets => {
+      this.log.debug('TemplatesManagementComponent: Received template sets', templateSets);
+      this.log.debug('Count of template sets:', templateSets[0].getTemplates().length);
+      this.templateSets = templateSets;
+    });
   }
 
   /**
@@ -60,9 +63,7 @@ export class TemplatesManagementComponent implements OnInit {
         const alertText = await this.translate.get('templatesManagement.alert.templateAddedError').toPromise();
         this.alert.error(`${alertText}: ${result.error}`, { autoClose: true, delay: 5000 });
       }
-      setTimeout(() => {
-        this.loader.hide();
-      }, 200);
+      this.loader.hide();
     });
   }
 
@@ -83,9 +84,7 @@ export class TemplatesManagementComponent implements OnInit {
         const alertText = await this.translate.get('templatesManagement.alert.templateAddedError').toPromise();
         this.alert.error(`${alertText}: ${result.error}`, { autoClose: true, delay: 5000 });
       }
-      setTimeout(() => {
-        this.loader.hide();
-      }, 200);
+      this.loader.hide();
     });
   }
 
@@ -107,9 +106,7 @@ export class TemplatesManagementComponent implements OnInit {
         const alertText = await this.translate.get('templatesManagement.alert.templateRemovedError').toPromise();
         this.alert.error(`${alertText}: ${result.error}`, { autoClose: true, delay: 5000 });
       }
-      setTimeout(() => {
-        this.loader.hide();
-      }, 200);
+      this.loader.hide();
     });
   }
 
@@ -131,9 +128,7 @@ export class TemplatesManagementComponent implements OnInit {
         const alertText = await this.translate.get('templatesManagement.alert.templateRemovedError').toPromise();
         this.alert.error(`${alertText}: ${result.error}`, { autoClose: true, delay: 5000 });
       }
-      setTimeout(() => {
-        this.loader.hide();
-      }, 200);
+      this.loader.hide();
     });
   }
 

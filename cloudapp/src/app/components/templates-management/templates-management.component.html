@@ -43,8 +43,9 @@
 </mat-expansion-panel>
 
 
-<div class="template-set-container" *ngFor="let templateSet of getTemplateSets()">
+<div class="template-set-container" *ngFor="let templateSet of templateSets">
   <h2>{{templateSet.getName()}}</h2>
+  {{templateSet.getTemplates().length}}
   <mat-accordion>
     <mat-expansion-panel *ngFor="let template of templateSet.getTemplates()">
       <mat-expansion-panel-header>
