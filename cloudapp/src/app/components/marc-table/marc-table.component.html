@@ -1,26 +1,24 @@
-<table class="marc">
-    <tr *ngFor="let entry of marcFields">
-      <td>
-        <span class="tag">
-          <change-icon changeType={{entry.change}}></change-icon>
-        </span>
-      </td>
-      <td>
+<div class="marc">
+    <div class="marc-row" *ngFor="let entry of marcFields">
+      <div class="marc-column">
+        <change-icon changeType={{entry.change}}></change-icon>
+      </div>
+      <div class="marc-column">
         <span class="tag">{{entry.tag}}</span>
-      </td>
-      <td>
+      </div>
+      <div class="marc-column">
         <span class="ind">{{entry.ind1}}</span>
-      </td>
-      <td>
+      </div>
+      <div class="marc-column">
         <span class="ind">{{entry.ind2}}</span>
-      </td>
-      <td>
-        <ng-container *ngFor="let valueEntry of entry.value">
+      </div>
+      <div class="marc-column">
+        <div class="marc-column-value" *ngFor="let valueEntry of entry.value">
           <span *ngIf="valueEntry.code && valueEntry.code != ''" class="subfield">$${{valueEntry.code}}
           </span>
           <span class="value">{{valueEntry.value}}
           </span>
-        </ng-container>
-      </td>
-    </tr>
-  </table>
+        </div>
+      </div>
+    </div>
+  </div>

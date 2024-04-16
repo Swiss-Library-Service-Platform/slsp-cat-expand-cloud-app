@@ -4,21 +4,35 @@
     font-family: Arial Unicode MS, Arial, sans-serif;
     font-size: 13px;
     font-weight: 400;
-    height: 18.6px;
-    line-height: 15.6px;
     color: rgb(0, 0, 0);
   
-    tr {
-      height: 2em;
+    .marc-row {
+     // height: 2em;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .marc-column {
+      display: flex;
+      flex-direction: column;
+      word-break: break-all;
+      padding-left: 8px;
+
+      .marc-column-value {
+        gap: 8px;
+        display: flex;
+        flex-direction: row;
+      }
     }
   
-    tr:nth-child(odd) {
+    .marc-row:nth-child(odd) {
       background: rgb(243, 245, 244);
     }
   
     .tag {
       color: rgb(128, 0, 128);
-      width: 3em;
+      width: 30px;
       padding-left: 3px;
     }
   
@@ -29,7 +43,7 @@
   
     .subfield {
       color: rgb(0, 0, 255);
-      width: 3em;
+      // width: 3em;
     }
   
     .value {

@@ -19,7 +19,7 @@
           <mat-action-list [ngClass]="{'hidden' : selectedEntity }">
             <ng-container *ngFor="let entity of entities">
               <mat-list-item matTooltip="{{entity.description}}" [matTooltipShowDelay]="800"
-                (click)="selectRecord(entity)">
+                (click)="loadRecord(entity)">
                 <mat-icon color="primary">menu_book</mat-icon>
                 <span class="entity-description">{{entity.description}}</span>
               </mat-list-item>
@@ -52,20 +52,17 @@
                       <mat-icon color="primary">edit</mat-icon>
                     </span>
                   </div>
-                  <!-- 
-                  <button mat-flat-button class="mat-small" color="primary"
-                    [disabled]="!selectedEntity || !hasChanges || (loader.isLoading | async)"
-                    (click)="save()">Save</button>
-                    -->
                 </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
+            <ng-template matExpansionPanelContent>
+
             <app-marc-table [xmlString]="xmlString"></app-marc-table>
-            
+            </ng-template>
           </mat-expansion-panel>
 
           <div class="selected-actions">
-            <button mat-flat-button color="primary" (click)="save()"
+            <button mat-flat-button color="primary" (click)="saveRecord()"
               [disabled]="!selectedEntity || !hasChanges || (loader.isLoading | async)">
               <mat-icon inline=true>save</mat-icon>
               Save

@@ -25,6 +25,10 @@ cloudapp-alert {
     }
 }
 
+div.mat-expansion-panel-body {
+    padding: 0 !important;
+  }
+  
 button.mat-button .mat-icon,
 a.mat-button .mat-icon,
 a.mat-raised-button .mat-icon,

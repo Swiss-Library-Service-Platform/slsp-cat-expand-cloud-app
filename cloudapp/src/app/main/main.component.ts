@@ -102,19 +102,17 @@ export class MainComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
   }
 
-  selectRecord(entity: Entity): void {
+  loadRecord(entity: Entity): void {
     this.hasChanges = false
     this.log.info(entity)
     this.loader.show()
     this.status.set('Selecting Record')
     this.getBibRecord(entity)
       .subscribe(
-        (bibRecord) => {
+        (bibRecord: BibRecord) => {
           this.log.info('selectRecord successful:', bibRecord)
-          this.selectedEntity = bibRecord
-          this.selectedEntity['appliedTemplates'] = []
+          this.selectRecord(bibRecord)
           this.log.info('selected', this.selectedEntity)
-          this.xmlString = this.selectedEntity.anies[0]
           this.loader.hide()
         },
         (error) => {
@@ -124,6 +122,13 @@ export class MainComponent implements OnInit, OnDestroy {
         }
       )
   }
+
+  selectRecord(entity: BibRecord): void {
+    this.selectedEntity = entity;
+    this.selectedEntity['appliedTemplates'] = []
+    this.xmlString = this.selectedEntity.anies[0]
+  }
+
 
   navigateBack(): void {
     this.selectedEntity = null
@@ -154,7 +159,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.loader.hide()
   }
 
-  save(): void {
+  saveRecord(): void {
     this.loader.show()
     this.status.set('Saving Record')
     const nzMmsId: Observable<string> = this.getNzMmsIdFromEntity(this.selectedEntity.entity)
@@ -165,25 +170,25 @@ export class MainComponent implements OnInit, OnDestroy {
       this.networkZoneRestService.call({
         method: HttpMethod.PUT,
         url: `/bibs/${id}`,
-        //queryParams: params,
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/xml'
         },
         requestBody: `<bib>${this.xmlString}</bib>`
       }).subscribe(
-        (response) => {
-          this.log.info('save successful:', response)
+        (bibRecord: BibRecord) => {
+          this.log.info('save successful:', bibRecord)
           this.eventsService.refreshPage().subscribe(pageReloaded => {
-            this.alert.success(`Record saved`);
+            this.selectRecord(bibRecord)
+            this.alert.success(`Record saved`)
           });
-          this.hasChanges = false;
-          this.loader.hide();
+          this.resetChanges()
+          this.loader.hide()
         },
         (error) => {
-          this.log.error('save failed:', error);
-          this.eventsService.refreshPage().subscribe();
-          this.loader.hide();
+          this.log.error('save failed:', error)
+          this.eventsService.refreshPage().subscribe()
+          this.loader.hide()
         }
       )
     })
