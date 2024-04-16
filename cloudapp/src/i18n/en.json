@@ -2,6 +2,7 @@
 	"main": {
 		"alert": {
 			"recordSaved": "Record saved",
+			"recordSavedError": "Error saving record",
 			"recordLoadError": "Error loading record"
 		},
 		"applyTemplateButtonLabel": "Apply",

@@ -89,7 +89,7 @@ export class MainComponent implements OnInit, OnDestroy {
                   this.loader.hide();
                 },
                 (error) => {
-                  this.log.error('ngOnInit failed:', error)
+                  this.log.error('entities load failed:', error)
                   this.loader.hide()
                 });
           },
@@ -121,7 +121,7 @@ export class MainComponent implements OnInit, OnDestroy {
         async (error) => {
           this.log.error('selectRecord failed:', error)
           const alertText = await this.translate.get('main.alert.recordLoadError').toPromise()
-          this.alert.error(alertText)
+          this.alert.error(`${alertText}: ${error.statusText}`)
           this.loader.hide()
         }
       )
@@ -192,16 +192,15 @@ export class MainComponent implements OnInit, OnDestroy {
           this.resetChanges()
           this.loader.hide()
         },
-        (error) => {
+        async (error) => {
           this.log.error('save failed:', error)
-          this.eventsService.refreshPage().subscribe()
+          const alertText = await this.translate.get('main.alert.recordSavedError').toPromise()
+          this.alert.error(`${alertText}: ${error.statusText}`)
           this.loader.hide()
         }
       )
     })
   }
-
-  
 
   private getBibRecord(entity: Entity): Observable<BibRecord> {
     return this.getNzMmsIdFromEntity(entity)
