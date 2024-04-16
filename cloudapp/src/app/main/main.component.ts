@@ -194,69 +194,7 @@ export class MainComponent implements OnInit, OnDestroy {
     })
   }
 
-  addInstitutionTemplate(newTemplate: any): void {
-    this.loader.show()
-    this.status.set('Saving Template')
-    this.templateSetRegistry.storeInstitutionTemplate(newTemplate.value).subscribe(result => {
-      if (result.success) {
-        this.alert.info(`Added new template`)
-        newTemplate.value = null
-      } else {
-        this.alert.error(`Could not add template: ${result.error}`)
-      }
-      setTimeout(() => {
-        this.loader.hide()
-      }, 200)
-    })
-  }
-
-  addUserTemplate(newTemplate: any): void {
-    this.loader.show()
-    this.status.set('Saving Template')
-    this.templateSetRegistry.storeUserTemplate(newTemplate.value).subscribe(result => {
-      if (result.success) {
-        this.alert.info(`Added new template`)
-        newTemplate.value = null
-      } else {
-        this.alert.error(`Could not add template: ${result.error}`)
-      }
-      setTimeout(() => {
-        this.loader.hide()
-      }, 200)
-    })
-  }
-
-  removeInstitutionTemplate(event: Event, templateName: string): void {
-    this.loader.show()
-    this.status.set('Removing Template')
-    event.stopPropagation()
-    this.templateSetRegistry.removeInstitutionTemplate(templateName).subscribe(result => {
-      if (result.success) {
-        this.alert.info(`Removed template ${templateName}`)
-      } else {
-        this.alert.error(`Could not remove template ${templateName}: ${result.error}`)
-      }
-      setTimeout(() => {
-        this.loader.hide()
-      }, 200)
-    })
-  }
-
-  removeUserTemplate(event: Event, templateName: string): void {
-    this.loader.show()
-    this.status.set('Removing Template')
-    event.stopPropagation()
-    this.templateSetRegistry.removeUserTemplate(templateName).subscribe(result => {
-      if (result.success) {
-        this.alert.info(`Removed template ${templateName}`)
-      } else {
-        this.alert.error(`Could not remove template ${templateName}: ${result.error}`)
-      }
-      setTimeout(() => {
-        this.loader.hide()
-      }, 200)
-    })
-  }
+  
 
   private getBibRecord(entity: Entity): Observable<BibRecord> {
     return this.getNzMmsIdFromEntity(entity)

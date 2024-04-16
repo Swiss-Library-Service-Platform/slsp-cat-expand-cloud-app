@@ -14,21 +14,23 @@
     }
 }
 
+html {
+    overflow-y: scroll;
+}
+
 cloudapp-alert {
     font-weight: bold;
     position: absolute;
     top: 1rem;
     width: 100%;
     z-index: 99;
+
     .alert {
         //height: 1.3rem;
     }
 }
 
-div.mat-expansion-panel-body {
-    padding: 0 !important;
-  }
-  
+
 button.mat-button .mat-icon,
 a.mat-button .mat-icon,
 a.mat-raised-button .mat-icon,
@@ -37,4 +39,72 @@ a.mat-stroked-button .mat-icon {
     vertical-align: top;
     font-size: 1.25em;
     padding-right: 4px;
+}
+
+.mat-expansion-panel-spacing {
+    margin: 0 !important;
+}
+
+mat-expansion-panel {
+    box-shadow: none !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
+    border-radius: 0 !important;
+
+    mat-expansion-panel-header {
+        padding-left: 0.5rem !important;
+        padding-right: 1rem !important;
+    }
+
+    div.mat-expansion-panel-body {
+        padding: 0 !important;
+        margin-bottom: 1rem;
+    }
+
+    .mat-expansion-panel-header.mat-expanded {
+        height: 48px;
+    }
+}
+
+.template-set-container {
+    margin-top: 20px;
+}
+
+.mat-accordion {
+    span {
+        margin-right: 5px;
+        //margin-bottom: 4px;
+    }
+
+    .template-actions {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 6px;
+    }
+}
+
+
+.item-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    .mat-icon {
+        margin-right: 10px;
+    }
+
+    div {
+        display: flex;
+        align-items: center;
+
+        span {
+            margin: 0;
+        }
+
+        span.template-applied-badge,
+        span.template-changed-badge {
+            margin-left: 10px;
+        }
+    }
 }

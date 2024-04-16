@@ -1,0 +1,27 @@
+.add-template-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 10px;
+}
+
+.template-source {
+    cursor: pointer;
+    margin-top: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+
+    summary {
+        margin-bottom: 1rem;
+    }
+}
+
+.code {
+    width: 100%;
+    border: 1px solid #ddd;
+    background: #f7f7f7;
+    font-family: monospace;
+    font-size: 11px;
+    height: 300px;
+    min-height: 100px;
+    white-space: pre;
+}

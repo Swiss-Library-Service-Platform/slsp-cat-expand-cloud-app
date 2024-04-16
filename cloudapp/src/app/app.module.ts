@@ -14,14 +14,16 @@ import { AddDataFieldRuleCreator } from './templates/rules/add-data-field-rule'
 import { ChangeControlFieldRuleCreator } from './templates/rules/change-control-field-rule'
 import { RuleCreatorToken } from './templates/rules/rule-creator'
 import { ChangeIconComponent } from './components/change-icon/change-icon.component';
-import { MarcTableComponent } from './components/marc-table/marc-table.component'
+import { MarcTableComponent } from './components/marc-table/marc-table.component';
+import { TemplatesManagementComponent } from './components/templates-management/templates-management.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
     ChangeIconComponent,
-    MarcTableComponent
+    MarcTableComponent,
+    TemplatesManagementComponent
   ],
   imports: [
     MaterialModule,
