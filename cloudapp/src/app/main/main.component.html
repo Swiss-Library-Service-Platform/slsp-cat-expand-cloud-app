@@ -92,8 +92,9 @@
                         </span>
                       </div>
                       <button mat-flat-button class="mat-small" color="primary"
-                        (click)="applyTemplate($event, template)">
-                        {{'main.applyTemplateButtonLabel' | translate }}
+                        (click)="applyTemplate($event, template)"
+                        [disabled]="selectedEntity['appliedTemplates'][template.getName()]" >
+                        {{'main.applyTemplateButtonLabel' | translate }} 
                       </button>
                     </div>
                   </mat-panel-title>

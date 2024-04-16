@@ -42,7 +42,7 @@ export class TemplatesManagementComponent implements OnInit {
         newTemplate.value = null
       } else {
         const alertText = await this.translate.get('templatesManagement.alert.templateAddedError').toPromise()
-        this.alert.error(`${alertText}: ${result.error}`)
+        this.alert.error(`${alertText}: ${result.error}`, { autoClose: true, delay: 5000 })
       }
       setTimeout(() => {
         this.loader.hide()
@@ -61,7 +61,7 @@ export class TemplatesManagementComponent implements OnInit {
         newTemplate.value = null
       } else {
         const alertText = await this.translate.get('templatesManagement.alert.templateAddedError').toPromise()
-        this.alert.error(`${alertText}: ${result.error}`)
+        this.alert.error(`${alertText}: ${result.error}`, { autoClose: true, delay: 5000 })
       }
       setTimeout(() => {
         this.loader.hide()
@@ -81,7 +81,7 @@ export class TemplatesManagementComponent implements OnInit {
           this.alert.info(alertText)
         } else {
           const alertText = await this.translate.get('templatesManagement.alert.templateRemovedError').toPromise()
-          this.alert.error(`${alertText}: ${result.error}`)
+          this.alert.error(`${alertText}: ${result.error}`, { autoClose: true, delay: 5000 })
         }
         setTimeout(() => {
           this.loader.hide()
@@ -101,7 +101,7 @@ export class TemplatesManagementComponent implements OnInit {
         this.alert.info(alertText)
       } else {
         const alertText = await this.translate.get('templatesManagement.alert.templateRemovedError').toPromise()
-        this.alert.error(`${alertText}: ${result.error}`)
+        this.alert.error(`${alertText}: ${result.error}`, { autoClose: true, delay: 5000 })
       }
       setTimeout(() => {
         this.loader.hide()

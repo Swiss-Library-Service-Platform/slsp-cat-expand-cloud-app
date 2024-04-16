@@ -121,7 +121,7 @@ export class MainComponent implements OnInit, OnDestroy {
         async (error) => {
           this.log.error('selectRecord failed:', error)
           const alertText = await this.translate.get('main.alert.recordLoadError').toPromise()
-          this.alert.error(`${alertText}: ${error.statusText}`)
+          this.alert.error(`${alertText}: ${error.statusText}`, { autoClose: true, delay: 5000 })
           this.loader.hide()
         }
       )
@@ -195,7 +195,7 @@ export class MainComponent implements OnInit, OnDestroy {
         async (error) => {
           this.log.error('save failed:', error)
           const alertText = await this.translate.get('main.alert.recordSavedError').toPromise()
-          this.alert.error(`${alertText}: ${error.statusText}`)
+          this.alert.error(`${alertText}: ${error.statusText}`, { autoClose: true, delay: 5000 })
           this.loader.hide()
         }
       )
