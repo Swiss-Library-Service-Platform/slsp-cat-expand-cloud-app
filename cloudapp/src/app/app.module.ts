@@ -10,12 +10,12 @@ import { AppInjector } from './app-injector'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { MainComponent } from './main/main.component'
-import { AddDataFieldRuleCreator } from './templates/rules/add-data-field-rule'
-import { ChangeControlFieldRuleCreator } from './templates/rules/change-control-field-rule'
-import { RuleCreatorToken } from './templates/rules/rule-creator'
+import { RuleCreatorToken } from './templates_helper/rules/rule-creator'
 import { ChangeIconComponent } from './components/change-icon/change-icon.component';
 import { MarcTableComponent } from './components/marc-table/marc-table.component';
 import { TemplatesManagementComponent } from './components/templates-management/templates-management.component'
+import { AddDataFieldRuleCreator } from './templates_helper/rules/add-data-field-rule'
+import { ChangeControlFieldRuleCreator } from './templates_helper/rules/change-control-field-rule'
 
 @NgModule({
   declarations: [

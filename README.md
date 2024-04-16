@@ -15,7 +15,7 @@ An [ExLibris Alma CloudApp](https://developers.exlibrisgroup.com/cloudapps/), wh
 ## How to create templates
 
 1. Add template definition json file in assets/templates
-2. Register the template definition file in assets/templastes/_template-index.json
+2. Register the template definition file in assets/templates/_template-index.json
 
 ### Rules and how to instantiate templates
 

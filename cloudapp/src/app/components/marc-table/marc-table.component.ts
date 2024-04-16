@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { BibRecord } from '../../models/bib-record';
-import { ChangeSet, ChangeType } from '../../templates/rules/rule';
+import { ChangeSet, ChangeType } from '../../templates_helper/rules/rule';
 import { ChangeTrackingService } from '../../services/change-tracking.service';
 
 @Component({

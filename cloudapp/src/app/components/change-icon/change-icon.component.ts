@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core'
-import { ChangeType } from '../../templates/rules/rule'
+import { ChangeType } from '../../templates_helper/rules/rule'
 
 @Component({
 	selector: 'change-icon',

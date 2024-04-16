@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { ChangeSet, ChangeType } from '../templates/rules/rule'
+import { ChangeSet, ChangeType } from '../templates_helper/rules/rule'
 
 @Injectable({
 	providedIn: 'root'
