@@ -1,4 +1,4 @@
-<mat-expansion-panel *ngIf="userIsAdmin">
+<mat-expansion-panel *ngIf="isUserAllowedIZ">
   <mat-expansion-panel-header>
     <mat-panel-title>
       <div class="item-title">
@@ -68,7 +68,7 @@
               </button>
             </span>
             <span class="manage-template-action institution"
-              *ngIf="template.getOrigin() == 'INSTITUTION' && userIsAdmin">
+              *ngIf="template.getOrigin() == 'INSTITUTION' && isUserAllowedIZ">
               <span class="uxf-icon uxf-home leading-icon"></span>
               <button mat-flat-button="mat-flat-button" class="mat-small" color="primary"
                 (click)="removeInstitutionTemplate($event, template.getName())">
@@ -76,7 +76,7 @@
               </button>
             </span>
             <span class="manage-template-action institution"
-              *ngIf="template.getOrigin() == 'INSTITUTION' && !userIsAdmin">
+              *ngIf="template.getOrigin() == 'INSTITUTION' && !isUserAllowedIZ">
               <button mat-flat-button="mat-flat-button" class="mat-small" color="primary"
                 [disabled]="true">
                 {{ 'templatesManagement.izLevel' | translate }}

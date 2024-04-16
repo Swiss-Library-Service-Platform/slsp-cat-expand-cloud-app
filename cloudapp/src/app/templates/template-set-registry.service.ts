@@ -97,7 +97,6 @@ export class TemplateSetRegistry {
 	}
 
 	storeUserTemplate(templateSource: string): Observable<WriteSettingsResponse> {
-		console.log("this", this)
 		return this.storeTemplate(templateSource, this.settingsService)
 	}
 

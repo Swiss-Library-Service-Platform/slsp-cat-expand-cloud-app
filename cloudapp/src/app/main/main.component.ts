@@ -29,7 +29,7 @@ export class MainComponent implements OnInit, OnDestroy {
   hasChanges: boolean
   changes: ChangeSet[]
   isAuthorizationDone: boolean
-  isUserAdmin: boolean
+  isUserAllowedIZ: boolean
   isInstitutionAllowed: boolean = false
   isProdEnvironment: boolean
 
@@ -78,7 +78,7 @@ export class MainComponent implements OnInit, OnDestroy {
           allowed => {
             this.isInstitutionAllowed = true;
             // User Authorization
-            this.isUserAdmin = initData.user.isAdmin;
+            this.isUserAllowedIZ = initData.user.isAdmin;
             this.isAuthorizationDone = true;
 
             // Get Entities

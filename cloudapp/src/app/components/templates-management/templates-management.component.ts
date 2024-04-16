@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TemplateSetRegistry } from '../../templates/template-set-registry.service';
 import { AlertService } from '@exlibris/exl-cloudapp-angular-lib';
 import { LoadingIndicatorService } from '../../services/loading-indicator.service';
@@ -12,6 +12,9 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./templates-management.component.scss']
 })
 export class TemplatesManagementComponent implements OnInit {
+
+  @Input()
+  isUserAllowedIZ: boolean
 
   constructor(
     private templateSetRegistry: TemplateSetRegistry,
