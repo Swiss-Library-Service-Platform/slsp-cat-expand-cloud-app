@@ -47,7 +47,6 @@ export abstract class Rule {
      */
     protected getChangeSet(element: Element, field: string, type: ChangeType) {
         const changeSet: ChangeSet = this.changeTrackingService.createChangeSet(element, field, type);
-        console.log('ChangeSet', changeSet);
         return changeSet;
     }
 }
