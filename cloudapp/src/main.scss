@@ -74,6 +74,10 @@ mat-expansion-panel {
     .mat-list-item-content {
         word-break: break-all;
     }
+
+    mat-icon {
+        padding-right: 0.5rem;
+    }
 }
 
 .template-rule:not(:last-child) {

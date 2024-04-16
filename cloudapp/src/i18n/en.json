@@ -1,7 +1,7 @@
 {
 	"main": {
 		"alert": {
-			"recordSaved": "Record saved",
+			"recordSaved": "Record saved successfully",
 			"recordSavedError": "Error saving record",
 			"recordLoadError": "Error loading record"
 		},
