@@ -2,7 +2,7 @@ name: Check CloudApp
 
 on:
   push:
-    branches: ["develop"]
+    branches: ["development, main"]
     paths:
       [
         "package.json",
