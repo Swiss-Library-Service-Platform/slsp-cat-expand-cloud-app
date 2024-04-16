@@ -96,7 +96,7 @@
                   </mat-panel-title>
                 </mat-expansion-panel-header>
                 <mat-list>
-                  <mat-list-item *ngFor="let rule of template.getRules()">
+                  <mat-list-item class="template-rule" *ngFor="let rule of template.getRules()">
                     <mat-icon matListItemIcon color="primary">rule</mat-icon>
                     {{rule.getName()}}
                   </mat-list-item>

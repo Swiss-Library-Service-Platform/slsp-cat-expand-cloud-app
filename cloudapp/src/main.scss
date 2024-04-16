@@ -57,7 +57,6 @@ mat-expansion-panel {
 
     div.mat-expansion-panel-body {
         padding: 0 !important;
-        margin-bottom: 1rem;
     }
 
     .mat-expansion-panel-header.mat-expanded {
@@ -67,6 +66,11 @@ mat-expansion-panel {
 
 .template-set-container {
     margin-top: 20px;
+}
+
+.template-rule {
+    padding-top: 0.5rem !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .mat-accordion {
