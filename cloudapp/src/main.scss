@@ -70,6 +70,13 @@ mat-expansion-panel {
 
 .template-rule {
     padding-top: 0.5rem !important;
+
+    .mat-list-item-content {
+        word-break: break-all;
+    }
+}
+
+.template-rule:not(:last-child) {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 

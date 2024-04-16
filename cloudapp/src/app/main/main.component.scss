@@ -32,6 +32,10 @@
   }
 }
 
+.template-list-main {
+  padding-bottom: 0.5rem;
+}
+
 .selected-container {
   padding: 3px;
 }
@@ -85,11 +89,14 @@
     }
   }
 }
+
+/*
 body[class*=cloudapp-theme] .mat-expansion-panel-body {
   padding-left: 0.5rem !important;
   padding-right: 0.5rem !important;
   overflow: scroll;
 }
+*/
 
 .empty-list {
   height: 100%;
