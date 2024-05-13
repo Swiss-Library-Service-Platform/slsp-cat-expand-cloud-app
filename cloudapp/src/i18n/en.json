@@ -11,6 +11,8 @@
 		"expandInfo": "To expand the view click the expand button in the toolbar",
 		"exportButtonLabel": "Export",
 		"inspectMarc": "Inspect MARC",
+		"items": "Items",
+		"manageTemplates": "Manage Templates",
 		"mmsIdNz": "MMS ID (NZ)",
 		"noMmsIdMsg": "No Bibliographic Entities found, search for MMSID",
 		"noRelatedRecordsFoundMsg": "No related records found",
@@ -49,11 +51,15 @@
 		},
 		"source": "Source"
 	},
-	"unauthorized": {
+	"unauthorized_institution": {
 		"headline": "Access denied",
-		"message": "You are not authorized to view this page",
         "text1": "Unfortunately your institution does not have the permission to use this app. Please ",
         "link": "contact SLSP ",
         "text2": "if you have any questions."
+	},
+	"unauthorized_user": {
+		"headline": "Access denied",
+        "text1": "Unfortunately you do not have the permission to use this app.",
+		"text2": "You need at least one of the following roles:"
 	}
 }

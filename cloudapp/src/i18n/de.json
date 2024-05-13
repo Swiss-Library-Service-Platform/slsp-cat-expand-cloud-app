@@ -1,17 +1,65 @@
 {
 	"main": {
+		"alert": {
+			"recordSaved": "Datensatz erfolgreich gespeichert",
+			"recordSavedError": "Fehler beim Speichern des Datensatzes",
+			"recordLoadError": "Fehler beim Laden des Datensatzes"
+		},
+		"applyTemplateButtonLabel": "Anwenden",
 		"calculateButtonLabel": "berechnen",
-		"closeWindowButtonLabel": "Popup schliessen",
-		"expandInfo": "Zum erweitern den Erweitern Button in der Toolbar klicken",
+		"closeWindowButtonLabel": "Fenster schliessen",
+		"expandInfo": "Zum Vergrössern der Ansicht auf den Vergrösserungs-Button in der Symbolleiste klicken",
 		"exportButtonLabel": "Exportieren",
+		"inspectMarc": "Prüfe MARC",
+		"items": "Items",
+		"manageTemplates": "Templates verwalten",
 		"mmsIdNz": "MMS ID (NZ)",
-		"noMmsIdMsg": "Keine Titel gefunden, bitte nach MMS ID suchen",
-		"noRelatedRecordsFoundMsg": "Keine vernküpften Datensätze gefunden",
-		"popUpWindowButtonLabel": "Popup öffnen",
+		"noMmsIdMsg": "Keine bibliografischen Entitäten gefunden, nach MMSID suchen",
+		"noRelatedRecordsFoundMsg": "Keine verknüpften Datensätze gefunden",
+		"popUpWindowButtonLabel": "Pop-up-Fenster",
 		"relatedRecords": "Verknüpfte Datensätze",
 		"resetButtonLabel": "Zurücksetzen",
-		"resetSelectionButtonLabel": "Auswahl Zurücksetzen",
-		"showAdditionalData": "Zusätzliche Daten anzeigen/verstecken",
-		"showHierarchyButtonLabel": "Hierarchie anzeigen"
+		"resetSelectionButtonLabel": "Auswahl zurücksetzen",
+		"saveButtonLabel": "Speichern",
+		"selectRecord": "Auswählen",
+		"testEnv": "Vorgang in der Alma-Sandbox-Umgebung testen",
+		"showAdditionalData": "Zeige/Verberge zusätzliche Daten",
+		"showHierarchyButtonLabel": "Hierarchie anzeigen",
+		"status": {
+			"applyingTemplate": "Vorlage wird angewendet...",
+			"loading": "Laden...",
+			"savingRecord": "Datensatz wird gespeichert...",
+			"selectingRecord": "Datensatz wird ausgewählt..."
+		}
+	},
+	"templatesManagement": {
+		"add": "Hinzufügen",
+		"addIzTemplate": "IZ Vorlage hinzufügen",
+		"addPersonalTemplate" : "Persönliche Vorlage hinzufügen",
+		"alert": {
+			"templateAdded": "Vorlage hinzugefügt",
+			"templateAddedError": "Fehler beim Hinzufügen der Vorlage",
+			"templateRemoved": "Vorlage entfernt",
+			"templateRemovedError": "Fehler beim Entfernen der Vorlage"
+		},
+		"builtIn": "Built-In",
+		"izLevel": "IZ-Level",
+		"remove": "Entfernen",
+		"status": {
+			"removingTemplate": "Vorlage wird entfernt...",
+			"savingTemplate": "Vorlage wird gespeichert..."
+		},
+		"source": "Quelle"
+	},
+	"unauthorized_institution": {
+		"headline": "Zugang verweigert",
+        "text1": "Ihre Institution hat leider keine Erlaubnis diese App zu verwenden. Bitte ",
+        "link": "kontaktieren Sie SLSP ",
+        "text2": "wenn Sie Fragen haben."
+	},
+	"unauthorized_user": {
+		"headline": "Zugang verweigert",
+        "text1": "Sie haben leider keine Erlaubnis diese App zu verwenden.",
+		"text2": "Sie benötigen mindestens eine der folgenden Rollen:"
 	}
 }

@@ -154,9 +154,10 @@ export class MainComponent implements OnInit, OnDestroy {
           this.loader.hide();
         },
         async (error) => {
+          let errorText = error.error?.errorList?.error ? error.error.errorList.error[0].errorMessage : error.statusText;
           this.log.error('selectRecord failed:', error);
           const alertText = await this.translate.get('main.alert.recordLoadError').toPromise();
-          this.alert.error(`${alertText}: ${error.statusText}`, { autoClose: true, delay: 5000 });
+          this.alert.error(`${alertText}: ${errorText}`, { autoClose: true, delay: 5000 });
           this.loader.hide();
         }
       );

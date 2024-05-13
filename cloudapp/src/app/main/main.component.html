@@ -10,7 +10,7 @@
   <div class="record-expander-main" *ngIf="isInstitutionAllowed">
 
     <mat-tab-group>
-      <mat-tab label="Items">
+      <mat-tab label="{{ 'main.items' | translate }}">
         <div *ngIf="entities.length == 0">
           <h2 translate>main.noMmsIdMsg</h2>
         </div>
@@ -111,24 +111,24 @@
         </div>
       </mat-tab>
 
-      <mat-tab label="Manage templates">
+      <mat-tab label="{{ 'main.manageTemplates' | translate }}">
         <app-templates-management [isUserAllowedIZ]="isUserAllowedIZ"></app-templates-management>
       </mat-tab>
     </mat-tab-group>
   </div>
 
   <!-- Institution not allowed -->
-  <div class="record-expander-unauthorized" *ngIf="!isInstitutionAllowed">
+  <div class="record-expander-unauthorized_institution" *ngIf="!isInstitutionAllowed">
     <h1>
       <mat-icon inline="true">error</mat-icon>
-      {{ 'unauthorized.headline' | translate }}
+      {{ 'unauthorized_institution.headline' | translate }}
     </h1>
     <p>
-      {{ 'unauthorized.text1' | translate }}
+      {{ 'unauthorized_institution.text1' | translate }}
       <a href="https://slsp.ch/en/contact" target="_blank">
-        {{ 'unauthorized.link' | translate }}
+        {{ 'unauthorized_institution.link' | translate }}
       </a>
-      {{ 'unauthorized.text2' | translate }}
+      {{ 'unauthorized_institution.text2' | translate }}
     </p>
   </div>
 </div>

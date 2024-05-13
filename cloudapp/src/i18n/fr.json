@@ -1,0 +1,65 @@
+{
+	"main": {
+		"alert": {
+			"recordSaved": "Notice enregistrée avec succès",
+			"recordSavedError": "Erreur d'enregistrement de la notice",
+			"recordLoadError": "Erreur de chargement de la notice"
+		},
+		"applyTemplateButtonLabel": "Appliquer",
+		"calculateButtonLabel": "calculer",
+		"closeWindowButtonLabel": "Fermer la fenêtre",
+		"expandInfo": "Pour agrandir la vue, cliquez sur le bouton Agrandir dans la barre d'outils.",
+		"exportButtonLabel": "Exporter",
+		"inspectMarc": "Inspecter MARC",
+		"items": "Items",
+		"manageTemplates": "Gérer les Templates",
+		"mmsIdNz": "Identifiant MMS (NZ)",
+		"noMmsIdMsg": "Aucune entité bibliographique trouvée, recherche par identifiant MMS",
+		"noRelatedRecordsFoundMsg": "Aucune notice reliée n'a été trouvée",
+		"popUpWindowButtonLabel": "Fenêtre popup",
+		"relatedRecords": "Notices reliées",
+		"resetButtonLabel": "Réinitialiser",
+		"resetSelectionButtonLabel": "Réinitialiser la sélection",
+		"saveButtonLabel": "Enregistrer",
+		"selectRecord": "Sélectionner",
+		"testEnv": "Tester l'instance dans l'environnement bac à sable Alma (Alma Sandbox)",
+		"showAdditionalData": "Afficher/masquer les données supplémentaires",
+		"showHierarchyButtonLabel": "Afficher la hiérarchie",
+		"status": {
+			"applyingTemplate": "Application du modèle...",
+			"loading": "Chargement...",
+			"savingRecord": "Enregistrement de la notice...",
+			"selectingRecord": "Sélection de la notice..."
+		}
+	},
+	"templatesManagement": {
+		"add": "Ajouter",
+		"addIzTemplate": "Ajouter un modèle de l'institution",
+		"addPersonalTemplate" : "Ajouter un modèle personnel",
+		"alert": {
+			"templateAdded": "Modèle ajouté",
+			"templateAddedError": "Erreur lors de l'ajout du modèle",
+			"templateRemoved": "Modèle supprimé",
+			"templateRemovedError": "Erreur lors de la suppression du modèle"
+		},
+		"builtIn": "Intégré",
+		"izLevel": "Niveau institution",
+		"remove": "Supprimer",
+		"status": {
+			"removingTemplate": "Suppression du modèle...",
+			"savingTemplate": "Enregistrement du modèle..."
+		},
+		"source": "Source"
+	},
+	"unauthorized_institution": {
+		"headline": "Accès refusé",
+        "text1": "Malheureusement, votre institution n'a pas l'autorisation d'utiliser cette application. Veuillez",
+        "link": "contacter SLSP",
+        "text2": "si vous avez des questions."
+	},
+	"unauthorized_user": {
+		"headline": "Accès refusé",
+        "text1": "Malheureusement, vous n'avez pas la permission d'utiliser cette application",
+		"text2": "Vous devez avoir au moins l'un des rôles suivants:"
+	}
+}

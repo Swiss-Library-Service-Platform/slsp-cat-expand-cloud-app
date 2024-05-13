@@ -1,0 +1,65 @@
+{
+	"main": {
+		"alert": {
+			"recordSaved": "Record salvato con successo",
+			"recordSavedError": "Errore durante il salvataggio del record",
+			"recordLoadError": "Errore durante il caricamento del record"
+		},
+		"applyTemplateButtonLabel": "Applica",
+		"calculateButtonLabel": "calcola" ,
+		"closeWindowButtonLabel": "Chiudi finestra",
+		"expandInfo": "Per espandere la schermata, cliccare sul pulsante Espandi nella barra degli strumenti",
+		"exportButtonLabel": "Esporta",
+		"inspectMarc": "Ispeziona MARC", 
+		"items": "Items",
+		"manageTemplates": "Gestire i Templates",
+		"mmsIdNz": "MMS ID (NZ)",
+		"noMmsIdMsg": "Nessuna voce bibliografica trovata, ricerca per MMS ID", 
+		"noRelatedRecordsFoundMsg": "Non sono stati trovati record correlati",
+		"popUpWindowButtonLabel": "Finestra popup",
+		"relatedRecords": "Record correlati", 
+		"resetButtonLabel": "Ripristina", 
+		"resetSelectionButtonLabel": "Seleziona il ripristino", 
+		"saveButtonLabel": "Salva", 
+		"selectRecord": "Seleziona", 
+		"testEnv": "Testa l'esempio usando come ambiente la Sandbox di Alma", 
+		"showAdditionalData": "Mostra/Nascondi i dati aggiuntivi", 
+		"showHierarchyButtonLabel": "Mostra gerarchia", 
+		"status": {
+			"applyingTemplate": "Applicazione del template......", 
+			"loading": "Caricamento...", 
+			"savingRecord": "Salvataggio del record...", 
+			"selectingRecord": "Selezione del record..." 
+		}
+	},
+	"templatesManagement": {
+		"add": "Aggiungi",
+		"addIzTemplate": "Aggiungi template della IZ", 
+		"addPersonalTemplate" : "Aggiungi template personale", 
+		"alert": {
+			"templateAdded": "Template aggiunto", 
+			"templateAddedError": "Errore durante l'aggiunta del template", 
+			"templateRemoved": "Template rimosso", 
+			"templateRemovedError": "Errore durante la rimozione del template" 
+		},
+		"builtIn": "Incorporato", 
+		"izLevel": "Livello di IZ", 
+		"remove": "Rimuovi", 
+		"status": {
+			"removingTemplate": "Rimozione del template...",
+			"savingTemplate": "Salvataggio del template..." 
+		},
+		"source": "Fonte" 
+	},
+	"unauthorized_institution": {
+		"headline": "Accesso negato", 
+        "text1": "Purtroppo la vostra istituzione non ha il permesso di utilizzare questa applicazione. Vi preghiamo di ", 
+        "link": "contattare SLSP ", 
+        "text2": "se avete domande." 
+	},
+	"unauthorized_user": {
+		"headline": "Accesso negato", 
+        "text1": "Purtroppo non avete il permesso di utilizzare questa applicazione.", 
+		"text2": "È richiesto almeno uno dei seguenti ruoli:" 
+	}
+}
