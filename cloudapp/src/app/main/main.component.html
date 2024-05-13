@@ -5,10 +5,39 @@
   </div>
 </ng-container>
 
-<!-- Main View -->
+<!-- Main Container -->
 <div *ngIf="isAuthorizationDone">
-  <div class="record-expander-main" *ngIf="isInstitutionAllowed">
 
+  <!-- Institution not allowed -->
+  <div  *ngIf="!isInstitutionAllowed" class="record-expander-unauthorized_institution">
+    <h1>
+      <mat-icon inline="true">error</mat-icon>
+      {{ 'unauthorized_institution.headline' | translate }}
+    </h1>
+    <p>
+      {{ 'unauthorized_institution.text1' | translate }}
+      <a href="https://slsp.ch/en/contact" target="_blank">
+        {{ 'unauthorized_institution.link' | translate }}
+      </a>
+      {{ 'unauthorized_institution.text2' | translate }}
+    </p>
+  </div>
+
+  <!-- User not authorized-->
+  <div *ngIf="isInstitutionAllowed && !isUserAllowedGeneral" class="record-expander-unauthorized" >
+    <h1>
+      <mat-icon inline="true">error</mat-icon>
+      {{ 'unauthorized_user.headline' | translate }}
+    </h1>
+    <p>
+      {{ 'unauthorized_user.text1' | translate }} <br><br>
+      {{ 'unauthorized_user.text2' | translate }} <br>
+      - {{ 'unauthorized_user.role' | translate }}
+    </p>
+  </div>
+
+  <!-- Main View (User Authorized)-->
+  <div *ngIf="isInstitutionAllowed && isUserAllowedGeneral" class="record-expander-main" >
     <mat-tab-group>
       <mat-tab label="{{ 'main.items' | translate }}">
         <div *ngIf="entities.length == 0">
@@ -117,20 +146,7 @@
     </mat-tab-group>
   </div>
 
-  <!-- Institution not allowed -->
-  <div class="record-expander-unauthorized_institution" *ngIf="!isInstitutionAllowed">
-    <h1>
-      <mat-icon inline="true">error</mat-icon>
-      {{ 'unauthorized_institution.headline' | translate }}
-    </h1>
-    <p>
-      {{ 'unauthorized_institution.text1' | translate }}
-      <a href="https://slsp.ch/en/contact" target="_blank">
-        {{ 'unauthorized_institution.link' | translate }}
-      </a>
-      {{ 'unauthorized_institution.text2' | translate }}
-    </p>
-  </div>
+ 
 </div>
 
 <div class="loading-shade" *ngIf="loader.isLoading | async">

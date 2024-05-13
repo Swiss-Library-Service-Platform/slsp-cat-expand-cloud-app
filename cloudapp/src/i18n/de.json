@@ -60,6 +60,7 @@
 	"unauthorized_user": {
 		"headline": "Zugang verweigert",
         "text1": "Sie haben leider keine Erlaubnis diese App zu verwenden.",
-		"text2": "Sie benötigen mindestens eine der folgenden Rollen:"
+		"text2": "Sie benötigen die folgende Rolle:",
+		"role": "Katalogisierer"
 	}
 }

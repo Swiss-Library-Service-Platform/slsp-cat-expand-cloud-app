@@ -41,8 +41,10 @@ export class MainComponent implements OnInit, OnDestroy {
   changes: ChangeSet[];
   /** Flag indicating if authorization is done */
   isAuthorizationDone: boolean;
+  /** Flag indicating if user is allowed in general */
+  isUserAllowedGeneral: boolean = false;
   /** Flag indicating if user is allowed in IZ */
-  isUserAllowedIZ: boolean;
+  isUserAllowedIZ: boolean = false;
   /** Flag indicating if institution is allowed */
   isInstitutionAllowed: boolean = false;
   /** Flag indicating if the environment is production */
@@ -103,10 +105,13 @@ export class MainComponent implements OnInit, OnDestroy {
         // Institution Authorization
         this.log.info('Checking if current institution is allowed to use this app');
         this.networkZoneRestService.getIsCurrentInstitutionAllowed(initData.instCode).subscribe(
-          allowed => {
+          async (response) => {
             this.isInstitutionAllowed = true;
+
             // User Authorization
-            this.isUserAllowedIZ = initData.user.isAdmin;
+            this.isUserAllowedGeneral = await this.getIsCurrentUserAllowed(initData.user.primaryId);
+            this.isUserAllowedIZ = await this.getIsCurrentUserAllowed(initData.user.primaryId);
+
             this.isAuthorizationDone = true;
 
             // Get Entities
@@ -318,6 +323,35 @@ export class MainComponent implements OnInit, OnDestroy {
         }),
         shareReplay(1)
       );
+  }
+
+  /**
+  * Checks wheter the currently loggedin user has sufficient permissions
+  *
+  * @param {String} primaryId
+  * @return {Boolean} 
+  * @memberof LibraryManagementService
+  */
+  async getIsCurrentUserAllowed(primaryId: String): Promise<boolean> {
+    let user;
+    try {
+      user = await this.restService.call<any>('/users/' + primaryId).toPromise();
+    } catch (error) {
+      // user not allowed
+      return false;
+    }
+    // 206 (Cataloger)
+    const requiredRoles = ['206'];
+    let isAllowed = false;
+    for (let userrole of user.user_role) {
+      if (requiredRoles.indexOf(userrole.role_type.value) != -1 &&
+        userrole.status.value == 'ACTIVE') {
+        isAllowed = true;
+        break;
+      }
+
+    }
+    return isAllowed;
   }
 
 }

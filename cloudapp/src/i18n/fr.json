@@ -60,6 +60,7 @@
 	"unauthorized_user": {
 		"headline": "Accès refusé",
         "text1": "Malheureusement, vous n'avez pas la permission d'utiliser cette application",
-		"text2": "Vous devez avoir au moins l'un des rôles suivants:"
+		"text2": "Vous devez avoir le rôle suivant:",
+		"role": "Catalogueur"
 	}
 }

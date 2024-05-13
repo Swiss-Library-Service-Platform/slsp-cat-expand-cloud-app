@@ -60,6 +60,7 @@
 	"unauthorized_user": {
 		"headline": "Access denied",
         "text1": "Unfortunately you do not have the permission to use this app.",
-		"text2": "You need at least one of the following roles:"
+		"text2": "You need the following role:",
+		"role": "Cataloger"
 	}
 }
