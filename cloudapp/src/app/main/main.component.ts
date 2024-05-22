@@ -110,7 +110,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
             // User Authorization
             this.isUserAllowedGeneral = await this.getIsCurrentUserAllowed(initData.user.primaryId);
-            this.isUserAllowedIZ = await this.getIsCurrentUserAllowed(initData.user.primaryId);
+            this.isUserAllowedIZ = await this.getIsCurrentUserAllowedForIZTemplate(initData.user.primaryId);
 
             this.isAuthorizationDone = true;
 
@@ -341,7 +341,36 @@ export class MainComponent implements OnInit, OnDestroy {
       return false;
     }
     // 206 (Cataloger)
-    const requiredRoles = ['206'];
+    const requiredRoles = ['204'];
+    let isAllowed = false;
+    for (let userrole of user.user_role) {
+      if (requiredRoles.indexOf(userrole.role_type.value) != -1 &&
+        userrole.status.value == 'ACTIVE') {
+        isAllowed = true;
+        break;
+      }
+
+    }
+    return isAllowed;
+  }
+
+  /**
+  * Checks wheter the currently loggedin user has sufficient permissions
+  *
+  * @param {String} primaryId
+  * @return {Boolean} 
+  * @memberof LibraryManagementService
+  */
+  async getIsCurrentUserAllowedForIZTemplate(primaryId: String): Promise<boolean> {
+    let user;
+    try {
+      user = await this.restService.call<any>('/users/' + primaryId).toPromise();
+    } catch (error) {
+      // user not allowed
+      return false;
+    }
+    // 227 (Cataloger Extended)
+    const requiredRoles = ['227'];
     let isAllowed = false;
     for (let userrole of user.user_role) {
       if (requiredRoles.indexOf(userrole.role_type.value) != -1 &&
