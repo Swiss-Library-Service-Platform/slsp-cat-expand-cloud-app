@@ -15,14 +15,14 @@ Expand records data fields based on specified templates.
 
 ## Requirements
 In order to use this Alma Cloud App, the institution of the user must be 
-– a member of the SLSP network zone 
-– manually unlocked by SLSP to use this service. 
+- a member of the SLSP network zone 
+- manually unlocked by SLSP to use this service. 
 
 Additionally, the current Alma user has to contain the following user role: 
-– Cataloger 
+- Cataloger 
 
 To define templates that are available for the whole Institution Zone, the user has to contain the following user role:
-– Cataloger Extended
+- Cataloger Extended
 
 # Developer Notes
 
