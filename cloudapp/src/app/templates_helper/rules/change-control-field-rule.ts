@@ -11,7 +11,7 @@ export class ChangeControlFieldRuleCreator extends RuleCreator<ChangeControlFiel
      * @returns The type string for ChangeControlFieldRule.
      */
     forType(): string {
-        return ChangeControlFieldRule.name;
+        return "ChangeControlFieldRule";
     }
 
     /**

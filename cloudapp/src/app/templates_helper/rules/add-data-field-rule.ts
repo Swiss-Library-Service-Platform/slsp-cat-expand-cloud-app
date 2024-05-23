@@ -10,7 +10,7 @@ export class AddDataFieldRuleCreator extends RuleCreator<AddDataFieldRule> {
      * @returns The type string for AddDataFieldRule.
      */
     forType(): string {
-        return AddDataFieldRule.name;
+        return "AddDataFieldRule";
     }
 
     /**
