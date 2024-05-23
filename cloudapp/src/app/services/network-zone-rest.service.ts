@@ -74,7 +74,7 @@ export class NetworkZoneRestService {
 
     private buildUrl(request: Request, isProxyRequest: Boolean): string {
         const regex = /\/+/gm;
-        const url: string = NetworkZoneRestService.PROXY_DOMAIN + (isProxyRequest ? NetworkZoneRestService.PROXY_PATH : '') + request.url;
-        return url.replace(regex, '/');
+        const path: string = (isProxyRequest ? NetworkZoneRestService.PROXY_PATH : '') + request.url;
+        return NetworkZoneRestService.PROXY_DOMAIN + path.replace(regex, '/');
     }
 }

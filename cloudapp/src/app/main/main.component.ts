@@ -104,7 +104,7 @@ export class MainComponent implements OnInit, OnDestroy {
         this.log.info('Checking if current institution is allowed to use this app');
 
         this.networkZoneRestService.call({
-          url: `isAllowed/s`,
+          url: `isAllowed/${initData.instCode}`,
           method: HttpMethod.GET,
         }, false).subscribe(
           async (response) => {
