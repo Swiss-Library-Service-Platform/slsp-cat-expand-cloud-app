@@ -5,11 +5,12 @@
   </div>
 </ng-container>
  -->
+
 <!-- Main Container -->
 <div *ngIf="isAuthorizationDone">
 
   <!-- Institution not allowed -->
-  <div  *ngIf="!isInstitutionAllowed" class="record-expander-unauthorized_institution">
+  <div *ngIf="!isInstitutionAllowed" class="record-expander-unauthorized_institution">
     <h1>
       <mat-icon inline="true">error</mat-icon>
       {{ 'unauthorized_institution.headline' | translate }}
@@ -24,7 +25,7 @@
   </div>
 
   <!-- User not authorized-->
-  <div *ngIf="isInstitutionAllowed && !isUserAllowedGeneral" class="record-expander-unauthorized" >
+  <div *ngIf="isInstitutionAllowed && !isUserAllowedGeneral" class="record-expander-unauthorized">
     <h1>
       <mat-icon inline="true">error</mat-icon>
       {{ 'unauthorized_user.headline' | translate }}
@@ -37,25 +38,30 @@
   </div>
 
   <!-- Main View (User Authorized)-->
-  <div *ngIf="isInstitutionAllowed && isUserAllowedGeneral" class="record-expander-main" >
+  <div *ngIf="isInstitutionAllowed && isUserAllowedGeneral" class="record-expander-main">
+
     <mat-tab-group>
       <mat-tab label="{{ 'main.items' | translate }}">
-        <div *ngIf="entities.length == 0">
-          <h2 translate>main.noMmsIdMsg</h2>
-        </div>
+        <ng-container *ngIf="(entities$ | async)?.length > 0; then entities; else noentities"></ng-container>
 
-        <div class="entities-list" *ngIf="entities.length > 0">
-          <mat-action-list [ngClass]="{'hidden' : selectedEntity }">
-            <ng-container *ngFor="let entity of entities">
-              <mat-list-item matTooltip="{{entity.description}}" [matTooltipShowDelay]="800"
-                (click)="loadRecord(entity)">
-                <mat-icon color="primary">menu_book</mat-icon>
-                <span class="entity-description">{{entity.description}}</span>
-              </mat-list-item>
-              <mat-divider></mat-divider>
-            </ng-container>
-          </mat-action-list>
-        </div>
+        <ng-template #noentities>
+          <h2 translate>main.noMmsIdMsg</h2>
+        </ng-template>
+
+        <ng-template #entities>
+          <div class="entities-list">
+            <mat-action-list [ngClass]="{'hidden' : selectedEntity }">
+              <ng-container *ngFor="let entity of entities$ | async">
+                <mat-list-item matTooltip="{{entity.description}}" [matTooltipShowDelay]="800"
+                  (click)="loadRecord(entity)">
+                  <mat-icon color="primary">menu_book</mat-icon>
+                  <span class="entity-description">{{entity.description}}</span>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+              </ng-container>
+            </mat-action-list>
+          </div>
+        </ng-template>
 
         <div class="selected-container" *ngIf="selectedEntity">
 
@@ -87,7 +93,7 @@
             </mat-expansion-panel-header>
             <ng-template matExpansionPanelContent>
 
-            <app-marc-table [xmlString]="xmlString"></app-marc-table>
+              <app-marc-table [xmlString]="xmlString"></app-marc-table>
             </ng-template>
           </mat-expansion-panel>
 
@@ -122,8 +128,8 @@
                       </div>
                       <button mat-flat-button class="mat-small" color="primary"
                         (click)="applyTemplate($event, template)"
-                        [disabled]="selectedEntity['appliedTemplates'][template.getName()]" >
-                        {{'main.applyTemplateButtonLabel' | translate }} 
+                        [disabled]="selectedEntity['appliedTemplates'][template.getName()]">
+                        {{'main.applyTemplateButtonLabel' | translate }}
                       </button>
                     </div>
                   </mat-panel-title>
@@ -145,8 +151,6 @@
       </mat-tab>
     </mat-tab-group>
   </div>
-
- 
 </div>
 
 <div class="loading-shade" *ngIf="loader.isLoading | async">
