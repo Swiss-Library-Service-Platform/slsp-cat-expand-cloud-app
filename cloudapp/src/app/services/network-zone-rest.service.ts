@@ -28,15 +28,6 @@ export class NetworkZoneRestService {
         return isProd;
     }
 
-    getIsCurrentInstitutionAllowed(instCode: any): Observable<boolean> {
-        return this.call({
-            url: `isAllowed/${instCode}`,
-            method: HttpMethod.GET
-        }, false).pipe(
-            switchMap(response => of(response["isAllowed"]))
-        )
-    }
-
     call(request: Request, isProxyRequest: Boolean = true): Observable<any> {
         switch (request.method) {
             case HttpMethod.GET:

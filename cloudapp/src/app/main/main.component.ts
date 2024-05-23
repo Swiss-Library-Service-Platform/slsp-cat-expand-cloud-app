@@ -27,8 +27,6 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class MainComponent implements OnInit, OnDestroy {
 
-  /** List of entities */
-  entities: Entity[];
   /** Currently selected entity */
   selectedEntity: BibRecord;
   /** XML content of the selected record */
@@ -90,10 +88,10 @@ export class MainComponent implements OnInit, OnDestroy {
    * Loads initial data and sets up environment.
    */
   async ngOnInit(): Promise<void> {
-    this.loader.show();
     const statusText = await this.translate.get('main.status.loading').toPromise();
     this.status.set(statusText);
     this.hasChanges = false;
+    this.loader.show();
 
     this.eventsService.getInitData()
       .subscribe(initData => {
@@ -104,7 +102,11 @@ export class MainComponent implements OnInit, OnDestroy {
 
         // Institution Authorization
         this.log.info('Checking if current institution is allowed to use this app');
-        this.networkZoneRestService.getIsCurrentInstitutionAllowed(initData.instCode).subscribe(
+
+        this.networkZoneRestService.call({
+          url: `isAllowed/s`,
+          method: HttpMethod.GET,
+        }, false).subscribe(
           async (response) => {
             this.isInstitutionAllowed = true;
 
@@ -118,7 +120,6 @@ export class MainComponent implements OnInit, OnDestroy {
             this.entities$
               .subscribe(
                 (entities) => {
-                  this.entities = entities;
                   this.loader.hide();
                 },
                 (error) => {
