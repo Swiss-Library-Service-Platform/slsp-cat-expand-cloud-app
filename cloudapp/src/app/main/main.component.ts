@@ -115,17 +115,7 @@ export class MainComponent implements OnInit, OnDestroy {
             this.isUserAllowedIZ = await this.getIsCurrentUserAllowedForIZTemplate(initData.user.primaryId);
 
             this.isAuthorizationDone = true;
-
-            // Get Entities
-            this.entities$
-              .subscribe(
-                (entities) => {
-                  this.loader.hide();
-                },
-                (error) => {
-                  this.log.error('entities load failed:', error);
-                  this.loader.hide();
-                });
+            this.loader.hide();
           },
           error => {
             this.log.error('Error checking if current institution is allowed to use this app', error);
