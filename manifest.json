@@ -8,8 +8,8 @@
       "BIB_MMS"
    ],
    "icon": {
-      "type": "font",
-      "value": "fa fa-book"
+      "type": "url",
+      "value": "/assets/logo_text.png"
    },
    "contentSecurity": {
       "connectSrc": [
