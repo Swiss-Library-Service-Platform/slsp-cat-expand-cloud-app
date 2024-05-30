@@ -11,8 +11,8 @@
 		"expandInfo": "To expand the view click the expand button in the toolbar",
 		"exportButtonLabel": "Export",
 		"inspectMarc": "Inspect MARC",
-		"items": "Items",
-		"manageTemplates": "Manage Templates",
+		"items": "Records",
+		"manageTemplates": "Manage Expansions",
 		"mmsIdNz": "MMS ID (NZ)",
 		"noMmsIdMsg": "No Bibliographic Entities found, search for MMSID",
 		"noRelatedRecordsFoundMsg": "No related records found",
@@ -26,7 +26,7 @@
 		"showAdditionalData": "Show/Hide additional data",
 		"showHierarchyButtonLabel": "Show hierarchy",
 		"status": {
-			"applyingTemplate": "Applying template...",
+			"applyingTemplate": "Applying expansion...",
 			"loading": "Loading...",
 			"savingRecord": "Saving record...",
 			"selectingRecord": "Selecting record..."
@@ -34,20 +34,20 @@
 	},
 	"templatesManagement": {
 		"add": "Add",
-		"addIzTemplate": "Add IZ template",
-		"addPersonalTemplate" : "Add personal template",
+		"addIzTemplate": "Add IZ expansion",
+		"addPersonalTemplate" : "Add personal expansion",
 		"alert": {
-			"templateAdded": "Template added",
-			"templateAddedError": "Error adding template",
-			"templateRemoved": "Template removed",
-			"templateRemovedError": "Error removing template"
+			"templateAdded": "Expansion added",
+			"templateAddedError": "Error adding expansion",
+			"templateRemoved": "Expansion removed",
+			"templateRemovedError": "Error removing expansion"
 		},
 		"builtIn": "Built-In",
 		"izLevel": "IZ-Level",
 		"remove": "Remove",
 		"status": {
-			"removingTemplate": "Removing template...",
-			"savingTemplate": "Saving template..."
+			"removingTemplate": "Removing expansion...",
+			"savingTemplate": "Saving expansion..."
 		},
 		"source": "Source"
 	},
