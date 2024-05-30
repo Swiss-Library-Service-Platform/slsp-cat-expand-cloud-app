@@ -84,8 +84,14 @@ class AddDataFieldRule extends Rule {
      * @returns A boolean indicating whether the data field is already present.
      */
     private checkIfAlreadyPresent(xmlDocument: Document): boolean {
-        const subfieldQuery: string = `//datafield[@tag='${this.tag}'][@ind1='${this.ind1}'][@ind2='${this.ind2}']/subfield[@code='${this.code}']`;
+        let conditions: string[] = [];
+        conditions.push(this.generateCondition('tag', this.tag));
+        conditions.push(this.generateCondition('ind1', this.ind1));
+        conditions.push(this.generateCondition('ind2', this.ind2));
+        conditions.push(`subfield[@code='${this.code}']`);
+        const subfieldQuery: string = `//datafield[${conditions.join(' and ')}]`;
         const subfields: Node[] = this.xpath.queryList(subfieldQuery, xmlDocument);
+
         if (!subfields || subfields.length == 0) {
             return false;
         }
@@ -94,6 +100,16 @@ class AddDataFieldRule extends Rule {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Generates Condition for attribute for XML query.
+     * @param attribute 
+     * @param value 
+     * @returns 
+     */
+    private generateCondition(attribute: string, value: string | undefined): string {
+        return value ? `@${attribute}='${value}'` : `not(@${attribute}) or @${attribute}=' '`;
     }
 
     /**
