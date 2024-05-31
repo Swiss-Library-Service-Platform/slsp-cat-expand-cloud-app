@@ -221,38 +221,34 @@ export class MainComponent implements OnInit, OnDestroy {
     this.loader.show();
     const statusText = await this.translate.get('main.status.savingRecord').toPromise();
     this.status.set(statusText);
-    const nzMmsId: Observable<string> = this.getNzMmsIdFromEntity(this.selectedEntity.entity);
-
-    this.log.info('selected entity', this.selectedEntity);
-
-    nzMmsId.subscribe(id => {
-      this.networkZoneRestService.call({
-        method: HttpMethod.PUT,
-        url: `/bibs/${id}`,
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/xml'
-        },
-        requestBody: `<bib>${this.xmlString}</bib>`
-      }).subscribe(
-        (bibRecord: BibRecord) => {
-          this.log.info('save successful:', bibRecord);
-          this.eventsService.refreshPage().subscribe(async pageReloaded => {
-            this.selectRecord(bibRecord);
-            const alertText = await this.translate.get('main.alert.recordSaved').toPromise();
-            this.alert.success(alertText);
-          });
-          this.resetChanges();
-          this.loader.hide();
-        },
-        async (error) => {
-          this.log.error('save failed:', error);
-          const alertText = await this.translate.get('main.alert.recordSavedError').toPromise();
-          this.alert.error(`${alertText}: ${error.statusText}`, { autoClose: true, delay: 5000 });
-          this.loader.hide();
-        }
-      );
-    });
+    this.log.info('saving entity', this.selectedEntity);
+    this.networkZoneRestService.call({
+      method: HttpMethod.PUT,
+      url: `/bibs/${this.selectedEntity.mms_id}`,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/xml'
+      },
+      requestBody: `<bib>${this.xmlString}</bib>`
+    }).subscribe(
+      async (bibRecord: BibRecord) => {
+        this.log.info('save successful:', bibRecord);
+        const alertText = await this.translate.get('main.alert.recordSaved').toPromise();
+        this.alert.success(alertText);
+        this.eventsService.refreshPage().subscribe(async pageReloaded => {
+          //await this.loadRecord(this.selectedEntity.entity);
+        });
+        this.selectRecord(bibRecord);
+        this.resetChanges();
+        this.loader.hide();
+      },
+      async (error) => {
+        this.log.error('save failed:', error);
+        const alertText = await this.translate.get('main.alert.recordSavedError').toPromise();
+        this.alert.error(`${alertText}: ${error.statusText}`, { autoClose: true, delay: 5000 });
+        this.loader.hide();
+      }
+    );
   }
 
   /**
