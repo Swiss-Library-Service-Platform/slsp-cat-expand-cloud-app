@@ -7,7 +7,7 @@
 				"name": "Change 008 / Pos.24 to 6",
 				"arguments": {
 					"tag": "008",
-					"searchRegex": "^(.{23}).(.*)$",
+					"searchRegex": "^(.{24}).(.*)$",
 					"replacement": "$16$2"
 				}
 			},
@@ -35,13 +35,13 @@
 			},
 			{
 				"type": "AddDataFieldRule",
-				"name": "add 655_7$$aBandes dessinÃ©es$$0(IDREF)027220796$$2idref",
+				"name": "add 655_7$$aBandes dessinées$$0(IDREF)027220796$$2idref",
 				"arguments": {
 					"tag": "655",
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-					"value": "Bandes dessinÃ©es$$0(IDREF)027220796$$2idref"
+					"value": "Bandes dessinées$$0(IDREF)027220796$$2idref"
 				}
 			},
 			{

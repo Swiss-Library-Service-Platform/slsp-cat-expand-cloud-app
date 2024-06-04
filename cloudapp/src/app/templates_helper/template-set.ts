@@ -45,6 +45,15 @@ export class TemplateSet {
 	}
 
 	/**
+	 * Retrieves a template by name.
+	 * @param name - The name of the template to retrieve
+	 * @returns The template with the specified name
+	 */
+	public getTemplate(name: string): Template {
+		return this.templates.find(t => t.getName() === name);
+	}
+
+	/**
 	 * Retrieves the name of the template set.
 	 * @returns Name of the template set
 	 */

@@ -7,7 +7,7 @@
 				"name": "Change 008 / Pos.34 to a",
 				"arguments": {
 					"tag": "008",
-					"searchRegex": "^(.{33}).(.*)$",
+					"searchRegex": "^(.{34}).(.*)$",
 					"replacement": "$1a$2"
 				}
 			},
