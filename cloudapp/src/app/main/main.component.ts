@@ -234,13 +234,12 @@ export class MainComponent implements OnInit, OnDestroy {
       async (bibRecord: BibRecord) => {
         this.log.info('save successful:', bibRecord);
         const alertText = await this.translate.get('main.alert.recordSaved').toPromise();
-        this.alert.success(alertText);
         this.eventsService.refreshPage().subscribe(async pageReloaded => {
-          //await this.loadRecord(this.selectedEntity.entity);
+          this.resetChanges();
+          this.navigateBack();
+          this.loader.hide();
+          this.alert.success(alertText);
         });
-        this.selectRecord(bibRecord);
-        this.resetChanges();
-        this.loader.hide();
       },
       async (error) => {
         this.log.error('save failed:', error);
