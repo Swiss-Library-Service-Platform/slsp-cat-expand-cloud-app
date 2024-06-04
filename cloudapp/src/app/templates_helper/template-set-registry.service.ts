@@ -180,6 +180,13 @@ export class TemplateSetRegistry {
 					}
 					const storedScripts: StoredScripts = storedTemplates.storedScripts;
 					const templateObject: TemplateDefinition = JSON.parse(templateSource) as TemplateDefinition;
+					// Check if template name is already in stored templates or in other templateset
+					if (this.get().some(templateSet => templateSet.getTemplate(templateObject.template.name))) {
+						return of({
+							success: false,
+							error: 'Template name already in use'
+						});
+					}
 					storedScripts[templateObject.template.name] = templateSource;
 					storedTemplates.storedScripts = storedScripts;
 					return service.set(storedTemplates);

@@ -33,7 +33,7 @@ export class TemplatesManagementComponent implements OnInit {
     private translate: TranslateService,
     private log: LogService
   ) { }
-  
+
 
   /**
    * Lifecycle hook that runs after component initialization.
@@ -41,7 +41,7 @@ export class TemplatesManagementComponent implements OnInit {
   ngOnInit(): void {
     this.templateSetRegistry.registry$.subscribe(templateSets => {
       this.log.debug('TemplatesManagementComponent: Received template sets', templateSets);
-      this.log.debug('Count of template sets:', templateSets[0].getTemplates().length);
+      this.log.debug('Count of template sets:', templateSets.length);
       this.templateSets = templateSets;
     });
   }
