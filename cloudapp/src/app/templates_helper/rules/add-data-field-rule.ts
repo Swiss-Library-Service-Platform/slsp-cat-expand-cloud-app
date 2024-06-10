@@ -92,12 +92,12 @@ class AddDataFieldRule extends Rule {
         const subfieldQuery: string = `//datafield[${conditions.join(' and ')}]`;
         const subfields: Node[] = this.xpath.queryList(subfieldQuery, xmlDocument);
 
-        if (!subfields || subfields.length == 0) {
-            return false;
-        }
-        const alreadyPresentNode: Node = subfields.find(subfield => subfield.textContent == this.value);
-        if (alreadyPresentNode) {
-            return true;
+        const [firstPartOfValue] = this.value.split('$$');
+        if (subfields && subfields.length > 0) {
+            const alreadyPresentNode: Node = subfields.find(subfield => subfield.textContent.includes(firstPartOfValue));
+            if (alreadyPresentNode) {
+                return true;
+            }
         }
         return false;
     }
