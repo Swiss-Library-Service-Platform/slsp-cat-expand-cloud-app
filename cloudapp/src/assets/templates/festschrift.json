@@ -25,13 +25,13 @@
 			},
 			{
 				"type": "AddDataFieldRule",
-				"name": "add 655_7$$aMélanges et hommages$$0(IDREF)027414248$$2idref",
+				"name": "add 655_7$$aMÃ©langes et hommages$$0(IDREF)027414248$$2idref",
 				"arguments": {
 					"tag": "655",
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-					"value": "Mélanges et hommages$$0(IDREF)027414248$$2idref"
+					"value": "MÃ©langes et hommages$$0(IDREF)027414248$$2idref"
 				}
 			},
 			{

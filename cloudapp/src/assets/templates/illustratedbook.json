@@ -26,13 +26,13 @@
 			},
 			{
 				"type": "AddDataFieldRule",
-				"name": "add 655_7$$aOuvrages illustrés$$0(IDREF)027791491$$2idref",
+				"name": "add 655_7$$aOuvrages illustrÃ©s$$0(IDREF)027791491$$2idref",
 				"arguments": {
 					"tag": "655",
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-					"value": "Ouvrages illustrés$$0(IDREF)027791491$$2idref"
+					"value": "Ouvrages illustrÃ©s$$0(IDREF)027791491$$2idref"
 				}
 			},
 			{
