@@ -35,13 +35,13 @@
 			},
 			{
 				"type": "AddDataFieldRule",
-				"name": "add 655_7$$aThèses et écrits académiques$$0(IDREF)027253139$$2idref",
+				"name": "add 655_7$$aThÃ¨ses et Ã©crits acadÃ©miques$$0(IDREF)027253139$$2idref",
 				"arguments": {
 					"tag": "655",
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-					"value": "Thèses et écrits académiques$$0(IDREF)027253139$$2idref"
+					"value": "ThÃ¨ses et Ã©crits acadÃ©miques$$0(IDREF)027253139$$2idref"
 				}
 			},
 			{

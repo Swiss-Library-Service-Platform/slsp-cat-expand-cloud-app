@@ -24,13 +24,13 @@
 			},
 			{
 				"type": "AddDataFieldRule",
-				"name": "add 655_7$$aActes de congrès$$0(IDREF)02886431X$$2idref",
+				"name": "add 655_7$$aActes de congrÃ¨s$$0(IDREF)02886431X$$2idref",
 				"arguments": {
 					"tag": "655",
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-					"value": "Actes de congrès$$0(IDREF)02886431X$$2idref"
+					"value": "Actes de congrÃ¨s$$0(IDREF)02886431X$$2idref"
 				}
 			},
 			{
