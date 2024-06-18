@@ -1,6 +1,10 @@
 /**
  * Component for managing templates.
  * Allows adding, removing, and displaying templates.
+ * 
+ * Note: In the past it was possible to add templates to different sets (templatesets).
+ * if a template definition contained a "set" attribute.
+ * This is now hidden in the UI, but the code still supports it, if it is needed in the future.
  */
 import { Component, Input, OnInit } from '@angular/core';
 import { AlertService } from '@exlibris/exl-cloudapp-angular-lib';
