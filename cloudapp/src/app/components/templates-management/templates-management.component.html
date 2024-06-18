@@ -57,12 +57,13 @@
               <span>{{template.getName()}}</span>
             </div>
             <span class="manage-template-action builtin" *ngIf="template.getOrigin() == 'BUILTIN'">
+              <mat-icon color="primary">lan</mat-icon>
               <button mat-flat-button="mat-flat-button" class="mat-small" color="primary" [disabled]="true">
                 {{ 'templatesManagement.builtIn' | translate }}
               </button>
             </span>
             <span class="manage-template-action user" *ngIf="template.getOrigin() == 'USER'">
-              <span class="uxf-icon uxf-user leading-icon"></span>
+              <span class="uxf-icon uxf-user leading-icon mat-icon mat-primary"></span>
               <button mat-flat-button="mat-flat-button" class="mat-small" color="primary"
                 (click)="removeUserTemplate($event, template.getName())">
                 {{ 'templatesManagement.remove' | translate }}
@@ -70,7 +71,7 @@
             </span>
             <span class="manage-template-action institution"
               *ngIf="template.getOrigin() == 'INSTITUTION' && isUserAllowedIZ">
-              <span class="uxf-icon uxf-home leading-icon"></span>
+              <span class="uxf-icon uxf-home leading-icon  mat-icon mat-primary"></span>
               <button mat-flat-button="mat-flat-button" class="mat-small" color="primary"
                 (click)="removeInstitutionTemplate($event, template.getName())">
                 {{ 'templatesManagement.remove' | translate }}
