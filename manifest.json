@@ -18,5 +18,9 @@
       "sandbox": {
          "popups": true
       }
+   },
+   "fullscreen": {
+      "allow": true,
+      "open": false
    }
 }
