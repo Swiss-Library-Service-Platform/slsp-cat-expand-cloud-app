@@ -49,7 +49,8 @@
 			"removingTemplate": "Rimozione del template...",
 			"savingTemplate": "Salvataggio del template..." 
 		},
-		"source": "Fonte" 
+		"source": "Fonte",
+		"templates" : "Templates"
 	},
 	"unauthorized_institution": {
 		"headline": "Accesso negato", 

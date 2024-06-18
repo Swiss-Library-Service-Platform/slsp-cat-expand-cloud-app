@@ -111,8 +111,12 @@
             </button>
           </div>
 
-          <div class="template-set-container" *ngFor="let templateSet of getTemplateSets()">
-            <h2>{{templateSet.getName()}}</h2>
+
+          <div class="template-sets-header">
+            <h2> {{ 'templatesManagement.templates' | translate }}</h2>
+          </div>
+          <div *ngFor="let templateSet of getTemplateSets()">
+            <!-- <h2>{{templateSet.getName()}}</h2> -->
             <mat-accordion>
               <mat-expansion-panel *ngFor="let template of templateSet.getTemplates()">
                 <mat-expansion-panel-header>
