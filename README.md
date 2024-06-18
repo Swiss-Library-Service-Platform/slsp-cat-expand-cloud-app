@@ -26,18 +26,18 @@ To define templates that are available for the whole Institution Zone, the user 
 
 # Developer Notes
 
-### How to create templates
+## How to create static templates
 
 1. Add template definition json file in assets/templates
 2. Register the template definition file in assets/templates/_template-index.json
 
-#### Rules and how to instantiate templates
+### Rules and how to instantiate templates
 
 - Rules need a RuleCreator impl.
 - Rules need a RulesArg definition
 - RuleCreators must be registered in app.module.ts (for injection)
 
-## Dev: Common issues
+## Common Issues
 
 ### MacOS Error: OpenSSL Error 'ERR_OSSL_EVP_UNSUPPORTED'
 

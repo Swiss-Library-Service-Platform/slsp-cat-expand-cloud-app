@@ -92,13 +92,29 @@ class AddDataFieldRule extends Rule {
         const subfieldQuery: string = `//datafield[${conditions.join(' and ')}]`;
         const subfields: Node[] = this.xpath.queryList(subfieldQuery, xmlDocument);
 
-        const [firstPartOfValue] = this.value.split('$$');
+        // Get all subfields of this tag
+        let valueSubfields = this.value.split(/\$\$[a-zA-Z0-9]/);
+        const firstSubField = valueSubfields[0];
+        const lastSubField = valueSubfields[valueSubfields.length - 1];
+
         if (subfields && subfields.length > 0) {
-            const alreadyPresentNode: Node = subfields.find(subfield => subfield.textContent.includes(firstPartOfValue));
-            if (alreadyPresentNode) {
+            let foundSubfield: Node;
+
+            // Option 1: ("Normalized") Subfields are separated in to nodes
+            foundSubfield = subfields.find(subfield => subfield.firstChild.textContent === firstSubField
+                && subfield.lastChild.textContent === lastSubField);
+            if (foundSubfield) {
+                return true;
+            }
+
+            // Option 2: (Not "Normalized") Same Subfield exists but all values in one node (without spaces)
+            foundSubfield = subfields.find(subfield => subfield.textContent.startsWith(firstSubField)
+                && subfield.textContent.endsWith(lastSubField));
+            if (foundSubfield) {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -109,7 +125,7 @@ class AddDataFieldRule extends Rule {
      * @returns 
      */
     private generateCondition(attribute: string, value: string | undefined): string {
-        return value ? `@${attribute}='${value}'` : `not(@${attribute}) or @${attribute}=' '`;
+        return value ? `@${attribute}='${value}'` : `(not(@${attribute}) or @${attribute}=' ')`;
     }
 
     /**

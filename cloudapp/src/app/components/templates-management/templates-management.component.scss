@@ -26,3 +26,19 @@
     min-height: 100px;
     white-space: pre;
 }
+
+.manage-template-action {
+    display: flex;
+
+    .uxf-icon {
+        height: 16px;
+        width: 16px;
+        margin-right: 5px;
+    }
+    .material-icons {
+        height: 20px;
+        width: 20px;
+        font-size: 20px;
+        margin-right: 5px;
+    }
+}

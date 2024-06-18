@@ -42,9 +42,11 @@
   </div>
 </mat-expansion-panel>
 
-
-<div class="template-set-container" *ngFor="let templateSet of templateSets">
-  <h2>{{templateSet.getName()}}</h2>
+<div class="template-sets-header">
+  <h2> {{ 'templatesManagement.templates' | translate }}</h2>
+</div>
+<div *ngFor="let templateSet of templateSets">
+  <!-- <h2>{{templateSet.getName()}}</h2> -->
   <mat-accordion>
     <mat-expansion-panel *ngFor="let template of templateSet.getTemplates()">
       <mat-expansion-panel-header>
@@ -55,13 +57,13 @@
               <span>{{template.getName()}}</span>
             </div>
             <span class="manage-template-action builtin" *ngIf="template.getOrigin() == 'BUILTIN'">
-              <button mat-flat-button="mat-flat-button" class="mat-small" color="primary"
-                [disabled]="true">
+              <mat-icon color="primary">lan</mat-icon>
+              <button mat-flat-button="mat-flat-button" class="mat-small" color="primary" [disabled]="true">
                 {{ 'templatesManagement.builtIn' | translate }}
-               </button>
+              </button>
             </span>
             <span class="manage-template-action user" *ngIf="template.getOrigin() == 'USER'">
-              <span class="uxf-icon uxf-user leading-icon"></span>
+              <span class="uxf-icon uxf-user leading-icon mat-icon mat-primary"></span>
               <button mat-flat-button="mat-flat-button" class="mat-small" color="primary"
                 (click)="removeUserTemplate($event, template.getName())">
                 {{ 'templatesManagement.remove' | translate }}
@@ -69,7 +71,7 @@
             </span>
             <span class="manage-template-action institution"
               *ngIf="template.getOrigin() == 'INSTITUTION' && isUserAllowedIZ">
-              <span class="uxf-icon uxf-home leading-icon"></span>
+              <span class="uxf-icon uxf-home leading-icon  mat-icon mat-primary"></span>
               <button mat-flat-button="mat-flat-button" class="mat-small" color="primary"
                 (click)="removeInstitutionTemplate($event, template.getName())">
                 {{ 'templatesManagement.remove' | translate }}
@@ -77,8 +79,7 @@
             </span>
             <span class="manage-template-action institution"
               *ngIf="template.getOrigin() == 'INSTITUTION' && !isUserAllowedIZ">
-              <button mat-flat-button="mat-flat-button" class="mat-small" color="primary"
-                [disabled]="true">
+              <button mat-flat-button="mat-flat-button" class="mat-small" color="primary" [disabled]="true">
                 {{ 'templatesManagement.izLevel' | translate }}
               </button>
             </span>
