@@ -11,8 +11,8 @@
 		"expandInfo": "Pour agrandir la vue, cliquez sur le bouton Agrandir dans la barre d'outils.",
 		"exportButtonLabel": "Exporter",
 		"inspectMarc": "Inspecter MARC",
-		"items": "Items",
-		"manageTemplates": "Gérer les modèles",
+		"items": "Notice",
+		"manageTemplates": "Gérer les extensions",
 		"mmsIdNz": "Identifiant MMS (NZ)",
 		"noMmsIdMsg": "Aucune entité bibliographique trouvée, recherche par identifiant MMS",
 		"noRelatedRecordsFoundMsg": "Aucune notice reliée n'a été trouvée",
@@ -26,7 +26,7 @@
 		"showAdditionalData": "Afficher/masquer les données supplémentaires",
 		"showHierarchyButtonLabel": "Afficher la hiérarchie",
 		"status": {
-			"applyingTemplate": "Application du modèle...",
+			"applyingTemplate": "Application du extension...",
 			"loading": "Chargement...",
 			"savingRecord": "Enregistrement de la notice...",
 			"selectingRecord": "Sélection de la notice..."
@@ -34,23 +34,23 @@
 	},
 	"templatesManagement": {
 		"add": "Ajouter",
-		"addIzTemplate": "Ajouter un modèle de l'institution",
-		"addPersonalTemplate" : "Ajouter un modèle personnel",
+		"addIzTemplate": "Ajouter un extension de l'institution",
+		"addPersonalTemplate" : "Ajouter un extension personnel",
 		"alert": {
-			"templateAdded": "Modèle ajouté",
-			"templateAddedError": "Erreur lors de l'ajout du modèle",
-			"templateRemoved": "Modèle supprimé",
-			"templateRemovedError": "Erreur lors de la suppression du modèle"
+			"templateAdded": "Extension ajouté",
+			"templateAddedError": "Erreur lors de l'ajout du extension",
+			"templateRemoved": "Extension supprimé",
+			"templateRemovedError": "Erreur lors de la suppression du extension"
 		},
 		"builtIn": "Intégré",
 		"izLevel": "Niveau institution",
 		"remove": "Supprimer",
 		"status": {
-			"removingTemplate": "Suppression du modèle...",
-			"savingTemplate": "Enregistrement du modèle..."
+			"removingTemplate": "Suppression du extension...",
+			"savingTemplate": "Enregistrement du extension..."
 		},
 		"source": "Source",
-		"templates" : "Modèles"
+		"templates" : "Extensions"
 	},
 	"unauthorized_institution": {
 		"headline": "Accès refusé",

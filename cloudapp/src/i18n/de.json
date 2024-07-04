@@ -11,8 +11,8 @@
 		"expandInfo": "Zum Vergrössern der Ansicht auf den Vergrösserungs-Button in der Symbolleiste klicken",
 		"exportButtonLabel": "Exportieren",
 		"inspectMarc": "Prüfe MARC",
-		"items": "Items",
-		"manageTemplates": "Vorlagen verwalten",
+		"items": "Datensatz",
+		"manageTemplates": "Erweiterungen",
 		"mmsIdNz": "MMS ID (NZ)",
 		"noMmsIdMsg": "Keine bibliografischen Entitäten gefunden, nach MMSID suchen",
 		"noRelatedRecordsFoundMsg": "Keine verknüpften Datensätze gefunden",
@@ -26,7 +26,7 @@
 		"showAdditionalData": "Zeige/Verberge zusätzliche Daten",
 		"showHierarchyButtonLabel": "Hierarchie anzeigen",
 		"status": {
-			"applyingTemplate": "Vorlage wird angewendet...",
+			"applyingTemplate": "Erweiterung wird angewendet...",
 			"loading": "Laden...",
 			"savingRecord": "Datensatz wird gespeichert...",
 			"selectingRecord": "Datensatz wird ausgewählt..."
@@ -34,23 +34,23 @@
 	},
 	"templatesManagement": {
 		"add": "Hinzufügen",
-		"addIzTemplate": "IZ Vorlage hinzufügen",
-		"addPersonalTemplate" : "Persönliche Vorlage hinzufügen",
+		"addIzTemplate": "IZ Erweiterung hinzufügen",
+		"addPersonalTemplate" : "Persönliche Erweiterung hinzufügen",
 		"alert": {
-			"templateAdded": "Vorlage hinzugefügt",
-			"templateAddedError": "Fehler beim Hinzufügen der Vorlage",
-			"templateRemoved": "Vorlage entfernt",
-			"templateRemovedError": "Fehler beim Entfernen der Vorlage"
+			"templateAdded": "Erweiterung hinzugefügt",
+			"templateAddedError": "Fehler beim Hinzufügen der Erweiterung",
+			"templateRemoved": "Erweiterung entfernt",
+			"templateRemovedError": "Fehler beim Entfernen der Erweiterung"
 		},
 		"builtIn": "Built-In",
 		"izLevel": "IZ-Level",
 		"remove": "Entfernen",
 		"status": {
-			"removingTemplate": "Vorlage wird entfernt...",
-			"savingTemplate": "Vorlage wird gespeichert..."
+			"removingTemplate": "Erweiterung wird entfernt...",
+			"savingTemplate": "Erweiterung wird gespeichert..."
 		},
 		"source": "Quelle",
-		"templates" : "Vorlagen"
+		"templates" : "Erweiterungen"
 	},
 	"unauthorized_institution": {
 		"headline": "Zugang verweigert",
