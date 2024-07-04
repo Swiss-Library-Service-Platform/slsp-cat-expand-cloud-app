@@ -11,8 +11,8 @@
 		"expandInfo": "Per espandere la schermata, cliccare sul pulsante Espandi nella barra degli strumenti",
 		"exportButtonLabel": "Esporta",
 		"inspectMarc": "Ispeziona MARC", 
-		"items": "Items",
-		"manageTemplates": "Gestire i Templates",
+		"items": "Record",
+		"manageTemplates": "Gestire le espansioni",
 		"mmsIdNz": "MMS ID (NZ)",
 		"noMmsIdMsg": "Nessuna voce bibliografica trovata, ricerca per MMS ID", 
 		"noRelatedRecordsFoundMsg": "Non sono stati trovati record correlati",
@@ -26,7 +26,7 @@
 		"showAdditionalData": "Mostra/Nascondi i dati aggiuntivi", 
 		"showHierarchyButtonLabel": "Mostra gerarchia", 
 		"status": {
-			"applyingTemplate": "Applicazione del template......", 
+			"applyingTemplate": "Applicazione del espansion......", 
 			"loading": "Caricamento...", 
 			"savingRecord": "Salvataggio del record...", 
 			"selectingRecord": "Selezione del record..." 
@@ -34,23 +34,23 @@
 	},
 	"templatesManagement": {
 		"add": "Aggiungi",
-		"addIzTemplate": "Aggiungi template della IZ", 
-		"addPersonalTemplate" : "Aggiungi template personale", 
+		"addIzTemplate": "Aggiungi espansion della IZ", 
+		"addPersonalTemplate" : "Aggiungi espansion personale", 
 		"alert": {
-			"templateAdded": "Template aggiunto", 
-			"templateAddedError": "Errore durante l'aggiunta del template", 
-			"templateRemoved": "Template rimosso", 
-			"templateRemovedError": "Errore durante la rimozione del template" 
+			"templateAdded": "Espansion aggiunto", 
+			"templateAddedError": "Errore durante l'aggiunta del espansion", 
+			"templateRemoved": "Espansion rimosso", 
+			"templateRemovedError": "Errore durante la rimozione del espansion" 
 		},
 		"builtIn": "Incorporato", 
 		"izLevel": "Livello di IZ", 
 		"remove": "Rimuovi", 
 		"status": {
-			"removingTemplate": "Rimozione del template...",
-			"savingTemplate": "Salvataggio del template..." 
+			"removingTemplate": "Rimozione del espansion...",
+			"savingTemplate": "Salvataggio del espansion..." 
 		},
 		"source": "Fonte",
-		"templates" : "Templates"
+		"templates" : "Espansion"
 	},
 	"unauthorized_institution": {
 		"headline": "Accesso negato", 
