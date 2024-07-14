@@ -1,6 +1,6 @@
 {
    "id": "slsp-cat-expand",
-   "title": "SLSP CatExpand (Beta)",
+   "title": "SLSP CatExpand",
    "subtitle": "Expand record metadata with templates",
    "author": "SLSP",
    "description": "Add or edit fields of a bibliographic record, based on templates.",
