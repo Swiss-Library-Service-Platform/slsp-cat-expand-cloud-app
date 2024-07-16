@@ -33,9 +33,6 @@ jobs:
         with:
           node-version: 13.x
 
-      - name: Install dependencies
-        run: npm install
-
       # - name: Audit ('npm audit')
       #   run: |
       #     npm ci
