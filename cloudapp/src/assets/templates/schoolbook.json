@@ -4,7 +4,7 @@
 		"rules": [
 			{
 				"type": "AddDataFieldRule",
-				"name": "add 655_7$$aaSchulbuch$$2gnd-content",
+				"name": "add 655_7$$aSchulbuch$$2gnd-content",
 				"arguments": {
 					"tag": "655",
 					"ind1": "",
