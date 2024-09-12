@@ -10,7 +10,7 @@
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-					"value": "Schulbuch$$2gnd-content"
+					"value": "Schulbuch $$2 gnd-content"
 				}
 			},
 			{
@@ -21,7 +21,7 @@
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-					"value": "Manuels d'enseignement$$0(IDREF)027446514$$2idref"
+					"value": "Manuels d'enseignement $$0 (IDREF)027446514 $$2 idref"
 				}
 			},
 			{
@@ -32,7 +32,7 @@
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-					"value": "Testi scolastici$$2sbt12-content"
+					"value": "Testi scolastici $$2 sbt12-content"
 				}
 			}
 		]

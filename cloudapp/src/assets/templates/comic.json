@@ -19,7 +19,7 @@
 					"ind1": "",
 					"ind2": "",
 					"code": "b",
-					"value": "sti$$2rdacontent"
+					"value": "sti $$2 rdacontent"
 				}
 			},
 			{
@@ -30,7 +30,7 @@
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-					"value": "Comic$$2gnd-content"
+					"value": "Comic $$2 gnd-content"
 				}
 			},
 			{
@@ -41,7 +41,7 @@
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-					"value": "Bandes dessinées$$0(IDREF)027220796$$2idref"
+					"value": "Bandes dessinées $$0 (IDREF)027220796 $$2 idref"
 				}
 			},
 			{
@@ -52,7 +52,7 @@
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-					"value": "Fumetti$$2sbt12-content"
+					"value": "Fumetti $$2 sbt12-content"
 				}
 			}
 		]

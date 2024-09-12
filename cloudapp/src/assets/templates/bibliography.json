@@ -19,7 +19,7 @@
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-					"value": "Bibliografie$$2gnd-content"
+					"value": "Bibliografie $$2 gnd-content"
 				}
 			},
 			{
@@ -30,7 +30,7 @@
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-					"value": "Bibliographie$$0(IDREF)027229386$$2idref"
+					"value": "Bibliographie $$0 (IDREF)027229386 $$2 idref"
 				}
 			},
 			{
@@ -41,7 +41,7 @@
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-					"value": "Bibliografie$$2sbt12-content"
+					"value": "Bibliografie $$2 sbt12-content"
 				}
 			}
 		]

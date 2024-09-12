@@ -10,7 +10,7 @@
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-					"value": "Ausstellungskatalog$$z$$y$$2gnd-content"
+					"value": "Ausstellungskatalog $$z $$y $$2 gnd-content"
 				}
 			},
 			{
@@ -21,7 +21,7 @@
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-					"value": "Catalogues d'exposition$$0(IDREF)027320456$$2idref"
+					"value": "Catalogues d'exposition $$0 (IDREF)027320456 $$2 idref"
 				}
 			},
 			{
@@ -32,7 +32,7 @@
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-					"value": "Cataloghi di esposizioni$$2sbt12-content"
+					"value": "Cataloghi di esposizioni $$2 sbt12-content"
 				}
 			}
 		]

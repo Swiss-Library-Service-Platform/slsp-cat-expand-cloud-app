@@ -19,7 +19,7 @@
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-					"value": "Biografie$$2gnd-content"
+					"value": "Biografie $$2 gnd-content"
 				}
 			},
 			{
@@ -30,7 +30,7 @@
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-					"value": "Biographie$$0(IDREF)027281558$$2idref"
+					"value": "Biographie $$0 (IDREF)027281558 $$2 idref"
 				}
 			},
 			{
@@ -41,7 +41,7 @@
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-					"value": "Biografie$$2sbt12-content"
+					"value": "Biografie $$2 sbt12-content"
 				}
 			}
 		]
