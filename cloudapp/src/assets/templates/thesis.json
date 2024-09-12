@@ -19,7 +19,7 @@
 					"ind1": "",
 					"ind2": "",
 					"code": "B",
-					"value": "$$b$$c$$d$$o"
+					"value": "$$b $$c $$d $$o"
 				}
 			},
 			{
@@ -30,7 +30,7 @@
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-					"value": "Hochschulschrift$$2gnd-content"
+					"value": "Hochschulschrift $$2 gnd-content"
 				}
 			},
 			{
@@ -41,7 +41,7 @@
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-					"value": "Thèses et écrits académiques$$0(IDREF)027253139$$2idref"
+					"value": "Thèses et écrits académiques $$0 (IDREF)027253139 $$2 idref"
 				}
 			},
 			{
@@ -52,7 +52,7 @@
 					"ind1": "",
 					"ind2": "7",
 					"code": "a",
-					"value": "Tesi$$2sbt12-content"
+					"value": "Tesi $$2 sbt12-content"
 				}
 			}
 		]
