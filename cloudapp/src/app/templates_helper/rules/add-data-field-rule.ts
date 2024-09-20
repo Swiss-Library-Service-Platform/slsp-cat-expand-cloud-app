@@ -94,8 +94,12 @@ class AddDataFieldRule extends Rule {
 
         // Get all subfields of this tag
         let valueSubfields = this.value.split(/\$\$[a-zA-Z0-9]/);
-        const firstSubField = valueSubfields[0];
-        const lastSubField = valueSubfields[valueSubfields.length - 1];
+        let firstSubField = valueSubfields[0];
+        let lastSubField = valueSubfields[valueSubfields.length - 1];
+
+        // Trim fields to remove leading/trailing spaces
+        firstSubField = firstSubField.trim();
+        lastSubField = lastSubField.trim();
 
         if (subfields && subfields.length > 0) {
             let foundSubfield: Node;
