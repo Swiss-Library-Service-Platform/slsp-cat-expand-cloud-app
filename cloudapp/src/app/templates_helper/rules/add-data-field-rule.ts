@@ -31,8 +31,7 @@ class AddDataFieldRule extends Rule {
     private tag: string;
     private ind1: string;
     private ind2: string;
-    private code: string;
-    private value: string;
+    private subfields: { code: string, value: string }[];
 
     /**
      * Constructs an instance of AddDataFieldRule.
@@ -45,8 +44,7 @@ class AddDataFieldRule extends Rule {
         this.tag = ruleArguments.tag;
         this.ind1 = ruleArguments.ind1;
         this.ind2 = ruleArguments.ind2;
-        this.code = ruleArguments.code;
-        this.value = ruleArguments.value;
+        this.subfields = ruleArguments.subfields;
     }
 
     /**
@@ -68,7 +66,7 @@ class AddDataFieldRule extends Rule {
         const record: Element = records[0];
 
         if (this.checkIfAlreadyPresent(xmlDocument)) {
-            this.log.info(`Field ${this.tag}_${this.ind1}_${this.ind2}$$${this.code} with content ${this.value}, already exists.`);
+            this.log.info(`Field ${this.tag}_${this.ind1}_${this.ind2} with content ${this.subfields}, already exists.`);
             return;
         }
         const newDataField: Element = this.createNode(xmlDocument);
@@ -78,48 +76,22 @@ class AddDataFieldRule extends Rule {
         ];
     }
 
-    /**
+     /**
      * Checks if the data field is already present in the XML document.
      * @param xmlDocument - The XML document to check against.
      * @returns A boolean indicating whether the data field is already present.
      */
-    private checkIfAlreadyPresent(xmlDocument: Document): boolean {
+     private checkIfAlreadyPresent(xmlDocument: Document): boolean {
         let conditions: string[] = [];
         conditions.push(this.generateCondition('tag', this.tag));
         conditions.push(this.generateCondition('ind1', this.ind1));
         conditions.push(this.generateCondition('ind2', this.ind2));
-        conditions.push(`subfield[@code='${this.code}']`);
-        const subfieldQuery: string = `//datafield[${conditions.join(' and ')}]`;
-        const subfields: Node[] = this.xpath.queryList(subfieldQuery, xmlDocument);
-
-        // Get all subfields of this tag
-        let valueSubfields = this.value.split(/\$\$[a-zA-Z0-9]/);
-        let firstSubField = valueSubfields[0];
-        let lastSubField = valueSubfields[valueSubfields.length - 1];
-
-        // Trim fields to remove leading/trailing spaces
-        firstSubField = firstSubField.trim();
-        lastSubField = lastSubField.trim();
-
-        if (subfields && subfields.length > 0) {
-            let foundSubfield: Node;
-
-            // Option 1: ("Normalized") Subfields are separated in to nodes
-            foundSubfield = subfields.find(subfield => subfield.firstChild.textContent === firstSubField
-                && subfield.lastChild.textContent === lastSubField);
-            if (foundSubfield) {
-                return true;
-            }
-
-            // Option 2: (Not "Normalized") Same Subfield exists but all values in one node (without spaces)
-            foundSubfield = subfields.find(subfield => subfield.textContent.startsWith(firstSubField)
-                && subfield.textContent.endsWith(lastSubField));
-            if (foundSubfield) {
-                return true;
-            }
+        for (let subfield of this.subfields) {
+            conditions.push(`subfield[@code="${subfield.code}" and text()="${subfield.value}"]`);
         }
-
-        return false;
+        const datafieldQuery: string = `//datafield[${conditions.join(' and ')}]`;
+        const datafields: Node[] = this.xpath.queryList(datafieldQuery, xmlDocument);
+        return datafields.length > 0;
     }
 
     /**
@@ -150,11 +122,13 @@ class AddDataFieldRule extends Rule {
         } else {
             datafield.setAttribute('ind2', ' ');
         }
-        const subfield: Element = xmlDocument.createElement('subfield');
-        subfield.setAttribute('code', this.code);
-        subfield.textContent = this.value;
+        this.subfields.forEach(subfield => {
+            const newSubfield: Element = xmlDocument.createElement('subfield');
+            newSubfield.setAttribute('code', subfield.code);
+            newSubfield.textContent = subfield.value;
+            datafield.appendChild(newSubfield);
+        });
 
-        datafield.appendChild(subfield);
         return datafield;
     }
 }
@@ -164,5 +138,5 @@ type RuleArguments = {
     ind1: string;
     ind2: string;
     code: string;
-    value: string;
+    subfields: { code: string, value: string }[];
 };

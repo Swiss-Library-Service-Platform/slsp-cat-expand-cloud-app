@@ -18,8 +18,16 @@
 					"tag": "336",
 					"ind1": "",
 					"ind2": "",
-					"code": "b",
-					"value": "sti $$2 rdacontent"
+					"subfields": [
+						{
+							"code": "b",
+							"value": "sti"
+						},
+						{
+							"code": "2",
+							"value": "rdacontent"
+						}
+					]
 				}
 			},
 			{
@@ -29,8 +37,16 @@
 					"tag": "655",
 					"ind1": "",
 					"ind2": "7",
-					"code": "a",
-					"value": "Comic $$2 gnd-content"
+					"subfields": [
+						{
+							"code": "a",
+							"value": "Comic"
+						},
+						{
+							"code": "2",
+							"value": "gnd-content"
+						}
+					]
 				}
 			},
 			{
@@ -40,8 +56,20 @@
 					"tag": "655",
 					"ind1": "",
 					"ind2": "7",
-					"code": "a",
-					"value": "Bandes dessinées $$0 (IDREF)027220796 $$2 idref"
+					"subfields": [
+						{
+							"code": "a",
+							"value": "Bandes dessinées"
+						},
+						{
+							"code": "0",
+							"value": "(IDREF)027220796"
+						},
+						{
+							"code": "2",
+							"value": "idref"
+						}
+					]
 				}
 			},
 			{
@@ -51,8 +79,16 @@
 					"tag": "655",
 					"ind1": "",
 					"ind2": "7",
-					"code": "a",
-					"value": "Fumetti $$2 sbt12-content"
+					"subfields": [
+						{
+							"code": "a",
+							"value": "Fumetti"
+						},
+						{
+							"code": "2",
+							"value": "sbt12-content"
+						}
+					]
 				}
 			}
 		]

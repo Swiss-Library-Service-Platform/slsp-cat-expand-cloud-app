@@ -18,8 +18,16 @@
 					"tag": "655",
 					"ind1": "",
 					"ind2": "7",
-					"code": "a",
-					"value": "Festschrift $$2 gnd-content"
+					"subfields": [
+						{
+							"code": "a",
+							"value": "Festschrift"
+						},
+						{
+							"code": "2",
+							"value": "gnd-content"
+						}
+					]
 				}
 			},
 			{
@@ -29,8 +37,20 @@
 					"tag": "655",
 					"ind1": "",
 					"ind2": "7",
-					"code": "a",
-					"value": "Mélanges et hommages $$0 (IDREF)027414248 $$2 idref"
+					"subfields": [
+						{
+							"code": "a",
+							"value": "Mélanges et hommages"
+						},
+						{
+							"code": "0",
+							"value": "(IDREF)027414248"
+						},
+						{
+							"code": "2",
+							"value": "idref"
+						}
+					]
 				}
 			},
 			{
@@ -40,8 +60,16 @@
 					"tag": "655",
 					"ind1": "",
 					"ind2": "7",
-					"code": "a",
-					"value": "Scritti in onore $$2 sbt12-content"
+					"subfields": [
+						{
+							"code": "a",
+							"value": "Scritti in onore"
+						},
+						{
+							"code": "2",
+							"value": "sbt12-content"
+						}
+					]
 				}
 			}
 		]
