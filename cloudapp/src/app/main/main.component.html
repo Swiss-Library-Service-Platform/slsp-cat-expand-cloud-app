@@ -124,7 +124,7 @@
                       </div>
                       <button mat-flat-button class="mat-small" color="primary"
                         (click)="applyTemplate($event, template)"
-                        [disabled]="selectedEntity['appliedTemplates'][template.getName()]">
+                        [disabled]="template.isOutdated() || selectedEntity['appliedTemplates'][template.getName()]">
                         {{'main.applyTemplateButtonLabel' | translate }}
                       </button>
                     </div>

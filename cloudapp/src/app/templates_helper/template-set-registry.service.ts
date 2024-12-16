@@ -265,12 +265,12 @@ export class TemplateSetRegistry {
 				template.addRule(rule);
 			} catch (e) {
 				hasError = true;
+				template.setOutdated(true);
 			}
 		});
 
 		if (hasError) {
-			this.alert.error(`Could not create outdated template '${templateName}. Please update the template or contact SLSP.`);
-			return;
+			this.alert.error(`Error: Template '${templateName}. Please update the template or contact SLSP.`);
 		}
 
 		let templateSet: TemplateSet = this.getTemplateSet(templateSetName);
