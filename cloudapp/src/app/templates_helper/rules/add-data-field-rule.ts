@@ -41,6 +41,9 @@ class AddDataFieldRule extends Rule {
     constructor(name: string, args: any) {
         super(name);
         const ruleArguments: RuleArguments = args as RuleArguments;
+        if (args.value || args.code) {
+            throw new Error(`The rule is outdated. Please update the template or contact SLSP.`);
+        }
         this.tag = ruleArguments.tag;
         this.ind1 = ruleArguments.ind1;
         this.ind2 = ruleArguments.ind2;
