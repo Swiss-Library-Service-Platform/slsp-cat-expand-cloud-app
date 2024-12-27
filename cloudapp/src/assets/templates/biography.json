@@ -3,15 +3,6 @@
 		"name": "Biography",
 		"rules": [			
 			{
-				"type": "ChangeControlFieldRule",
-				"name": "Change 008 / Pos.34 to b",
-				"arguments": {
-					"tag": "008",
-					"searchRegex": "^(.{34}).(.*)$",
-					"replacement": "$1b$2"
-				}
-			},
-			{
 				"type": "AddDataFieldRule",
 				"name": "add 655_7$$aBiografie$$2gnd-content",
 				"arguments": {
