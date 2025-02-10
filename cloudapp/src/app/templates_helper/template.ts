@@ -10,6 +10,8 @@ export class Template {
 	private rules: Rule[] = [];
 	/** Helper service for XPath queries */
 	private xpath: XPathHelperService;
+	/** Outdated flag */
+	private outdated: boolean = false;
 
 	/**
 	 * Creates an instance of Template.
@@ -55,6 +57,22 @@ export class Template {
 	 */
 	public getSource(): string {
 		return this.source;
+	}
+
+	/**
+	 * Sets the template as outdated.
+	 * @param outdated - True if the template is outdated, false otherwise
+	 */
+	public setOutdated(outdated: boolean): void {
+		this.outdated = outdated;
+	}
+
+	/**
+	 * Checks if the template is outdated
+	 * @returns True if the template is outdated, false otherwise
+	 */
+	public isOutdated(): boolean {
+		return this.outdated;
 	}
 
 	/**

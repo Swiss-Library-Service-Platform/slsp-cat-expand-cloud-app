@@ -1,11 +1,3 @@
-<!-- Test Flag TODO: Re-Add this here!
-<ng-container *ngIf="!isProdEnvironment">
-  <div class="info-test-env">
-    {{ 'main.testEnv' | translate }}
-  </div>
-</ng-container>
- -->
-
 <!-- Main Container -->
 <div *ngIf="isAuthorizationDone">
 
@@ -132,7 +124,7 @@
                       </div>
                       <button mat-flat-button class="mat-small" color="primary"
                         (click)="applyTemplate($event, template)"
-                        [disabled]="selectedEntity['appliedTemplates'][template.getName()]">
+                        [disabled]="template.isOutdated() || selectedEntity['appliedTemplates'][template.getName()]">
                         {{'main.applyTemplateButtonLabel' | translate }}
                       </button>
                     </div>

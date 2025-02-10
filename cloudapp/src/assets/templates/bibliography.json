@@ -18,8 +18,16 @@
 					"tag": "655",
 					"ind1": "",
 					"ind2": "7",
-					"code": "a",
-					"value": "Bibliografie $$2 gnd-content"
+					"subfields": [
+						{
+							"code": "a",
+							"value": "Bibliografie"
+						},
+						{
+							"code": "2",
+							"value": "gnd-content"
+						}
+					]
 				}
 			},
 			{
@@ -29,8 +37,20 @@
 					"tag": "655",
 					"ind1": "",
 					"ind2": "7",
-					"code": "a",
-					"value": "Bibliographie $$0 (IDREF)027229386 $$2 idref"
+					"subfields": [
+						{
+							"code": "a",
+							"value": "Bibliographie"
+						},
+						{
+							"code": "0",
+							"value": "(IDREF)027229386"
+						},
+						{
+							"code": "2",
+							"value": "idref"
+						}
+					]
 				}
 			},
 			{
@@ -40,8 +60,16 @@
 					"tag": "655",
 					"ind1": "",
 					"ind2": "7",
-					"code": "a",
-					"value": "Bibliografie $$2 sbt12-content"
+					"subfields": [
+						{
+							"code": "a",
+							"value": "Bibliografie"
+						},
+						{
+							"code": "2",
+							"value": "sbt12-content"
+						}
+					]
 				}
 			}
 		]

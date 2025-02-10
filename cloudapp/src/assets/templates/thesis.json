@@ -18,8 +18,28 @@
 					"tag": "502",
 					"ind1": "",
 					"ind2": "",
-					"code": "B",
-					"value": "$$b $$c $$d $$o"
+					"subfields": [
+						{
+							"code": "B",
+							"value": ""
+						},
+						{
+							"code": "b",
+							"value": ""
+						},
+						{
+							"code": "c",
+							"value": ""
+						},
+						{
+							"code": "d",
+							"value": ""
+						},
+						{
+							"code": "o",
+							"value": ""
+						}
+					]
 				}
 			},
 			{
@@ -29,8 +49,16 @@
 					"tag": "655",
 					"ind1": "",
 					"ind2": "7",
-					"code": "a",
-					"value": "Hochschulschrift $$2 gnd-content"
+					"subfields": [
+						{
+							"code": "a",
+							"value": "Hochschulschrift"
+						},
+						{
+							"code": "2",
+							"value": "gnd-content"
+						}
+					]
 				}
 			},
 			{
@@ -40,8 +68,20 @@
 					"tag": "655",
 					"ind1": "",
 					"ind2": "7",
-					"code": "a",
-					"value": "Thèses et écrits académiques $$0 (IDREF)027253139 $$2 idref"
+					"subfields": [
+						{
+							"code": "a",
+							"value": "Thèses et écrits académiques"
+						},
+						{
+							"code": "0",
+							"value": "(IDREF)027253139"
+						},
+						{
+							"code": "2",
+							"value": "idref"
+						}
+					]
 				}
 			},
 			{
@@ -51,8 +91,16 @@
 					"tag": "655",
 					"ind1": "",
 					"ind2": "7",
-					"code": "a",
-					"value": "Tesi $$2 sbt12-content"
+					"subfields": [
+						{
+							"code": "a",
+							"value": "Tesi"
+						},
+						{
+							"code": "2",
+							"value": "sbt12-content"
+						}
+					]
 				}
 			}
 		]

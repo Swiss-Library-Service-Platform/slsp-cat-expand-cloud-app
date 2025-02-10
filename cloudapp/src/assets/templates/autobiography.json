@@ -18,8 +18,16 @@
 					"tag": "655",
 					"ind1": "",
 					"ind2": "7",
-					"code": "a",
-					"value": "Autobiografie $$2 gnd-content"
+					"subfields": [
+						{
+							"code": "a",
+							"value": "Autobiografie"
+						},
+						{
+							"code": "2",
+							"value": "gnd-content"
+						}
+					]
 				}
 			},
 			{
@@ -29,8 +37,20 @@
 					"tag": "655",
 					"ind1": "",
 					"ind2": "7",
-					"code": "a",
-					"value": "Autobiographie $$0 (IDREF)02759436X $$2 idref"
+					"subfields": [
+						{
+							"code": "a",
+							"value": "Autobiographie"
+						},
+						{
+							"code": "0",
+							"value": "(IDREF)02759436X"
+						},
+						{
+							"code": "2",
+							"value": "idref"
+						}
+					]
 				}
 			},
 			{
@@ -40,8 +60,16 @@
 					"tag": "655",
 					"ind1": "",
 					"ind2": "7",
-					"code": "a",
-					"value": "Autobiografie $$2 sbt12-content"
+					"subfields": [
+						{
+							"code": "a",
+							"value": "Autobiografie"
+						},
+						{
+							"code": "2",
+							"value": "sbt12-content"
+						}
+					]
 				}
 			}
 		]

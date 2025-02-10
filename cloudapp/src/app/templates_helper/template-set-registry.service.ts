@@ -12,6 +12,7 @@ import { Rule } from './rules/rule';
 import { RuleCreator, RuleCreatorToken } from './rules/rule-creator';
 import { Template, TemplateOrigin } from './template';
 import { TemplateSet } from './template-set';
+import { AlertService } from '@exlibris/exl-cloudapp-angular-lib';
 
 @Injectable({
 	providedIn: 'root'
@@ -32,6 +33,7 @@ export class TemplateSetRegistry {
 		private settingsService: CloudAppSettingsService,
 		private configService: CloudAppConfigService,
 		private log: LogService,
+		private alert: AlertService,
 		@Inject(RuleCreatorToken) ruleCreators: RuleCreator<Rule>[]
 	) {
 		this.initTemplates();
@@ -255,11 +257,21 @@ export class TemplateSetRegistry {
 
 		const template: Template = new Template(templateName, JSON.stringify(templateDefinition, null, 2), origin);
 
+		let hasError = false;
 		rules.forEach(ruleDefinition => {
 			const ruleCreator: RuleCreator<Rule> = this.getRuleCreator(ruleDefinition.type);
-			const rule: Rule = ruleCreator.create(ruleDefinition.name, ruleDefinition.arguments);
-			template.addRule(rule);
+			try {
+				const rule: Rule = ruleCreator.create(ruleDefinition.name, ruleDefinition.arguments);
+				template.addRule(rule);
+			} catch (e) {
+				hasError = true;
+				template.setOutdated(true);
+			}
 		});
+
+		if (hasError) {
+			this.alert.error(`Error: Template '${templateName}. Please update the template or contact SLSP.`);
+		}
 
 		let templateSet: TemplateSet = this.getTemplateSet(templateSetName);
 		if (!templateSet) {

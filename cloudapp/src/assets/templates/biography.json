@@ -9,8 +9,16 @@
 					"tag": "655",
 					"ind1": "",
 					"ind2": "7",
-					"code": "a",
-					"value": "Biografie $$2 gnd-content"
+					"subfields": [
+						{
+							"code": "a",
+							"value": "Biografie"
+						},
+						{
+							"code": "2",
+							"value": "gnd-content"
+						}
+					]
 				}
 			},
 			{
@@ -20,8 +28,20 @@
 					"tag": "655",
 					"ind1": "",
 					"ind2": "7",
-					"code": "a",
-					"value": "Biographie $$0 (IDREF)027281558 $$2 idref"
+					"subfields": [
+						{
+							"code": "a",
+							"value": "Biographie"
+						},
+						{
+							"code": "0",
+							"value": "(IDREF)027281558"
+						},
+						{
+							"code": "2",
+							"value": "idref"
+						}
+					]
 				}
 			},
 			{
@@ -31,8 +51,16 @@
 					"tag": "655",
 					"ind1": "",
 					"ind2": "7",
-					"code": "a",
-					"value": "Biografie $$2 sbt12-content"
+					"subfields": [
+						{
+							"code": "a",
+							"value": "Biografie"
+						},
+						{
+							"code": "2",
+							"value": "sbt12-content"
+						}
+					]
 				}
 			}
 		]
