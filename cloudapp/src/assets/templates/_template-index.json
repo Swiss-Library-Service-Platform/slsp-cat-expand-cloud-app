@@ -8,6 +8,8 @@
 		"exhibitioncatalogue.json",
 		"festschrift.json",
 		"illustratedbook.json",
+		"journal.json",
+		"monographicseries.json",
 		"schoolbook.json",
 		"thesis.json"
 	]
