@@ -1,5 +1,4 @@
 {
-{
   "template": {
     "name": "Monographic series",
     "rules": [
@@ -75,5 +74,4 @@
       }
     ]
   }
-}
 }
