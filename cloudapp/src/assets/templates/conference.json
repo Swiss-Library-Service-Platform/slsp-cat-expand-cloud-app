@@ -21,19 +21,7 @@
 					"subfields": [
 						{
 							"code": "a",
-							"value": "Konferenzschrift"
-						},
-						{
-							"code": "z",
-							"value": " "
-						},
-						{
-							"code": "y",
-							"value": " "
-						},
-						{
-							"code": "2",
-							"value": "gnd-content"
+							"value": "Konferenzschrift $$z $$y $$2 gnd-content"
 						}
 					]
 				}

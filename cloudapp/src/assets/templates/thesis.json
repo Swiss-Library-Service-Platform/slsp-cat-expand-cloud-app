@@ -21,23 +21,7 @@
 					"subfields": [
 						{
 							"code": "B",
-							"value": ""
-						},
-						{
-							"code": "b",
-							"value": ""
-						},
-						{
-							"code": "c",
-							"value": ""
-						},
-						{
-							"code": "d",
-							"value": ""
-						},
-						{
-							"code": "o",
-							"value": ""
+							"value": "$$b $$c $$d $$o"
 						}
 					]
 				}
