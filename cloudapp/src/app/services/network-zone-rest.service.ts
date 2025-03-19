@@ -77,4 +77,23 @@ export class NetworkZoneRestService {
         const path: string = (isProxyRequest ? NetworkZoneRestService.PROXY_PATH : '') + request.url;
         return NetworkZoneRestService.PROXY_DOMAIN + path.replace(regex, '/');
     }
+
+    /**
+     * Checks if the current user has the required roles to use the application
+     * Uses the proxy endpoint which checks against NZ roles
+     * @returns Promise<boolean>
+     */
+    async checkUserRoles(): Promise<boolean> {
+        try {
+            const response = await this.call({
+                url: 'check-user-roles',
+                method: HttpMethod.GET
+            }, false 
+        ).toPromise();
+            return response.hasRequiredRoles;
+        } catch (error) {
+            console.error('Error checking user roles:', error);
+            return false;
+        }
+    }
 }
