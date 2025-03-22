@@ -26,7 +26,7 @@
 		"showAdditionalData": "Afficher/masquer les données supplémentaires",
 		"showHierarchyButtonLabel": "Afficher la hiérarchie",
 		"status": {
-			"applyingTemplate": "Application du extension...",
+			"applyingTemplate": "Application de l'extension",
 			"loading": "Chargement...",
 			"savingRecord": "Enregistrement de la notice...",
 			"selectingRecord": "Sélection de la notice..."
@@ -34,20 +34,20 @@
 	},
 	"templatesManagement": {
 		"add": "Ajouter",
-		"addIzTemplate": "Ajouter un extension de l'institution",
-		"addPersonalTemplate" : "Ajouter un extension personnel",
+		"addIzTemplate": "Ajouter une extension de l'institution",
+		"addPersonalTemplate" : "Ajouter une extension personnelle",
 		"alert": {
-			"templateAdded": "Extension ajouté",
-			"templateAddedError": "Erreur lors de l'ajout du extension",
-			"templateRemoved": "Extension supprimé",
-			"templateRemovedError": "Erreur lors de la suppression du extension"
+			"templateAdded": "Extension ajoutée",
+			"templateAddedError": "Erreur lors de l'ajout de l'extension",
+			"templateRemoved": "Extension supprimée",
+			"templateRemovedError": "Erreur lors de la suppression de l'extension"
 		},
 		"builtIn": "Intégré",
 		"izLevel": "Niveau institution",
 		"remove": "Supprimer",
 		"status": {
-			"removingTemplate": "Suppression du extension...",
-			"savingTemplate": "Enregistrement du extension..."
+			"removingTemplate": "Suppression de l'extension...",
+			"savingTemplate": "Enregistrement de l'extension..."
 		},
 		"source": "Source",
 		"templates" : "Extensions"
