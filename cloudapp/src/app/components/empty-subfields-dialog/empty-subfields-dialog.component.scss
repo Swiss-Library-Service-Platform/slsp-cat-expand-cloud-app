@@ -1,6 +1,6 @@
 .dialog-content {
   width: 100%;
-  padding: 20px 0;
+  padding-top: 20px;
 }
 
 .info-message {
@@ -54,8 +54,8 @@ mat-dialog-content {
 }
 
 .field-container {
-  margin-top: 16px;
-  margin-bottom: 24px;
+  margin-top: 8px;
+  margin-bottom: 0;
 
   .rule-name {
     font-size: 14px;
@@ -71,9 +71,24 @@ mat-dialog-content {
   mat-icon {
     font-size: 16px;
   }
+
+  mat-form-field {
+    margin-bottom: 0;
+
+    div {
+      padding-bottom: 0;
+    }
+  }
+
+  ::ng-deep {
+
+    .mat-form-field-wrapper {
+      padding-bottom: 8px;
+    }
+  }
 }
 
-mat-dialog-actions {
+.dialog-actions {
   padding: 8px 0;
 
   button {
