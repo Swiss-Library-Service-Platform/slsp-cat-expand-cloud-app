@@ -12,7 +12,19 @@
 					"subfields": [
 						{
 							"code": "a",
-							"value": "Ausstellungskatalog $$z $$y $$2 gnd-content"
+							"value": "Ausstellungskatalog"
+						},
+						{
+							"code": "z",
+							"value": ""
+						},
+						{
+							"code": "y",
+							"value": ""
+						},
+						{
+							"code": "2",
+							"value": "gnd-content"
 						}
 					]
 				}

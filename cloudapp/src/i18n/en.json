@@ -32,10 +32,18 @@
 			"selectingRecord": "Selecting record..."
 		}
 	},
+	"dialog": {
+		"emptySubfields": {
+			"title": "Fill in Missing Subfields",
+			"description": "The template contains empty subfields. You can optionally provide values for these subfields. Empty subfields will be ignored.",
+			"cancel": "Cancel",
+			"apply": "Apply"
+		}
+	},
 	"templatesManagement": {
 		"add": "Add",
 		"addIzTemplate": "Add IZ expansion",
-		"addPersonalTemplate" : "Add personal expansion",
+		"addPersonalTemplate": "Add personal expansion",
 		"alert": {
 			"templateAdded": "Expansion added",
 			"templateAddedError": "Error adding expansion",
@@ -50,17 +58,17 @@
 			"savingTemplate": "Saving expansion..."
 		},
 		"source": "Source",
-		"templates" : "Expansions"
+		"templates": "Expansions"
 	},
 	"unauthorized_institution": {
 		"headline": "Access denied",
-        "text1": "Unfortunately your institution does not have the permission to use this app. Please ",
-        "link": "contact SLSP ",
-        "text2": "if you have any questions."
+		"text1": "Unfortunately your institution does not have the permission to use this app. Please ",
+		"link": "contact SLSP ",
+		"text2": "if you have any questions."
 	},
 	"unauthorized_user": {
 		"headline": "Access denied",
-        "text1": "Unfortunately you do not have the permission to use this app.",
+		"text1": "Unfortunately you do not have the permission to use this app.",
 		"text2": "You need the following role:",
 		"role": "Cataloger"
 	}

@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>{{ 'dialog.emptySubfields.title' | translate }}</h2>
+<mat-dialog-content class="dialog-content">
+  <div class="info-message">
+    <mat-icon>info</mat-icon>
+    <p>{{ 'dialog.emptySubfields.description' | translate }}</p>
+  </div>
+
+
+  <div *ngFor="let field of data.emptySubfields" class="field-container">
+    <div class="rule-name" [innerHTML]="sanitizer.bypassSecurityTrustHtml(field.ruleName)"></div>
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>subfield ${{ field.code }}</mat-label>
+      <input matInput [(ngModel)]="field.inputValue" >
+      <mat-icon matPrefix>edit</mat-icon>
+      <button mat-icon-button matSuffix *ngIf="field.inputValue" (click)="field.inputValue=''"
+        [attr.aria-label]="'Clear ' + field.fieldTag + ' $' + field.code">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onNoClick()">
+    {{ 'dialog.emptySubfields.cancel' | translate }}
+  </button>
+  <button mat-button color="primary" (click)="onApplyClick()">
+    {{ 'dialog.emptySubfields.apply' | translate }}
+  </button>
+</mat-dialog-actions>

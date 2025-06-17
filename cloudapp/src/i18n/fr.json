@@ -32,10 +32,18 @@
 			"selectingRecord": "Sélection de la notice..."
 		}
 	},
+	"dialog": {
+		"emptySubfields": {
+			"title": "Remplir les sous-zones vides",
+			"description": "Le modèle contient des sous-zones vides. Vous pouvez remplir ces sous-zones de manière facultative. Les sous-zones vides seront ignorées.",
+			"cancel": "Annuler",
+			"apply": "Appliquer"
+		}
+	},
 	"templatesManagement": {
 		"add": "Ajouter",
 		"addIzTemplate": "Ajouter une extension de l'institution",
-		"addPersonalTemplate" : "Ajouter une extension personnelle",
+		"addPersonalTemplate": "Ajouter une extension personnelle",
 		"alert": {
 			"templateAdded": "Extension ajoutée",
 			"templateAddedError": "Erreur lors de l'ajout de l'extension",
@@ -50,17 +58,17 @@
 			"savingTemplate": "Enregistrement de l'extension..."
 		},
 		"source": "Source",
-		"templates" : "Extensions"
+		"templates": "Extensions"
 	},
 	"unauthorized_institution": {
 		"headline": "Accès refusé",
-        "text1": "Malheureusement, votre institution n'a pas l'autorisation d'utiliser cette application. Veuillez",
-        "link": "contacter SLSP",
-        "text2": "si vous avez des questions."
+		"text1": "Malheureusement, votre institution n'a pas l'autorisation d'utiliser cette application. Veuillez",
+		"link": "contacter SLSP",
+		"text2": "si vous avez des questions."
 	},
 	"unauthorized_user": {
 		"headline": "Accès refusé",
-        "text1": "Malheureusement, vous n'avez pas la permission d'utiliser cette application",
+		"text1": "Malheureusement, vous n'avez pas la permission d'utiliser cette application",
 		"text2": "Vous devez avoir le rôle suivant:",
 		"role": "Catalogueur"
 	}

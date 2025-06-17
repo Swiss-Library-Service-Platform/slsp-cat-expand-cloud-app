@@ -1,8 +1,10 @@
 @import './app/main/main.component.theme';
+@import './app/components/empty-subfields-dialog/empty-subfields-dialog.component.theme';
 
 @mixin themed-styles($theme, $typography) {
     /* Include themed component mixins or theme dependent styles here */
     @include main-component-theme($theme, $typography);
+    @include empty-subfields-dialog-component-theme($theme, $typography);
 }
 
 @mixin global-styles {
@@ -123,4 +125,8 @@ mat-expansion-panel {
             margin-left: 10px;
         }
     }
+}
+
+.full-width-dialog {
+  border: 1px solid rgba(0, 0, 0, 0.12);
 }

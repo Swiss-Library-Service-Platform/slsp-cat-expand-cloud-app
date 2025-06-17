@@ -27,10 +27,14 @@ export class AddDataFieldRuleCreator extends RuleCreator<AddDataFieldRule> {
 /**
  * Rule for adding a data field to an XML document.
  */
-class AddDataFieldRule extends Rule {
+export class AddDataFieldRule extends Rule {
+    /** MARC field tag */
     private tag: string;
+    /** First indicator */
     private ind1: string;
+    /** Second indicator */
     private ind2: string;
+    /** Array of subfields with their codes and values */
     private subfields: { code: string, value: string }[];
 
     /**
@@ -73,6 +77,10 @@ class AddDataFieldRule extends Rule {
             return;
         }
         const newDataField: Element = this.createNode(xmlDocument);
+        if (!newDataField) {
+            // If all subfields were empty, don't create the field
+            return [];
+        }
         record.appendChild(newDataField);
         return [
             this.getChangeSet(newDataField, this.tag, ChangeType.Create)
@@ -98,10 +106,10 @@ class AddDataFieldRule extends Rule {
     }
 
     /**
-     * Generates Condition for attribute for XML query.
-     * @param attribute 
-     * @param value 
-     * @returns 
+     * Generates a condition string for an XML attribute query.
+     * @param attribute - The name of the XML attribute to check
+     * @param value - The value to match against, undefined means match empty or space
+     * @returns XPath condition string for the attribute
      */
     private generateCondition(attribute: string, value: string | undefined): string {
         return value ? `@${attribute}='${value}'` : `(not(@${attribute}) or @${attribute}=' ')`;
@@ -125,7 +133,16 @@ class AddDataFieldRule extends Rule {
         } else {
             datafield.setAttribute('ind2', ' ');
         }
-        this.subfields.forEach(subfield => {
+        
+        // Only create subfields that have values
+        const nonEmptySubfields = this.subfields.filter(sf => sf.value && sf.value.trim() !== '');
+        
+        // Only return datafield if it has at least one non-empty subfield
+        if (nonEmptySubfields.length === 0) {
+            return null;
+        }
+        
+        nonEmptySubfields.forEach(subfield => {
             const newSubfield: Element = xmlDocument.createElement('subfield');
             newSubfield.setAttribute('code', subfield.code);
             newSubfield.textContent = subfield.value;
@@ -136,10 +153,18 @@ class AddDataFieldRule extends Rule {
     }
 }
 
+/**
+ * Arguments required for creating a new AddDataFieldRule.
+ */
 type RuleArguments = {
+    /** MARC field tag (e.g., '245') */
     tag: string;
+    /** First indicator value */
     ind1: string;
+    /** Second indicator value */
     ind2: string;
+    /** Legacy field code - no longer used */
     code: string;
+    /** Array of subfield definitions with their codes and values */
     subfields: { code: string, value: string }[];
 };
