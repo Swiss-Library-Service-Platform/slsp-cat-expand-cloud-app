@@ -35,7 +35,7 @@
 	"dialog": {
 		"emptySubfields": {
 			"title": "Fill in Missing Subfields",
-			"description": "The template contains empty subfields. You can optionally provide values for these subfields. Empty subfields will be ignored.",
+			"description": "The expansions contains empty subfields that can be filled in here.",
 			"cancel": "Cancel",
 			"apply": "Apply"
 		}
