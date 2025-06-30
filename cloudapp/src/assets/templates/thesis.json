@@ -20,24 +20,67 @@
 					"ind2": "",
 					"subfields": [
 						{
-							"code": "B",
-							"value": ""
-						}, 
-						{
 							"code": "b",
-							"value": ""
+							"value": "",
+							"options": [
+								"Bachelorarbeit",
+								"Diplomarbeit",
+								"Dissertation",
+								"Dissertazione",
+								"Habilitationsschrift",
+								"Lizenziatsarbeit",
+								"Magisterarbeit",
+								"Masterarbeit",
+								"Mémoire de licence",
+								"Mémoire de maîtrise",
+								"Memoria di licenza",
+								"Tesi di abilitazione",
+								"Tesi di bachelor",
+								"Tesi di diploma",
+								"Tesi di laurea magistrale",
+								"Tesi di master",
+								"Thèse",
+								"Thèse d’habilitation",
+								"Travail de bachelor",
+								"Travail de diplôme",
+								"Travail de master"
+							],
+							"description": {
+								"de": "Art der Hochschulschrift",
+								"en": "Type de titre académique",
+								"fr": "Type de titre académique",
+								"it": "Tipo di titolo accademico"
+							}
 						},
 						{
 							"code": "c",
-							"value": ""
+							"value": "",
+							"description": {
+								"de": "Name der Institution",
+								"en": "Nom de l'institution",
+								"fr": "Nom de l'institution",
+								"it": "Nome dell'istituzione"
+							}
 						},
 						{
 							"code": "d",
-							"value": ""
+							"value": "",
+							"description": {
+								"de": "Jahr",
+								"en": "Année",
+								"fr": "Année",
+								"it": "Anno"
+							}
 						},
 						{
 							"code": "o",
-							"value": ""
+							"value": "",
+							"description": {
+								"de": "Dissertationsnummer",
+								"en": "Numéro de thèse",
+								"fr": "Numéro de thèse",
+								"it": "Numero di tesi"
+							}
 						}
 					]
 				}

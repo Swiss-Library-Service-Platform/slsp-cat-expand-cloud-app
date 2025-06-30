@@ -1,29 +1,41 @@
-<h2 mat-dialog-title>{{ 'dialog.emptySubfields.title' | translate }}</h2>
 <mat-dialog-content class="dialog-content">
-  <div class="info-message">
-    <mat-icon>info</mat-icon>
-    <p>{{ 'dialog.emptySubfields.description' | translate }}</p>
+  <h1 mat-dialog-title>{{ 'dialog.emptySubfields.title' | translate }}</h1>
+  <div class="dialog-fields">
+    <div class="info-message">
+      <mat-icon>info</mat-icon>
+      <p>{{ 'dialog.emptySubfields.description' | translate }}</p>
+    </div>
+
+    <div *ngFor="let field of data.emptySubfields" class="field-container">
+      <div class="rule-name" [innerHTML]="sanitizer.bypassSecurityTrustHtml(field.ruleName)"></div>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>${{ field.code }}: {{ field.description[getCurrentLanguage()] }}</mat-label>
+        <input *ngIf="!field.options" type="text" matInput [(ngModel)]="field.inputValue">
+        <mat-select *ngIf="field.options" (click)="onClickStopPropagation($event)" class="full-width" matNativeControl
+          [(ngModel)]="field.inputValue">
+          <mat-option *ngFor="let option of field.options" [value]="option">
+            {{ option }}
+          </mat-option>
+          <mat-option class="custom-option" [value]="'__custom__'">{{ 'dialog.emptySubfields.anotherValue' | translate
+            }}</mat-option>
+        </mat-select>
+        <input *ngIf="field.options && field.inputValue === '__custom__'" type="text" matInput
+          [(ngModel)]="field.customInputValue" placeholder="{{ 'dialog.emptySubfields.enterCustomValue' | translate }}"
+          (click)="onClickStopPropagation($event)" class="custom-input">
+        <mat-icon matPrefix>edit</mat-icon>
+        <button mat-icon-button matSuffix *ngIf="field.inputValue || field.customInputValue"
+          (click)="field.inputValue=''; field.customInputValue=''"
+          [attr.aria-label]="'Clear ' + field.fieldTag + ' $' + field.code">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
   </div>
-
-
-  <div *ngFor="let field of data.emptySubfields" class="field-container">
-    <div class="rule-name" [innerHTML]="sanitizer.bypassSecurityTrustHtml(field.ruleName)"></div>
-    <mat-form-field class="full-width" appearance="outline">
-      <mat-label>subfield ${{ field.code }}</mat-label>
-      <input matInput [(ngModel)]="field.inputValue">
-      <mat-icon matPrefix>edit</mat-icon>
-      <button mat-icon-button matSuffix *ngIf="field.inputValue" (click)="field.inputValue=''"
-        [attr.aria-label]="'Clear ' + field.fieldTag + ' $' + field.code">
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-form-field>
-  </div>
-
   <div class="dialog-actions" align="end">
-    <button mat-button (click)="onNoClick()">
+    <button mat-flat-button color="secondary" (click)="onNoClick()">
       {{ 'dialog.emptySubfields.cancel' | translate }}
     </button>
-    <button mat-button color="primary" (click)="onApplyClick()">
+    <button mat-flat-button class="mat-small" color="primary" (click)="onApplyClick()">
       {{ 'dialog.emptySubfields.apply' | translate }}
     </button>
   </div>

@@ -37,7 +37,9 @@
       "title": "Compila i sottocampi vuoti",
       "description": "Il modello contiene sottocampi vuoti che possono essere compilati qui.",
       "cancel": "Annulla",
-      "apply": "Applica"
+      "apply": "Applica",
+      "anotherValue": "Altro valore",
+      "enterCustomValue": "Immettere il valore..."
     }
   },
   "templatesManagement": {

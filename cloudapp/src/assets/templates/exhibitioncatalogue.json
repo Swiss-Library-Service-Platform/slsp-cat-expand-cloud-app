@@ -16,11 +16,23 @@
 						},
 						{
 							"code": "z",
-							"value": ""
+							"value": "",
+							"description": {
+								"de": "Ausstellungsort",
+								"en": "Ausstellungsort",
+								"fr": "Ausstellungsort",
+								"it": "Ausstellungsort"
+							}
 						},
 						{
 							"code": "y",
-							"value": ""
+							"value": "",
+							"description": {
+								"de": "Ausstellungsdaten",
+								"en": "Ausstellungsdaten",
+								"fr": "Ausstellungsdaten",
+								"it": "Ausstellungsdaten"
+							}
 						},
 						{
 							"code": "2",

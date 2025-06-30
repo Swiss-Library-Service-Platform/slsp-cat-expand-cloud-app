@@ -4,15 +4,7 @@
 import { ChangeSet, Rule } from './rules/rule';
 import { XPathHelperService } from '../services/xpath-helper.service';
 import { AddDataFieldRule } from './rules/add-data-field-rule';
-
-export interface EmptySubfieldInfo {
-	fieldTag: string;
-	ruleName: string;
-	ind1: string;
-	ind2: string;
-	code: string;
-	inputValue: string;
-}
+import { EmptySubfield } from '../components/empty-subfields-dialog/empty-subfields-dialog.component';
 
 export class Template {
 
@@ -98,8 +90,8 @@ export class Template {
 	 * @param xmlString - The XML string to which the template will be applied
 	 * @returns The modified XML string and the list of changes applied
 	 */
-	public findEmptySubfields(): EmptySubfieldInfo[] {
-		const emptySubfields: EmptySubfieldInfo[] = [];
+	public findEmptySubfields(): EmptySubfield[] {
+		const emptySubfields: EmptySubfield[] = [];
 
 		this.rules.forEach(rule => {
 			if (rule instanceof AddDataFieldRule) {
@@ -117,10 +109,10 @@ export class Template {
 									ruleSubfields,
 									subfield.code
 								),
-								ind1: (rule as any)['ind1'] || ' ',
-								ind2: (rule as any)['ind2'] || ' ',
 								code: subfield.code,
-								inputValue: ''
+								inputValue: '',
+								description: subfield.description || '',
+								options: subfield.options
 							});
 						}
 					});
@@ -152,9 +144,9 @@ export class Template {
 
 	/**
 	 * Updates empty subfields with values provided by the user.
-	 * @param filledSubfields - Array of EmptySubfieldInfo objects containing filled values
+	 * @param filledSubfields - Array of EmptySubfield objects containing filled values
 	 */
-	public updateEmptySubfields(filledSubfields: EmptySubfieldInfo[]): void {
+	public updateEmptySubfields(filledSubfields: EmptySubfield[]): void {
 		this.rules.forEach(rule => {
 			if (rule instanceof AddDataFieldRule) {
 				const args = (rule as any)['subfields'];

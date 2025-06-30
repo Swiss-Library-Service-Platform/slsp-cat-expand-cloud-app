@@ -37,7 +37,9 @@
       "title": "Leere Unterfelder ausfüllen",
       "description": "Die Vorlage enthält leere Unterfelder, die hier erfasst werden können.",
       "cancel": "Abbrechen",
-      "apply": "Anwenden"
+      "apply": "Anwenden",
+      "anotherValue": "Anderer Wert",
+      "enterCustomValue": "Geben Sie einen Wert ein..."
     }
   },
   "templatesManagement": {

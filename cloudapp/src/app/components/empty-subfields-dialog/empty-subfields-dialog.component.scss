@@ -1,6 +1,25 @@
 .dialog-content {
-  width: 100%;
-  padding-top: 20px;
+  h1 {
+    padding: 12px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  .dialog-fields {
+    padding: 0 24px;
+    margin-bottom: 16px;
+
+    .field-container {
+      margin-bottom: 16px;
+    }
+  }
+
+  .dialog-actions {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 12px;
+  }
 }
 
 .info-message {
@@ -28,7 +47,6 @@
 
 .full-width {
   width: 100%;
-  margin-bottom: 16px;
   display: block;
 
   &.mat-form-field-appearance-outline {
@@ -46,11 +64,6 @@
       opacity: 0.7;
     }
   }
-}
-
-mat-dialog-content {
-  padding: 0;
-  margin: 0;
 }
 
 .field-container {
@@ -86,13 +99,17 @@ mat-dialog-content {
       padding-bottom: 8px;
     }
   }
+
+  .custom-input {
+    padding-top: 8px;
+    font-style: italic;
+  }
+
 }
 
-.dialog-actions {
-  padding: 8px 0;
-
-  button {
-    margin-left: 8px;
+::ng-deep {
+  .custom-option .mat-option-text {
+    font-style: italic;
   }
 }
 

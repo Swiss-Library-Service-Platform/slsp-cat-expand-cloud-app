@@ -35,7 +35,7 @@ export class AddDataFieldRule extends Rule {
     /** Second indicator */
     private ind2: string;
     /** Array of subfields with their codes and values */
-    private subfields: { code: string, value: string }[];
+    private subfields: { code: string, value: string, description?: string, options?: string[] }[];
 
     /**
      * Constructs an instance of AddDataFieldRule.
@@ -87,12 +87,12 @@ export class AddDataFieldRule extends Rule {
         ];
     }
 
-     /**
-     * Checks if the data field is already present in the XML document.
-     * @param xmlDocument - The XML document to check against.
-     * @returns A boolean indicating whether the data field is already present.
-     */
-     private checkIfAlreadyPresent(xmlDocument: Document): boolean {
+    /**
+    * Checks if the data field is already present in the XML document.
+    * @param xmlDocument - The XML document to check against.
+    * @returns A boolean indicating whether the data field is already present.
+    */
+    private checkIfAlreadyPresent(xmlDocument: Document): boolean {
         let conditions: string[] = [];
         conditions.push(this.generateCondition('tag', this.tag));
         conditions.push(this.generateCondition('ind1', this.ind1));
@@ -133,15 +133,15 @@ export class AddDataFieldRule extends Rule {
         } else {
             datafield.setAttribute('ind2', ' ');
         }
-        
+
         // Only create subfields that have values
         const nonEmptySubfields = this.subfields.filter(sf => sf.value && sf.value.trim() !== '');
-        
+
         // Only return datafield if it has at least one non-empty subfield
         if (nonEmptySubfields.length === 0) {
             return null;
         }
-        
+
         nonEmptySubfields.forEach(subfield => {
             const newSubfield: Element = xmlDocument.createElement('subfield');
             newSubfield.setAttribute('code', subfield.code);

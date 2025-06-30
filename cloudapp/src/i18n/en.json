@@ -1,75 +1,77 @@
 {
-	"main": {
-		"alert": {
-			"recordSaved": "Record saved successfully",
-			"recordSavedError": "Error saving record",
-			"recordLoadError": "Error loading record"
-		},
-		"applyTemplateButtonLabel": "Apply",
-		"calculateButtonLabel": "calculate",
-		"closeWindowButtonLabel": "Close window",
-		"expandInfo": "To expand the view click the expand button in the toolbar",
-		"exportButtonLabel": "Export",
-		"inspectMarc": "Inspect MARC",
-		"items": "Record",
-		"manageTemplates": "Manage Expansions",
-		"mmsIdNz": "MMS ID (NZ)",
-		"noMmsIdMsg": "No Bibliographic Entities found, search for MMSID",
-		"noRelatedRecordsFoundMsg": "No related records found",
-		"popUpWindowButtonLabel": "Popup window",
-		"relatedRecords": "Related Records",
-		"resetButtonLabel": "Reset",
-		"resetSelectionButtonLabel": "Reset selection",
-		"saveButtonLabel": "Save",
-		"selectRecord": "Select",
-		"testEnv": "Test instance using Alma Sandbox environment",
-		"showAdditionalData": "Show/Hide additional data",
-		"showHierarchyButtonLabel": "Show hierarchy",
-		"status": {
-			"applyingTemplate": "Applying expansion...",
-			"loading": "Loading...",
-			"savingRecord": "Saving record...",
-			"selectingRecord": "Selecting record..."
-		}
-	},
-	"dialog": {
-		"emptySubfields": {
-			"title": "Fill in Missing Subfields",
-			"description": "The expansions contains empty subfields that can be filled in here.",
-			"cancel": "Cancel",
-			"apply": "Apply"
-		}
-	},
-	"templatesManagement": {
-		"add": "Add",
-		"addIzTemplate": "Add IZ expansion",
-		"addPersonalTemplate": "Add personal expansion",
-		"alert": {
-			"templateAdded": "Expansion added",
-			"templateAddedError": "Error adding expansion",
-			"templateRemoved": "Expansion removed",
-			"templateRemovedError": "Error removing expansion"
-		},
-		"builtIn": "Built-In",
-		"izLevel": "IZ-Level",
-		"remove": "Remove",
-		"status": {
-			"removingTemplate": "Removing expansion...",
-			"savingTemplate": "Saving expansion..."
-		},
-		"source": "Source",
-		"templates": "Expansions"
-	},
-	"unauthorized_institution": {
-		"headline": "Access denied",
-		"text1": "Unfortunately your institution does not have the permission to use this app. Please ",
-		"link": "contact SLSP ",
-		"text2": "if you have any questions."
-	},
-	"unauthorized_user": {
-		"headline": "Access denied",
-		"text1": "Unfortunately you do not have the permission to use this app.",
-		"text2": "You need the following role:",
-		"role": "Cataloger"
-	}
+  "main": {
+    "alert": {
+      "recordSaved": "Record saved successfully",
+      "recordSavedError": "Error saving record",
+      "recordLoadError": "Error loading record"
+    },
+    "applyTemplateButtonLabel": "Apply",
+    "calculateButtonLabel": "calculate",
+    "closeWindowButtonLabel": "Close window",
+    "expandInfo": "To expand the view click the expand button in the toolbar",
+    "exportButtonLabel": "Export",
+    "inspectMarc": "Inspect MARC",
+    "items": "Record",
+    "manageTemplates": "Manage Expansions",
+    "mmsIdNz": "MMS ID (NZ)",
+    "noMmsIdMsg": "No Bibliographic Entities found, search for MMSID",
+    "noRelatedRecordsFoundMsg": "No related records found",
+    "popUpWindowButtonLabel": "Popup window",
+    "relatedRecords": "Related Records",
+    "resetButtonLabel": "Reset",
+    "resetSelectionButtonLabel": "Reset selection",
+    "saveButtonLabel": "Save",
+    "selectRecord": "Select",
+    "testEnv": "Test instance using Alma Sandbox environment",
+    "showAdditionalData": "Show/Hide additional data",
+    "showHierarchyButtonLabel": "Show hierarchy",
+    "status": {
+      "applyingTemplate": "Applying expansion...",
+      "loading": "Loading...",
+      "savingRecord": "Saving record...",
+      "selectingRecord": "Selecting record..."
+    }
+  },
+  "dialog": {
+    "emptySubfields": {
+      "title": "Fill in Missing Subfields",
+      "description": "The expansions contains empty subfields that can be filled in here.",
+      "cancel": "Cancel",
+      "apply": "Apply",
+      "anotherValue": "Other value",
+      "enterCustomValue": "Enter custom value..."
+    }
+  },
+  "templatesManagement": {
+    "add": "Add",
+    "addIzTemplate": "Add IZ expansion",
+    "addPersonalTemplate": "Add personal expansion",
+    "alert": {
+      "templateAdded": "Expansion added",
+      "templateAddedError": "Error adding expansion",
+      "templateRemoved": "Expansion removed",
+      "templateRemovedError": "Error removing expansion"
+    },
+    "builtIn": "Built-In",
+    "izLevel": "IZ-Level",
+    "remove": "Remove",
+    "status": {
+      "removingTemplate": "Removing expansion...",
+      "savingTemplate": "Saving expansion..."
+    },
+    "source": "Source",
+    "templates": "Expansions"
+  },
+  "unauthorized_institution": {
+    "headline": "Access denied",
+    "text1": "Unfortunately your institution does not have the permission to use this app. Please ",
+    "link": "contact SLSP ",
+    "text2": "if you have any questions."
+  },
+  "unauthorized_user": {
+    "headline": "Access denied",
+    "text1": "Unfortunately you do not have the permission to use this app.",
+    "text2": "You need the following role:",
+    "role": "Cataloger"
+  }
 }

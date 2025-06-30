@@ -25,11 +25,23 @@
 						},
 						{
 							"code": "z",
-							"value": ""
+							"value": "",
+							"description": {
+								"de": "Konferenzort",
+								"en": "Konferenzort",
+								"fr": "Konferenzort",
+								"it": "Konferenzort"
+							}
 						},
 						{
 							"code": "y",
-							"value": ""
+							"value": "",
+							"description": {
+								"de": "Konferenzdaten",
+								"en": "Konferenzdaten",
+								"fr": "Konferenzdaten",
+								"it": "Konferenzdaten"
+							}
 						},
 						{
 							"code": "2",

@@ -37,7 +37,9 @@
       "title": "Remplir les sous-zones vides",
       "description": "Le modèle contient des sous-champs vides qui peuvent être enregistrés ici.",
       "cancel": "Annuler",
-      "apply": "Appliquer"
+      "apply": "Appliquer",
+      "anotherValue": "Autre valeur",
+      "enterCustomValue": "Entrez la valeur..."
     }
   },
   "templatesManagement": {

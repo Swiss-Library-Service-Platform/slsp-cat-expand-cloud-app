@@ -8,6 +8,7 @@
 }
 
 @mixin global-styles {
+
     /* Add global styles here */
     .mat-flat-button.mat-small {
         min-width: 1%;
@@ -101,6 +102,16 @@ mat-expansion-panel {
     }
 }
 
+.cdk-overlay-container {
+    .mat-dialog-container {
+        padding: 0;
+
+        .mat-dialog-content {
+            padding: 0;
+            margin: 0;
+        }
+    }
+}
 
 .item-title {
     display: flex;
@@ -128,5 +139,5 @@ mat-expansion-panel {
 }
 
 .full-width-dialog {
-  border: 1px solid rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(0, 0, 0, 0.12);
 }
