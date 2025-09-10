@@ -5,6 +5,8 @@
  */
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AlertService, CloudAppEventsService, CloudAppRestService, Entity, EntityType, HttpMethod } from '@exlibris/exl-cloudapp-angular-lib';
+import { MatDialog } from '@angular/material/dialog';
+import { EmptySubfieldsDialogComponent } from '../components/empty-subfields-dialog/empty-subfields-dialog.component';
 import { Observable, of } from 'rxjs';
 import { catchError, filter, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { BibRecord } from '../models/bib-record';
@@ -65,6 +67,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private _status: StatusMessageService,
     private _loader: LoadingIndicatorService,
+    private dialog: MatDialog,
   ) { }
 
   /**
@@ -206,11 +209,38 @@ export class MainComponent implements OnInit, OnDestroy {
     const statusText = await this.translate.get('main.status.applyingTemplate').toPromise();
     this.status.set(statusText);
     this.log.info('apply template:', template.getName());
-    let changes = [];
-    [this.xmlString, changes] = template.applyTemplate(this.xmlString);
-    this.selectedEntity['appliedTemplates'][template.getName()] = true;
-    this.changeTrackingService.addChanges(changes);
-    this.hasChanges = true;
+
+    // Check for empty subfields first
+    const emptySubfields = template.findEmptySubfields();
+    let dialogResult = null;
+    
+    if (emptySubfields.length > 0) {
+      // Show dialog to get values for empty subfields
+      const dialogRef = this.dialog.open(EmptySubfieldsDialogComponent, {
+        data: { emptySubfields },
+        width: '100%',
+        maxWidth: '100vw',
+        panelClass: 'full-width-dialog',
+        autoFocus: false,
+        disableClose: true
+      });
+
+      dialogResult = await dialogRef.afterClosed().toPromise();
+      if (dialogResult) {
+        // Update template with filled subfields
+        template.updateEmptySubfields(dialogResult);
+      }
+    }
+
+    if (emptySubfields.length === 0 || dialogResult) {
+      // Apply template only if no empty subfields or if user provided values
+      let changes = [];
+      [this.xmlString, changes] = template.applyTemplate(this.xmlString);
+      this.selectedEntity['appliedTemplates'][template.getName()] = true;
+      this.changeTrackingService.addChanges(changes);
+      this.hasChanges = true;
+      template.resetEmptySubfields(); // Reset empty subfields after applying template
+    }
     this.loader.hide();
   }
 

@@ -21,7 +21,31 @@
 					"subfields": [
 						{
 							"code": "a",
-							"value": "Konferenzschrift $$z $$y $$2 gnd-content"
+							"value": "Konferenzschrift"
+						},
+						{
+							"code": "z",
+							"value": "",
+							"description": {
+								"de": "Konferenzort",
+								"en": "Konferenzort",
+								"fr": "Konferenzort",
+								"it": "Konferenzort"
+							}
+						},
+						{
+							"code": "y",
+							"value": "",
+							"description": {
+								"de": "Konferenzdaten",
+								"en": "Konferenzdaten",
+								"fr": "Konferenzdaten",
+								"it": "Konferenzdaten"
+							}
+						},
+						{
+							"code": "2",
+							"value": "gnd-content"
 						}
 					]
 				}

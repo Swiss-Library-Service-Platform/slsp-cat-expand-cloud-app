@@ -12,7 +12,31 @@
 					"subfields": [
 						{
 							"code": "a",
-							"value": "Ausstellungskatalog $$z $$y $$2 gnd-content"
+							"value": "Ausstellungskatalog"
+						},
+						{
+							"code": "z",
+							"value": "",
+							"description": {
+								"de": "Ausstellungsort",
+								"en": "Ausstellungsort",
+								"fr": "Ausstellungsort",
+								"it": "Ausstellungsort"
+							}
+						},
+						{
+							"code": "y",
+							"value": "",
+							"description": {
+								"de": "Ausstellungsdaten",
+								"en": "Ausstellungsdaten",
+								"fr": "Ausstellungsdaten",
+								"it": "Ausstellungsdaten"
+							}
+						},
+						{
+							"code": "2",
+							"value": "gnd-content"
 						}
 					]
 				}

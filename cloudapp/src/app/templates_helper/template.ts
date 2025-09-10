@@ -3,6 +3,8 @@
  */
 import { ChangeSet, Rule } from './rules/rule';
 import { XPathHelperService } from '../services/xpath-helper.service';
+import { AddDataFieldRule } from './rules/add-data-field-rule';
+import { EmptySubfield } from '../components/empty-subfields-dialog/empty-subfields-dialog.component';
 
 export class Template {
 
@@ -88,6 +90,106 @@ export class Template {
 	 * @param xmlString - The XML string to which the template will be applied
 	 * @returns The modified XML string and the list of changes applied
 	 */
+	public findEmptySubfields(): EmptySubfield[] {
+		const emptySubfields: EmptySubfield[] = [];
+
+		this.rules.forEach(rule => {
+			if (rule instanceof AddDataFieldRule) {
+				const args = (rule as any)['subfields'];
+				if (args) {
+					args.forEach(subfield => {
+						if (subfield.value === '') {
+							const ruleSubfields = (rule as any)['subfields'];
+							emptySubfields.push({
+								fieldTag: (rule as any)['tag'],
+								ruleName: this.computeRuleName(
+									(rule as any)['tag'],
+									(rule as any)['ind1'] || ' ',
+									(rule as any)['ind2'] || ' ',
+									ruleSubfields,
+									subfield.code
+								),
+								code: subfield.code,
+								inputValue: '',
+								description: subfield.description || '',
+								options: subfield.options
+							});
+						}
+					});
+				}
+			}
+		});
+
+		return emptySubfields;
+	}
+
+	/**
+	 * Computes a human-readable display name for a MARC field rule.
+	 * @param tag - The MARC field tag
+	 * @param ind1 - First indicator
+	 * @param ind2 - Second indicator
+	 * @param subfields - Array of subfields with their codes and values
+	 * @param currentCode - Optional subfield code to highlight in the output
+	 * @returns Formatted string representing the MARC field
+	 */
+	private computeRuleName(tag: string, ind1: string, ind2: string, subfields: { code: string, value: string }[], currentCode?: string): string {
+		const subfieldStr = subfields
+			.map(sf => {
+				const content = `$${sf.code}${sf.value ? ' ' + sf.value : ''}`;
+				return sf.code === currentCode ? `<strong>${content}</strong>` : content;
+			})
+			.join(' ');
+		return `${tag} - ${ind1} ${ind2}- ${subfieldStr}`;
+	}
+
+	/**
+	 * Updates empty subfields with values provided by the user.
+	 * @param filledSubfields - Array of EmptySubfield objects containing filled values
+	 */
+	public updateEmptySubfields(filledSubfields: EmptySubfield[]): void {
+		this.rules.forEach(rule => {
+			if (rule instanceof AddDataFieldRule) {
+				const args = (rule as any)['subfields'];
+				if (args) {
+					args.forEach(subfield => {
+						const match = filledSubfields.find(
+							es => es.fieldTag === (rule as any)['tag'] && es.code === subfield.code
+						);
+						if (match && match.inputValue) {
+							subfield.value = match.inputValue;
+							subfield.emptyValueFilled = true;
+						}
+					});
+				}
+			}
+		});
+	}
+
+	/**
+	 * Resets any filled empty subfields back to their empty state.
+	 * Removes the emptyValueFilled flag from subfields that were filled.
+	 */
+	public resetEmptySubfields(): void {
+		this.rules.forEach(rule => {
+			if (rule instanceof AddDataFieldRule) {
+				const args = (rule as any)['subfields'];
+				if (args) {
+					args.forEach(subfield => {
+						if (subfield.emptyValueFilled) {
+							subfield.value = '';
+							delete subfield.emptyValueFilled;
+						}
+					});
+				}
+			}
+		});
+	}
+
+	/**
+	 * Applies the template to the provided XML string, creating all MARC fields defined in the rules.
+	 * @param xmlString - The XML string representing the MARC record
+	 * @returns Tuple containing the modified XML string and an array of changes made
+	 */
 	public applyTemplate(xmlString: string): [string, ChangeSet[]] {
 		const xmlDom = new DOMParser().parseFromString(xmlString, "application/xml");
 		const changes: ChangeSet[][] = this.rules
@@ -100,7 +202,9 @@ export class Template {
 	}
 }
 
-/** Enum representing the origin of a template */
+/**
+ * Represents the origin of a template to determine its source and permissions.
+ */
 export enum TemplateOrigin {
 	BuiltIn = "BUILTIN",
 	User = "USER",

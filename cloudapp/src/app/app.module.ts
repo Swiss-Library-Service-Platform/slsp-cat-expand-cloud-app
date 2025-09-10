@@ -13,7 +13,8 @@ import { MainComponent } from './main/main.component'
 import { RuleCreatorToken } from './templates_helper/rules/rule-creator'
 import { ChangeIconComponent } from './components/change-icon/change-icon.component';
 import { MarcTableComponent } from './components/marc-table/marc-table.component';
-import { TemplatesManagementComponent } from './components/templates-management/templates-management.component'
+import { TemplatesManagementComponent } from './components/templates-management/templates-management.component';
+import { EmptySubfieldsDialogComponent } from './components/empty-subfields-dialog/empty-subfields-dialog.component';
 import { AddDataFieldRuleCreator } from './templates_helper/rules/add-data-field-rule'
 import { ChangeControlFieldRuleCreator } from './templates_helper/rules/change-control-field-rule'
 
@@ -23,7 +24,8 @@ import { ChangeControlFieldRuleCreator } from './templates_helper/rules/change-c
     MainComponent,
     ChangeIconComponent,
     MarcTableComponent,
-    TemplatesManagementComponent
+    TemplatesManagementComponent,
+    EmptySubfieldsDialogComponent
   ],
   imports: [
     MaterialModule,

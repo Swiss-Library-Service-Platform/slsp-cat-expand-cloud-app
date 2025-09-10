@@ -1,0 +1,10 @@
+
+@mixin empty-subfields-dialog-component-theme($theme, $typography) {
+  .field-container {
+    .rule-name {
+      strong {
+        color: mat-color(map-get($theme, primary));
+      }
+    }
+  }
+}
