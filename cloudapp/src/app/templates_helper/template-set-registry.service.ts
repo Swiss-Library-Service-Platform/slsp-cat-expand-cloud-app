@@ -260,10 +260,17 @@ export class TemplateSetRegistry {
 		let hasError = false;
 		rules.forEach(ruleDefinition => {
 			const ruleCreator: RuleCreator<Rule> = this.getRuleCreator(ruleDefinition.type);
+			if (!ruleCreator) {
+				this.log.error(`Unknown rule type: '${ruleDefinition.type}' in template '${templateName}'.`);
+				hasError = true;
+				template.setOutdated(true);
+				return;
+			}
 			try {
 				const rule: Rule = ruleCreator.create(ruleDefinition.name, ruleDefinition.arguments);
 				template.addRule(rule);
 			} catch (e) {
+				this.log.error(`Failed to create rule '${ruleDefinition.name}' (${ruleDefinition.type}) in template '${templateName}':`, e);
 				hasError = true;
 				template.setOutdated(true);
 			}

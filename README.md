@@ -31,11 +31,10 @@ To define templates that are available for the whole Institution Zone, the user 
 1. Add template definition json file in assets/templates
 2. Register the template definition file in assets/templates/_template-index.json
 
-### Rules and how to instantiate templates
+### Rules and Template Reference
 
-- Rules need a RuleCreator impl.
-- Rules need a RulesArg definition
-- RuleCreators must be registered in app.module.ts (for injection)
+See [TEMPLATE_RULES.md](TEMPLATE_RULES.md) for a complete reference of all available rule types and how to use them in templates.
+
 
 ## Common Issues
 
