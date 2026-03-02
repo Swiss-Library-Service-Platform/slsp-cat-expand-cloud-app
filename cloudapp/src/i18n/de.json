@@ -40,6 +40,10 @@
       "apply": "Anwenden",
       "anotherValue": "Anderer Wert",
       "enterCustomValue": "Geben Sie einen Wert ein..."
+    },
+    "confirm": {
+      "cancel": "Abbrechen",
+      "delete": "Löschen"
     }
   },
   "templatesManagement": {
@@ -50,11 +54,19 @@
       "templateAdded": "Erweiterung hinzugefügt",
       "templateAddedError": "Fehler beim Hinzufügen der Erweiterung",
       "templateRemoved": "Erweiterung entfernt",
-      "templateRemovedError": "Fehler beim Entfernen der Erweiterung"
+      "templateRemovedError": "Fehler beim Entfernen der Erweiterung",
+      "templateUpdated": "Erweiterung aktualisiert",
+      "templateUpdatedError": "Fehler beim Aktualisieren der Erweiterung"
     },
     "builtIn": "Built-In",
+    "confirmDelete": "Soll diese Erweiterung wirklich gelöscht werden?",
+    "cancel": "Abbrechen",
+    "edit": "Bearbeiten",
     "izLevel": "IZ-Level",
+    "originUser": "Benutzer",
+    "originIZ": "IZ",
     "remove": "Entfernen",
+    "save": "Speichern",
     "status": {
       "removingTemplate": "Erweiterung wird entfernt...",
       "savingTemplate": "Erweiterung wird gespeichert..."

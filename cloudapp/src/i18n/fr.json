@@ -40,6 +40,10 @@
       "apply": "Appliquer",
       "anotherValue": "Autre valeur",
       "enterCustomValue": "Entrez la valeur..."
+    },
+    "confirm": {
+      "cancel": "Annuler",
+      "delete": "Supprimer"
     }
   },
   "templatesManagement": {
@@ -50,11 +54,19 @@
       "templateAdded": "Extension ajoutée",
       "templateAddedError": "Erreur lors de l'ajout de l'extension",
       "templateRemoved": "Extension supprimée",
-      "templateRemovedError": "Erreur lors de la suppression de l'extension"
+      "templateRemovedError": "Erreur lors de la suppression de l'extension",
+      "templateUpdated": "Extension mise à jour",
+      "templateUpdatedError": "Erreur lors de la mise à jour de l'extension"
     },
     "builtIn": "Intégré",
+    "confirmDelete": "Voulez-vous vraiment supprimer cette extension ?",
+    "cancel": "Annuler",
+    "edit": "Modifier",
     "izLevel": "Niveau institution",
+    "originUser": "Utilisateur",
+    "originIZ": "IZ",
     "remove": "Supprimer",
+    "save": "Enregistrer",
     "status": {
       "removingTemplate": "Suppression de l'extension...",
       "savingTemplate": "Enregistrement de l'extension..."
