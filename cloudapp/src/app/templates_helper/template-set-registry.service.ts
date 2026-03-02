@@ -104,6 +104,26 @@ export class TemplateSetRegistry {
 	}
 
 	/**
+	 * Updates a user template.
+	 * @param oldName - The current name of the template to update
+	 * @param newSource - The new source code of the template
+	 * @returns Observable for the write settings response
+	 */
+	updateUserTemplate(oldName: string, newSource: string): Observable<WriteSettingsResponse> {
+		return this.updateTemplate(oldName, newSource, this.settingsService);
+	}
+
+	/**
+	 * Updates an institution template.
+	 * @param oldName - The current name of the template to update
+	 * @param newSource - The new source code of the template
+	 * @returns Observable for the write settings response
+	 */
+	updateInstitutionTemplate(oldName: string, newSource: string): Observable<WriteSettingsResponse> {
+		return this.updateTemplate(oldName, newSource, this.configService);
+	}
+
+	/**
 	 *  Initializes the registry with built-in templates and stored templates.
 	 */
 	initTemplates() {
@@ -244,6 +264,62 @@ export class TemplateSetRegistry {
 			);
 	}
 
+
+	/**
+	 * Updates an existing template in the settings.
+	 * @param oldName - The current name of the template
+	 * @param newSource - The new source code of the template
+	 * @param service - The settings service to use
+	 * @returns Observable for the write settings response
+	 */
+	private updateTemplate(oldName: string, newSource: string, service: CloudAppSettingsService | CloudAppConfigService): Observable<WriteSettingsResponse> {
+		return service.get()
+			.pipe(
+				switchMap(settings => {
+					let storedTemplates: StoredTemplates = settings as StoredTemplates;
+					if (!storedTemplates || !storedTemplates.storedScripts) {
+						storedTemplates = { storedScripts: {} };
+					}
+					const storedScripts: StoredScripts = storedTemplates.storedScripts;
+					const templateObject: TemplateDefinition = JSON.parse(newSource) as TemplateDefinition;
+					const newName: string = templateObject.template.name;
+					// If name changed, check for collision with other templates
+					if (newName !== oldName) {
+						const nameInUse = this.get().some(templateSet => templateSet.getTemplate(newName));
+						if (nameInUse) {
+							return of({
+								success: false,
+								error: 'Template name already in use'
+							});
+						}
+					}
+					// Remove old key, set new key
+					delete storedScripts[oldName];
+					storedScripts[newName] = newSource;
+					storedTemplates.storedScripts = storedScripts;
+					return service.set(storedTemplates);
+				}),
+				switchMap(result => {
+					if (result.success == true) {
+						// Remove old template from registry, filter out empty sets
+						this.registry = this.registry.filter(templateSet => {
+							templateSet.removeTemplate(oldName);
+							return templateSet.getTemplates().length > 0;
+						});
+						// Create and add updated template
+						const templateObject: TemplateDefinition = JSON.parse(newSource) as TemplateDefinition;
+						const origin = service === this.settingsService ? TemplateOrigin.User : TemplateOrigin.Institution;
+						this.createTemplateFromJsonAndAddToSet(templateObject, origin);
+						this.registrySubject.next(this.registry);
+					}
+					return of(result);
+				}),
+				catchError(error => of({
+					success: false,
+					error: error
+				}))
+			);
+	}
 
 	/**
 	 * Creates a template from a JSON definition.

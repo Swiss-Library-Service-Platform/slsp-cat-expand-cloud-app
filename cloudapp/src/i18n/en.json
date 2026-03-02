@@ -40,6 +40,10 @@
       "apply": "Apply",
       "anotherValue": "Other value",
       "enterCustomValue": "Enter custom value..."
+    },
+    "confirm": {
+      "cancel": "Cancel",
+      "delete": "Delete"
     }
   },
   "templatesManagement": {
@@ -50,11 +54,19 @@
       "templateAdded": "Expansion added",
       "templateAddedError": "Error adding expansion",
       "templateRemoved": "Expansion removed",
-      "templateRemovedError": "Error removing expansion"
+      "templateRemovedError": "Error removing expansion",
+      "templateUpdated": "Expansion updated",
+      "templateUpdatedError": "Error updating expansion"
     },
     "builtIn": "Built-In",
+    "confirmDelete": "Are you sure you want to delete this expansion?",
+    "cancel": "Cancel",
+    "edit": "Edit",
     "izLevel": "IZ-Level",
+    "originUser": "User",
+    "originIZ": "IZ",
     "remove": "Remove",
+    "save": "Save",
     "status": {
       "removingTemplate": "Removing expansion...",
       "savingTemplate": "Saving expansion..."
