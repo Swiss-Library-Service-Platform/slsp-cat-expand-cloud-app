@@ -110,21 +110,25 @@ Each subfield has:
 
 ## AddSubfieldRule
 
-Adds a new subfield to an existing data field. The target field is identified by tag and optional indicators. Conditions can be used to control when the subfield is added.
+Adds a new subfield to existing data fields. Target fields are identified by tag and optional indicators. Conditions can be used to control when the subfield is added.
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `targetField` | yes | Which field to add the subfield to (see below) |
+| `targetFields` | yes | Array of fields to add the subfield to (see below) |
 | `conditions` | no | Array of conditions that must all be met (see [Conditions](#conditions)) |
 | `subfield` | yes | The subfield to add: `code`, `value`, and optional `description`/`options` |
 
-**targetField:**
+**targetFields:**
+
+An array of target field objects. The rule applies to all matching datafields across all entries. Each entry can have its own indicators.
 
 | Property | Required | Description |
 |----------|----------|-------------|
 | `tag` | yes | Field tag (e.g. `"040"`) |
 | `ind1` | no | First indicator to match (see [Indicator Matching](#indicator-matching)) |
 | `ind2` | no | Second indicator to match (see [Indicator Matching](#indicator-matching)) |
+
+> **Note:** Conditions apply globally — each matched datafield is evaluated against the same set of conditions, regardless of which `targetFields` entry matched it.
 
 **Example** — Add $$d to field 040, only if no existing $$d already contains "CH-ZuSLS":
 
@@ -133,7 +137,7 @@ Adds a new subfield to an existing data field. The target field is identified by
   "type": "AddSubfieldRule",
   "name": "Add $$d CH-ZuSLS UNIGE",
   "arguments": {
-    "targetField": { "tag": "040" },
+    "targetFields": [{ "tag": "040" }],
     "conditions": [
       { "code": "a", "valueRegex": "CH-ZuSLS", "negate": true },
       { "code": "d", "valueRegex": "CH-ZuSLS", "negate": true }
@@ -143,20 +147,33 @@ Adds a new subfield to an existing data field. The target field is identified by
 }
 ```
 
-**Example** — Add $$4 with a user-prompted value:
+**Example** — Add $$4 to multiple fields with a user-prompted value:
 
 ```json
 {
   "type": "AddSubfieldRule",
-  "name": "Add $$4 (prompted)",
+  "name": "Add $$4",
   "arguments": {
-    "targetField": { "tag": "700", "ind1": "1" },
+    "targetFields": [{ "tag": "100" }, { "tag": "700" }],
     "subfield": {
       "code": "4",
       "value": "",
       "description": { "de": "Funktionscode", "en": "Relator code", "fr": "Code de fonction", "it": "Codice di funzione" }
     }
   }
+}
+```
+
+**Example** — Target fields with different indicators:
+
+```json
+{
+  "targetFields": [
+    { "tag": "100", "ind1": "1" },
+    { "tag": "110", "ind1": "2" },
+    { "tag": "700", "ind1": "1" },
+    { "tag": "710", "ind1": "2" }
+  ]
 }
 ```
 
@@ -168,7 +185,7 @@ Changes the value of an existing subfield. If no matching subfield is found, not
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `targetField` | yes | Which field contains the subfield (same as AddSubfieldRule) |
+| `targetFields` | yes | Array of fields to search in (same as AddSubfieldRule) |
 | `conditions` | no | Array of conditions that must all be met (see [Conditions](#conditions)) |
 | `targetSubfield` | yes | Which subfield to edit (see below) |
 | `replacement` | yes | New value (`""` triggers user prompt). Supports capture groups if `searchRegex` is set. |
@@ -188,7 +205,7 @@ Changes the value of an existing subfield. If no matching subfield is found, not
   "type": "EditSubfieldRule",
   "name": "Set $$b to fre",
   "arguments": {
-    "targetField": { "tag": "040" },
+    "targetFields": [{ "tag": "040" }],
     "targetSubfield": { "code": "b", "valueRegex": "^(?!ger$|fre$|ita$)" },
     "replacement": "fre"
   }
@@ -202,7 +219,7 @@ Changes the value of an existing subfield. If no matching subfield is found, not
   "type": "EditSubfieldRule",
   "name": "Replace old code in $$a",
   "arguments": {
-    "targetField": { "tag": "040" },
+    "targetFields": [{ "tag": "040" }],
     "targetSubfield": { "code": "a" },
     "searchRegex": "OLD_CODE",
     "replacement": "NEW_CODE"
@@ -214,7 +231,7 @@ Changes the value of an existing subfield. If no matching subfield is found, not
 
 ## Indicator Matching
 
-For `AddSubfieldRule` and `EditSubfieldRule`, the `ind1` and `ind2` properties in `targetField` control which fields are matched:
+For `AddSubfieldRule` and `EditSubfieldRule`, the `ind1` and `ind2` properties in each `targetFields` entry control which fields are matched:
 
 | Value in JSON | Matches |
 |---------------|---------|
@@ -271,7 +288,7 @@ Multiple rules can be combined in a single template to achieve complex transform
         "type": "EditSubfieldRule",
         "name": "Set $$b to fre (if exists and not fre/ger/ita)",
         "arguments": {
-          "targetField": { "tag": "040" },
+          "targetFields": [{ "tag": "040" }],
           "targetSubfield": { "code": "b", "valueRegex": "^(?!ger$|fre$|ita$)" },
           "replacement": "fre"
         }
@@ -280,7 +297,7 @@ Multiple rules can be combined in a single template to achieve complex transform
         "type": "AddSubfieldRule",
         "name": "Add $$b fre (if missing)",
         "arguments": {
-          "targetField": { "tag": "040" },
+          "targetFields": [{ "tag": "040" }],
           "conditions": [{ "code": "b", "exists": false }],
           "subfield": { "code": "b", "value": "fre" }
         }

@@ -14,28 +14,31 @@ export class AddSubfieldRuleCreator extends RuleCreator<AddSubfieldRule> {
 }
 
 export class AddSubfieldRule extends Rule {
-    private targetField: TargetField;
+    private targetFields: TargetField[];
     private conditions: SubfieldCondition[];
     private subfield: { code: string, value: string, description?: any, options?: string[], emptyValueFilled?: boolean };
 
     constructor(name: string, args: any) {
         super(name);
         const ruleArguments = args as RuleArguments;
-        this.targetField = ruleArguments.targetField;
+        if (!ruleArguments.targetFields || !Array.isArray(ruleArguments.targetFields) || ruleArguments.targetFields.length === 0) {
+            throw new Error('"targetFields" must be a non-empty array of target field objects.');
+        }
+        this.targetFields = ruleArguments.targetFields;
         this.conditions = ruleArguments.conditions || [];
         this.subfield = { ...ruleArguments.subfield, value: ruleArguments.subfield.value ?? '' };
-        DatafieldUtils.validateTargetField(this.targetField);
+        this.targetFields.forEach(tf => DatafieldUtils.validateTargetField(tf));
         DatafieldUtils.validateSubfieldCode(this.subfield.code);
         DatafieldUtils.validateAndCompileConditions(this.conditions);
     }
 
-    public getTargetField(): TargetField { return this.targetField; }
+    public getTargetFields(): TargetField[] { return this.targetFields; }
     public getSubfield() { return this.subfield; }
 
     public getEmptySubfields(): EmptySubfield[] {
         if (this.subfield && this.subfield.value === '') {
             return [{
-                fieldTag: this.targetField.tag,
+                fieldTag: this.targetFields.map(tf => tf.tag).join('/'),
                 ruleName: this.computeRuleName(),
                 code: this.subfield.code,
                 inputValue: '',
@@ -49,8 +52,9 @@ export class AddSubfieldRule extends Rule {
     public fillEmptySubfields(filledSubfields: EmptySubfield[]): void {
         if (this.subfield && this.subfield.value === '') {
             const ruleName = this.computeRuleName();
+            const fieldTag = this.targetFields.map(tf => tf.tag).join('/');
             const match = filledSubfields.find(
-                es => es.fieldTag === this.targetField.tag && es.code === this.subfield.code && es.ruleName === ruleName
+                es => es.fieldTag === fieldTag && es.code === this.subfield.code && es.ruleName === ruleName
             );
             if (match && match.inputValue) {
                 this.subfield.value = match.inputValue;
@@ -67,9 +71,10 @@ export class AddSubfieldRule extends Rule {
     }
 
     private computeRuleName(): string {
-        const ind1 = this.targetField.ind1 || ' ';
-        const ind2 = this.targetField.ind2 || ' ';
-        return `${this.getName()}: ${this.targetField.tag} - ${ind1} ${ind2}- <strong>$${this.subfield.code}</strong>`;
+        const tagList = this.targetFields.map(tf => tf.tag).join('/');
+        const ind1 = this.targetFields[0].ind1 || ' ';
+        const ind2 = this.targetFields[0].ind2 || ' ';
+        return `${this.getName()}: ${tagList} - ${ind1} ${ind2}- <strong>$${this.subfield.code}</strong>`;
     }
 
     public apply(xmlDocument: Document): ChangeSet[] {
@@ -81,24 +86,26 @@ export class AddSubfieldRule extends Rule {
             return [];
         }
 
-        const matchingFields = DatafieldUtils.findMatchingDatafields(this.targetField, xmlDocument, this.xpath);
-        if (matchingFields.length === 0) {
-            this.log.info(`No datafields found matching tag ${this.targetField.tag}.`);
-            return [];
-        }
-
         const changeSets: ChangeSet[] = [];
 
-        matchingFields.forEach(datafield => {
-            if (DatafieldUtils.evaluateConditions(datafield, this.conditions)) {
-                const newSubfield = xmlDocument.createElement('subfield');
-                newSubfield.setAttribute('code', this.subfield.code);
-                newSubfield.textContent = this.subfield.value;
-                datafield.appendChild(newSubfield);
-                changeSets.push(
-                    this.getChangeSet(datafield, this.targetField.tag, ChangeType.Change)
-                );
+        this.targetFields.forEach(targetField => {
+            const matchingFields = DatafieldUtils.findMatchingDatafields(targetField, xmlDocument, this.xpath);
+            if (matchingFields.length === 0) {
+                this.log.info(`No datafields found matching tag ${targetField.tag}.`);
+                return;
             }
+
+            matchingFields.forEach(datafield => {
+                if (DatafieldUtils.evaluateConditions(datafield, this.conditions)) {
+                    const newSubfield = xmlDocument.createElement('subfield');
+                    newSubfield.setAttribute('code', this.subfield.code);
+                    newSubfield.textContent = this.subfield.value;
+                    datafield.appendChild(newSubfield);
+                    changeSets.push(
+                        this.getChangeSet(datafield, datafield.getAttribute('tag'), ChangeType.Change)
+                    );
+                }
+            });
         });
 
         return changeSets;
@@ -106,7 +113,7 @@ export class AddSubfieldRule extends Rule {
 }
 
 type RuleArguments = {
-    targetField: TargetField;
+    targetFields: TargetField[];
     conditions?: SubfieldCondition[];
     subfield: { code: string, value: string, description?: any, options?: string[] };
 };
