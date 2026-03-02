@@ -90,13 +90,20 @@
   }
 }
 
-/*
-body[class*=cloudapp-theme] .mat-expansion-panel-body {
-  padding-left: 0.5rem !important;
-  padding-right: 0.5rem !important;
-  overflow: scroll;
+::ng-deep .mat-tab-header {
+  position: sticky !important;
+  top: 0;
+  z-index: 10;
+  background: white;
 }
-*/
+
+.marc-inspect-panel {
+  ::ng-deep .mat-expansion-panel-body {
+    max-height: 50vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
 
 .empty-list {
   height: 100%;
