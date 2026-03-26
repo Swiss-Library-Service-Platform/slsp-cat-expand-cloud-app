@@ -4,7 +4,7 @@
 		"rules": [
 			{
 				"type": "AddDataFieldRule",
-				"name": "add 655_7$$aSchulbuch$$2gnd-content",
+				"name": "add 655_7$$Lehr- und Lernressource$$2gnd-content",
 				"arguments": {
 					"tag": "655",
 					"ind1": "",
@@ -12,7 +12,7 @@
 					"subfields": [
 						{
 							"code": "a",
-							"value": "Schulbuch"
+							"value": "Lehr- und Lernressource"
 						},
 						{
 							"code": "2",
