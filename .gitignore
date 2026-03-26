@@ -49,3 +49,4 @@ config*.json
 # See: https://github.com/ExLibrisGroup/cloudapp-sdk/issues/48
 cloudapp/src/proxy.conf.js
 
+docs/
