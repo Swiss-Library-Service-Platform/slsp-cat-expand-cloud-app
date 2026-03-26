@@ -33,7 +33,7 @@ To define templates that are available for the whole Institution Zone, the user 
 
 ### Rules and Template Reference
 
-See [TEMPLATE_RULES.md](TEMPLATE_RULES.md) for a complete reference of all available rule types and how to use them in templates.
+See the [Expansion Rules Reference](https://slsp.atlassian.net/wiki/spaces/AlmaPrimoVE/pages/1831272463) on SLSPhere for a complete reference of all available rule types and how to use them in expansions/templates.
 
 
 ## Common Issues
