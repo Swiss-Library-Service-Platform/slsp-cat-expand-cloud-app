@@ -24,6 +24,10 @@ Additionally, the current Alma user has to contain the following user role:
 To define templates that are available for the whole Institution Zone, the user has to contain the following user role:
 - Cataloger Extended
 
+## Support
+
+For questions or to report an issue, please contact [SLSP Support](https://slsp.atlassian.net/servicedesk/customer/portal/1).
+
 # Developer Notes
 
 ## How to create static templates
