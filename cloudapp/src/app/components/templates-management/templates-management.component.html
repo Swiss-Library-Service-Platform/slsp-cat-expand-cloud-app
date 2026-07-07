@@ -46,7 +46,6 @@
   <h2> {{ 'templatesManagement.templates' | translate }}</h2>
 </div>
 <div *ngFor="let templateSet of templateSets">
-  <!-- <h2>{{templateSet.getName()}}</h2> -->
   <mat-accordion>
     <mat-expansion-panel *ngFor="let template of templateSet.getTemplates()">
       <mat-expansion-panel-header>
@@ -56,49 +55,84 @@
               <mat-icon color="primary">control_point_duplicate</mat-icon>
               <span>{{template.getName()}}</span>
             </div>
-            <span class="manage-template-action builtin" *ngIf="template.getOrigin() == 'BUILTIN'">
-              <mat-icon color="primary">lan</mat-icon>
-              <button mat-flat-button="mat-flat-button" class="mat-small" color="primary" [disabled]="true">
-                {{ 'templatesManagement.builtIn' | translate }}
-              </button>
+            <span class="origin-badge builtin-chip" *ngIf="template.getOrigin() == 'BUILTIN'">
+              <mat-icon class="origin-icon">lan</mat-icon>
+              <span>{{ 'templatesManagement.builtIn' | translate }}</span>
             </span>
-            <span class="manage-template-action user" *ngIf="template.getOrigin() == 'USER'">
-              <span class="uxf-icon uxf-user leading-icon mat-icon mat-primary"></span>
-              <button mat-flat-button="mat-flat-button" class="mat-small" color="primary"
-                (click)="removeUserTemplate($event, template.getName())">
-                {{ 'templatesManagement.remove' | translate }}
-              </button>
+            <span class="origin-badge user-chip" *ngIf="template.getOrigin() == 'USER'">
+              <mat-icon class="origin-icon">person</mat-icon>
+              <span>{{ 'templatesManagement.originUser' | translate }}</span>
             </span>
-            <span class="manage-template-action institution"
-              *ngIf="template.getOrigin() == 'INSTITUTION' && isUserAllowedIZ">
-              <span class="uxf-icon uxf-home leading-icon  mat-icon mat-primary"></span>
-              <button mat-flat-button="mat-flat-button" class="mat-small" color="primary"
-                (click)="removeInstitutionTemplate($event, template.getName())">
-                {{ 'templatesManagement.remove' | translate }}
-              </button>
-            </span>
-            <span class="manage-template-action institution"
-              *ngIf="template.getOrigin() == 'INSTITUTION' && !isUserAllowedIZ">
-              <button mat-flat-button="mat-flat-button" class="mat-small" color="primary" [disabled]="true">
-                {{ 'templatesManagement.izLevel' | translate }}
-              </button>
+            <span class="origin-badge iz-chip" *ngIf="template.getOrigin() == 'INSTITUTION'">
+              <mat-icon class="origin-icon">home_work</mat-icon>
+              <span>{{ 'templatesManagement.originIZ' | translate }}</span>
             </span>
           </div>
         </mat-panel-title>
       </mat-expansion-panel-header>
+
       <mat-list>
         <mat-list-item class="template-rule" *ngFor="let rule of template.getRules()">
-          <mat-icon matListItemIcon="matListItemIcon" color="primary">rule</mat-icon>
+          <mat-icon matListItemIcon color="primary">rule</mat-icon>
           {{rule.getName()}}
         </mat-list-item>
       </mat-list>
-      <details class="template-source">
-        <summary>
-          {{ 'templatesManagement.source' | translate }}
-        </summary>
-        <textarea cdkTextareaAutosize="cdkTextareaAutosize" readonly="readonly" class="code"
-          value="{{template.getSource()}}"></textarea>
-      </details>
+
+      <!-- View mode -->
+      <ng-container *ngIf="editingTemplateName !== template.getName()">
+        <details class="template-source">
+          <summary>
+            {{ 'templatesManagement.source' | translate }}
+          </summary>
+          <textarea cdkTextareaAutosize readonly class="code"
+            value="{{template.getSource()}}"></textarea>
+        </details>
+        <div class="template-actions" *ngIf="template.getOrigin() == 'USER'">
+          <button mat-flat-button class="mat-small" color="primary"
+            (click)="startEdit(template)">
+            <mat-icon>edit</mat-icon>
+            {{ 'templatesManagement.edit' | translate }}
+          </button>
+          <button mat-stroked-button class="mat-small btn-remove"
+            (click)="removeUserTemplate($event, template.getName())">
+            <mat-icon>delete_outline</mat-icon>
+            {{ 'templatesManagement.remove' | translate }}
+          </button>
+        </div>
+        <div class="template-actions" *ngIf="template.getOrigin() == 'INSTITUTION' && isUserAllowedIZ">
+          <button mat-flat-button class="mat-small" color="primary"
+            (click)="startEdit(template)">
+            <mat-icon>edit</mat-icon>
+            {{ 'templatesManagement.edit' | translate }}
+          </button>
+          <button mat-stroked-button class="mat-small btn-remove"
+            (click)="removeInstitutionTemplate($event, template.getName())">
+            <mat-icon>delete_outline</mat-icon>
+            {{ 'templatesManagement.remove' | translate }}
+          </button>
+        </div>
+        <div class="template-actions" *ngIf="template.getOrigin() == 'INSTITUTION' && !isUserAllowedIZ">
+          <span class="iz-level-label">{{ 'templatesManagement.izLevel' | translate }}</span>
+        </div>
+      </ng-container>
+
+      <!-- Edit mode -->
+      <ng-container *ngIf="editingTemplateName === template.getName()">
+        <textarea class="code" cdkTextareaAutosize [(ngModel)]="editSource"></textarea>
+        <div class="template-actions">
+          <button mat-stroked-button class="mat-small"
+            (click)="cancelEdit()">
+            {{ 'templatesManagement.cancel' | translate }}
+          </button>
+          <button mat-flat-button class="mat-small" color="primary"
+            [disabled]="!editSource"
+            (click)="saveEdit(template)">
+            <mat-icon>save</mat-icon>
+            {{ 'templatesManagement.save' | translate }}
+          </button>
+        </div>
+      </ng-container>
+
     </mat-expansion-panel>
   </mat-accordion>
 </div>

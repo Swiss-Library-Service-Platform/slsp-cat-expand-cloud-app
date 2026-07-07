@@ -1,6 +1,7 @@
 import { LogService } from '../../services/log.service';
 import { ChangeSet, ChangeType, Rule } from './rule';
 import { RuleCreator } from './rule-creator';
+import { DatafieldUtils } from './datafield-utils';
 
 /**
  * Rule creator for creating ChangeControlFieldRule instances.
@@ -44,6 +45,8 @@ class ChangeControlFieldRule extends Rule {
         this.tag = ruleArguments.tag;
         this.searchRegex = new RegExp(ruleArguments.searchRegex);
         this.replacement = ruleArguments.replacement;
+
+        DatafieldUtils.validateTag(this.tag);
     }
 
     /**
@@ -81,7 +84,7 @@ class ChangeControlFieldRule extends Rule {
      * @returns The control field node.
      */
     private getControlFieldNode(xmlDocument: Document): Node {
-        const query: string = `//controlfield[@tag='${this.tag}']`;
+        const query: string = `//controlfield[@tag=${DatafieldUtils.escapeXPathString(this.tag)}]`;
         this.log.info(query);
         this.log.info(this.xpath.querySingle(query, xmlDocument));
         return this.xpath.querySingle(query, xmlDocument);

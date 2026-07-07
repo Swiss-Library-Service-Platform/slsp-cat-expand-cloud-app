@@ -15,8 +15,11 @@ import { ChangeIconComponent } from './components/change-icon/change-icon.compon
 import { MarcTableComponent } from './components/marc-table/marc-table.component';
 import { TemplatesManagementComponent } from './components/templates-management/templates-management.component';
 import { EmptySubfieldsDialogComponent } from './components/empty-subfields-dialog/empty-subfields-dialog.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { AddDataFieldRuleCreator } from './templates_helper/rules/add-data-field-rule'
+import { AddSubfieldRuleCreator } from './templates_helper/rules/add-subfield-rule'
 import { ChangeControlFieldRuleCreator } from './templates_helper/rules/change-control-field-rule'
+import { EditSubfieldRuleCreator } from './templates_helper/rules/edit-subfield-rule'
 
 @NgModule({
   declarations: [
@@ -25,7 +28,8 @@ import { ChangeControlFieldRuleCreator } from './templates_helper/rules/change-c
     ChangeIconComponent,
     MarcTableComponent,
     TemplatesManagementComponent,
-    EmptySubfieldsDialogComponent
+    EmptySubfieldsDialogComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     MaterialModule,
@@ -41,7 +45,9 @@ import { ChangeControlFieldRuleCreator } from './templates_helper/rules/change-c
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'standard' } },
     { provide: RuleCreatorToken, useClass: AddDataFieldRuleCreator, multi: true },
+    { provide: RuleCreatorToken, useClass: AddSubfieldRuleCreator, multi: true },
     { provide: RuleCreatorToken, useClass: ChangeControlFieldRuleCreator, multi: true },
+    { provide: RuleCreatorToken, useClass: EditSubfieldRuleCreator, multi: true },
   ],
   bootstrap: [AppComponent]
 })

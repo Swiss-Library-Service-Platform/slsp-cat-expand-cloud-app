@@ -2,6 +2,7 @@ import { AppInjector } from '../../app-injector';
 import { ChangeTrackingService } from '../../services/change-tracking.service';
 import { LogService } from '../../services/log.service';
 import { XPathHelperService } from '../../services/xpath-helper.service';
+import { EmptySubfield } from '../../components/empty-subfields-dialog/empty-subfields-dialog.component';
 
 /**
  * Abstract class representing a rule.
@@ -37,6 +38,28 @@ export abstract class Rule {
      * @returns An array of ChangeSet objects representing the changes made by the rule.
      */
     public abstract apply(recordXml: Document): ChangeSet[];
+
+    /**
+     * Returns empty subfields that need user input via the dialog.
+     * Override in subclasses that support prompted values.
+     */
+    public getEmptySubfields(): EmptySubfield[] {
+        return [];
+    }
+
+    /**
+     * Updates this rule with user-provided values for empty subfields.
+     * Override in subclasses that support prompted values.
+     */
+    public fillEmptySubfields(filledSubfields: EmptySubfield[]): void {
+    }
+
+    /**
+     * Resets any user-provided values back to empty.
+     * Override in subclasses that support prompted values.
+     */
+    public resetFilledSubfields(): void {
+    }
 
     /**
      * Creates a ChangeSet object representing a change made by the rule.

@@ -40,6 +40,10 @@
       "apply": "Applica",
       "anotherValue": "Altro valore",
       "enterCustomValue": "Immettere il valore..."
+    },
+    "confirm": {
+      "cancel": "Annulla",
+      "delete": "Elimina"
     }
   },
   "templatesManagement": {
@@ -50,11 +54,19 @@
       "templateAdded": "Espansion aggiunto",
       "templateAddedError": "Errore durante l'aggiunta del espansion",
       "templateRemoved": "Espansion rimosso",
-      "templateRemovedError": "Errore durante la rimozione del espansion"
+      "templateRemovedError": "Errore durante la rimozione del espansion",
+      "templateUpdated": "Espansione aggiornata",
+      "templateUpdatedError": "Errore durante l'aggiornamento dell'espansione"
     },
     "builtIn": "Incorporato",
+    "confirmDelete": "Sei sicuro di voler eliminare questa espansione?",
+    "cancel": "Annulla",
+    "edit": "Modifica",
     "izLevel": "Livello di IZ",
+    "originUser": "Utente",
+    "originIZ": "IZ",
     "remove": "Rimuovi",
+    "save": "Salva",
     "status": {
       "removingTemplate": "Rimozione del espansion...",
       "savingTemplate": "Salvataggio del espansion..."

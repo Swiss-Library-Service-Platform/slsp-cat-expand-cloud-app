@@ -3,7 +3,6 @@
  */
 import { ChangeSet, Rule } from './rules/rule';
 import { XPathHelperService } from '../services/xpath-helper.service';
-import { AddDataFieldRule } from './rules/add-data-field-rule';
 import { EmptySubfield } from '../components/empty-subfields-dialog/empty-subfields-dialog.component';
 
 export class Template {
@@ -86,60 +85,13 @@ export class Template {
 	}
 
 	/**
-	 * Applies the template to the given XML string.
-	 * @param xmlString - The XML string to which the template will be applied
-	 * @returns The modified XML string and the list of changes applied
+	 * Finds all empty subfields across all rules that need user input via the dialog.
+	 * @returns Array of EmptySubfield objects representing fields that need user input
 	 */
 	public findEmptySubfields(): EmptySubfield[] {
-		const emptySubfields: EmptySubfield[] = [];
-
-		this.rules.forEach(rule => {
-			if (rule instanceof AddDataFieldRule) {
-				const args = (rule as any)['subfields'];
-				if (args) {
-					args.forEach(subfield => {
-						if (subfield.value === '') {
-							const ruleSubfields = (rule as any)['subfields'];
-							emptySubfields.push({
-								fieldTag: (rule as any)['tag'],
-								ruleName: this.computeRuleName(
-									(rule as any)['tag'],
-									(rule as any)['ind1'] || ' ',
-									(rule as any)['ind2'] || ' ',
-									ruleSubfields,
-									subfield.code
-								),
-								code: subfield.code,
-								inputValue: '',
-								description: subfield.description || '',
-								options: subfield.options
-							});
-						}
-					});
-				}
-			}
-		});
-
-		return emptySubfields;
-	}
-
-	/**
-	 * Computes a human-readable display name for a MARC field rule.
-	 * @param tag - The MARC field tag
-	 * @param ind1 - First indicator
-	 * @param ind2 - Second indicator
-	 * @param subfields - Array of subfields with their codes and values
-	 * @param currentCode - Optional subfield code to highlight in the output
-	 * @returns Formatted string representing the MARC field
-	 */
-	private computeRuleName(tag: string, ind1: string, ind2: string, subfields: { code: string, value: string }[], currentCode?: string): string {
-		const subfieldStr = subfields
-			.map(sf => {
-				const content = `$${sf.code}${sf.value ? ' ' + sf.value : ''}`;
-				return sf.code === currentCode ? `<strong>${content}</strong>` : content;
-			})
-			.join(' ');
-		return `${tag} - ${ind1} ${ind2}- ${subfieldStr}`;
+		const result: EmptySubfield[] = [];
+		this.rules.forEach(rule => result.push(...rule.getEmptySubfields()));
+		return result;
 	}
 
 	/**
@@ -147,42 +99,14 @@ export class Template {
 	 * @param filledSubfields - Array of EmptySubfield objects containing filled values
 	 */
 	public updateEmptySubfields(filledSubfields: EmptySubfield[]): void {
-		this.rules.forEach(rule => {
-			if (rule instanceof AddDataFieldRule) {
-				const args = (rule as any)['subfields'];
-				if (args) {
-					args.forEach(subfield => {
-						const match = filledSubfields.find(
-							es => es.fieldTag === (rule as any)['tag'] && es.code === subfield.code
-						);
-						if (match && match.inputValue) {
-							subfield.value = match.inputValue;
-							subfield.emptyValueFilled = true;
-						}
-					});
-				}
-			}
-		});
+		this.rules.forEach(rule => rule.fillEmptySubfields(filledSubfields));
 	}
 
 	/**
 	 * Resets any filled empty subfields back to their empty state.
-	 * Removes the emptyValueFilled flag from subfields that were filled.
 	 */
 	public resetEmptySubfields(): void {
-		this.rules.forEach(rule => {
-			if (rule instanceof AddDataFieldRule) {
-				const args = (rule as any)['subfields'];
-				if (args) {
-					args.forEach(subfield => {
-						if (subfield.emptyValueFilled) {
-							subfield.value = '';
-							delete subfield.emptyValueFilled;
-						}
-					});
-				}
-			}
-		});
+		this.rules.forEach(rule => rule.resetFilledSubfields());
 	}
 
 	/**
@@ -194,11 +118,11 @@ export class Template {
 		const xmlDom = new DOMParser().parseFromString(xmlString, "application/xml");
 		const changes: ChangeSet[][] = this.rules
 			.map(rule => rule.apply(xmlDom))
-			.filter(changeSet => changeSet !== undefined);
+			.filter(changeSet => changeSet !== undefined && changeSet.length > 0);
 
 		const record: Node = this.xpath.querySingle('//record', xmlDom);
 		xmlString = new XMLSerializer().serializeToString(record);
-		return [xmlString, [].concat(...changes)];
+		return [xmlString, ([] as ChangeSet[]).concat(...changes)];
 	}
 }
 
