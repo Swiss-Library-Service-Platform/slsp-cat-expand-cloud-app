@@ -12,7 +12,7 @@ import { switchMap } from 'rxjs/operators'
 export class NetworkZoneRestService {
 
     public static IS_PROD: string = 'false'
-    private static PROXY_DOMAIN: string = 'https://proxy02.swisscovery.network/'
+    private static PROXY_DOMAIN: string = 'https://ecaproxy.swisscovery.network/'
     private static PROXY_PATH: string = 'p/api-eu.hosted.exlibrisgroup.com/almaws/v1/'
 
     constructor(

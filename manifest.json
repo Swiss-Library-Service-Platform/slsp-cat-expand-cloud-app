@@ -13,7 +13,7 @@
    },
    "contentSecurity": {
       "connectSrc": [
-         "https://proxy02.swisscovery.network"
+         "https://ecaproxy.swisscovery.network"
       ],
       "sandbox": {
          "popups": true
